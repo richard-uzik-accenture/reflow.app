@@ -1,7 +1,8 @@
-import { animate, motion, useMotionValue, useTransform, type PanInfo } from 'framer-motion';
-import { useLayoutEffect, useRef, type RefObject } from 'react';
+import { animate, motion, motionValue, useTransform, type MotionValue, type PanInfo } from 'framer-motion';
+import { useLayoutEffect, useMemo, useRef, type RefObject } from 'react';
 import { decideSwipeDirection, planDuelFling } from '../lib/swipe';
 import { reflowSpring } from '../lib/transitions';
+import { CARD_TITLE_SCALE_RANGES, HEADLINE_SCALE_RANGES, scaleTitleStyle } from '../lib/textScale';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import type { Task } from '../lib/tasks';
 
@@ -24,7 +25,23 @@ export function CompareDuel({ candidate, newTaskTitle, progress, onDecide }: Com
   // commit function here — pressing a button plays the same fling as a swipe.
   const commitRef = useRef<CommitFn | null>(null);
 
+  // Lifted out of DuelCard so the ghost stack behind it can derive a live
+  // reveal from the same drag position, including mid-drag before any commit.
+  // Recreated fresh per step (memoized on the same key as DuelCard's own key)
+  // so a just-completed fling's final offset can never leak into the next
+  // card/ghost — no reset-in-an-effect race to get right.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const x = useMemo(() => motionValue(0), [candidate.id, progress.done]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const y = useMemo(() => motionValue(0), [candidate.id, progress.done]);
+
+  const dragProgress = useTransform(x, (latest) => Math.min(Math.abs(latest) / SWIPE_THRESHOLD_PX, 1));
+  const topGhostScale = useTransform(dragProgress, [0, 1], [1 - 0.04, 1]);
+  const topGhostY = useTransform(dragProgress, [0, 1], [10, 0]);
+  const shimmerOpacity = useTransform(dragProgress, [0, 0.15, 1], [0, 1, 1]);
+
   const ghosts = Math.min(Math.max(progress.total - progress.done - 1, 0), MAX_GHOSTS);
+  const headlineStyle = scaleTitleStyle(newTaskTitle, HEADLINE_SCALE_RANGES);
 
   return (
     <motion.div
@@ -33,18 +50,21 @@ export function CompareDuel({ candidate, newTaskTitle, progress, onDecide }: Com
       animate={{ opacity: 1, y: 0, transition: reflowSpring }}
       exit={{ opacity: 0, transition: { duration: 0.16, ease: 'easeIn' } }}
     >
-      <h2 className="duel-question">
-        more urgent than <span className="ref-title">"{candidate.title}"</span>?
-      </h2>
+      <div className="duel-headline">
+        <p className="duel-caption">where does this rank?</p>
+        <h2 className="duel-question" style={headlineStyle}>{newTaskTitle}</h2>
+      </div>
 
       <div className="duel-stage">
         <div className="duel-stack">
           {Array.from({ length: ghosts }, (_, i) => (
-            <motion.div
+            <GhostCard
               key={`ghost-${i}`}
-              className="duel-ghost"
-              animate={{ scale: 1 - 0.04 * (i + 1), y: 10 * (i + 1) }}
-              transition={reducedMotion ? { duration: 0 } : reflowSpring}
+              index={i}
+              reducedMotion={reducedMotion}
+              scale={i === 0 ? topGhostScale : undefined}
+              y={i === 0 ? topGhostY : undefined}
+              shimmerOpacity={i === 0 ? shimmerOpacity : undefined}
             />
           ))}
 
@@ -53,17 +73,19 @@ export function CompareDuel({ candidate, newTaskTitle, progress, onDecide }: Com
               behind for the next one. */}
           <DuelCard
             key={`${candidate.id}:${progress.done}`}
-            title={newTaskTitle}
+            title={candidate.title}
             reducedMotion={reducedMotion}
             commitRef={commitRef}
             onResolved={onDecide}
+            x={x}
+            y={y}
           />
         </div>
       </div>
 
       <div className="duel-actions">
-        <button className="duel-action later" onClick={() => commitRef.current?.(-1)}>← later</button>
-        <button className="duel-action sooner" onClick={() => commitRef.current?.(1)}>sooner →</button>
+        <button className="duel-action loses-spot" onClick={() => commitRef.current?.(-1)}>← loses spot</button>
+        <button className="duel-action stays-ahead" onClick={() => commitRef.current?.(1)}>stays ahead →</button>
       </div>
 
       <div className="duel-progress">
@@ -75,23 +97,52 @@ export function CompareDuel({ candidate, newTaskTitle, progress, onDecide }: Com
   );
 }
 
+interface GhostCardProps {
+  index: number;
+  reducedMotion: boolean;
+  scale?: MotionValue<number>;
+  y?: MotionValue<number>;
+  shimmerOpacity?: MotionValue<number>;
+}
+
+function GhostCard({ index, reducedMotion, scale, y, shimmerOpacity }: GhostCardProps) {
+  // Only the topmost ghost (the next card in line) gets a live, drag-derived
+  // reveal; deeper ghosts keep the static step-mount animation.
+  if (scale && y) {
+    return (
+      <motion.div className="duel-ghost" style={{ scale, y }}>
+        {!reducedMotion && shimmerOpacity && (
+          <motion.div className="duel-ghost-shimmer" style={{ opacity: shimmerOpacity }} aria-hidden />
+        )}
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      className="duel-ghost"
+      animate={{ scale: 1 - 0.04 * (index + 1), y: 10 * (index + 1) }}
+      transition={reducedMotion ? { duration: 0 } : reflowSpring}
+    />
+  );
+}
+
 interface DuelCardProps {
   title: string;
   reducedMotion: boolean;
   commitRef: RefObject<CommitFn | null>;
   onResolved: (newTaskWon: boolean) => void;
+  x: MotionValue<number>;
+  y: MotionValue<number>;
 }
 
-function DuelCard({ title, reducedMotion, commitRef, onResolved }: DuelCardProps) {
-  // Drag position lives in motion values, never React state: the card tracks the
-  // finger on the compositor without re-rendering per frame.
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+function DuelCard({ title, reducedMotion, commitRef, onResolved, x, y }: DuelCardProps) {
   const committed = useRef(false);
+  const titleStyle = scaleTitleStyle(title, CARD_TITLE_SCALE_RANGES);
 
   const rotate = useTransform(x, [-300, 0, 300], reducedMotion ? [0, 0, 0] : [-16, 0, 16], { clamp: true });
-  const soonerOpacity = useTransform(x, [40, 130], [0, 1], { clamp: true });
-  const laterOpacity = useTransform(x, [-130, -40], [1, 0], { clamp: true });
+  const staysAheadOpacity = useTransform(x, [40, 130], [0, 1], { clamp: true });
+  const losesSpotOpacity = useTransform(x, [-130, -40], [1, 0], { clamp: true });
 
   function commit(direction: 1 | -1, velocityX = 0, velocityY = 0) {
     if (committed.current) return;
@@ -105,7 +156,9 @@ function DuelCard({ title, reducedMotion, commitRef, onResolved }: DuelCardProps
     animate(x, plan.direction * plan.distance, {
       duration: plan.duration,
       ease,
-      onComplete: () => onResolved(plan.direction === 1),
+      // Right = the card's reference task stays more urgent (new task loses);
+      // left = the new task overtakes it. See compare.ts for newTaskWon semantics.
+      onComplete: () => onResolved(plan.direction === -1),
     });
   }
 
@@ -138,15 +191,15 @@ function DuelCard({ title, reducedMotion, commitRef, onResolved }: DuelCardProps
       transition={{ duration: reducedMotion ? 0 : 0.18, ease: 'easeOut' }}
       whileDrag={{ scale: 1.03 }}
     >
-      <motion.span className="duel-stamp sooner" style={{ opacity: soonerOpacity }} aria-hidden>
-        sooner
+      <motion.span className="duel-stamp stays-ahead" style={{ opacity: staysAheadOpacity }} aria-hidden>
+        stays ahead
       </motion.span>
-      <motion.span className="duel-stamp later" style={{ opacity: laterOpacity }} aria-hidden>
-        later
+      <motion.span className="duel-stamp loses-spot" style={{ opacity: losesSpotOpacity }} aria-hidden>
+        loses spot
       </motion.span>
 
-      <div className="duel-card-title">{title}</div>
-      <div className="duel-card-meta">just added</div>
+      <div className="duel-card-title" style={titleStyle}>{title}</div>
+      <div className="duel-card-meta">already on your list</div>
     </motion.div>
   );
 }
