@@ -20,7 +20,7 @@ interface TaskRowProps {
 }
 
 export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, failed }: TaskRowProps) {
-  const { dragControls, charging, onPointerDown, onPointerMove, onPointerUp, onPointerCancel } = useLongPressDrag();
+  const { dragControls, charging, ref, onPointerDown } = useLongPressDrag();
   const [now, setNow] = useState(() => new Date());
   const reducedMotion = useReducedMotion();
 
@@ -39,14 +39,12 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
 
   return (
     <Reorder.Item
+      ref={ref}
       value={task}
       dragListener={false}
       dragControls={dragControls}
-      onDragEnd={onReorderCommit}
       onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerCancel={onPointerCancel}
+      onDragEnd={onReorderCommit}
       className="task-row"
       initial={{ opacity: 0, height: 0, marginBottom: 0 }}
       animate={{
@@ -72,7 +70,6 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
         backgroundColor: { duration: LONG_PRESS_MS / 1000 },
         x: { duration: 0.4 },
       }}
-      style={{ touchAction: 'pan-y' }}
     >
       <span className="rank" aria-hidden="true" />
       <motion.button
