@@ -109,17 +109,28 @@ the text column entirely, with an opaque backing:
   white-space: nowrap;
   pointer-events: none;
 }
-.duel-stamp.sooner {
-  right: -6px;
-  transform: translateY(-50%) rotate(9deg);
-  color: var(--signal-coral);
-}
-.duel-stamp.later {
+.duel-stamp.stays-ahead {
   left: -6px;
   transform: translateY(-50%) rotate(-9deg);
+  color: var(--signal-coral);
+}
+.duel-stamp.loses-spot {
+  right: -6px;
+  transform: translateY(-50%) rotate(9deg);
   color: var(--violet-soft);
 }
 ```
+
+> **Naming note:** the plan was originally drafted against `sooner`/`later`
+> copy. The shipped `CompareDuel.tsx`/`global.css` use **`stays-ahead`** /
+> **`loses-spot`** instead (`.duel-stamp.stays-ahead`, `.duel-stamp.loses-spot`,
+> `.duel-action.stays-ahead`) — same coral/violet-soft semantics (card's task
+> stays ahead = coral, loses its spot = violet-soft), just different class
+> names and left/right sides swapped from the original draft (today
+> `stays-ahead` sits left, `loses-spot` sits right — see
+> `global.css:690-691`). Use the class names above, not `sooner`/`later`,
+> anywhere else this plan or its phases mention them. `LeftoverCard.tsx`'s
+> `keep`/`let go` naming is unaffected — that pairing was never renamed.
 
 Why this placement is safe against future title-length changes: the stamp
 sits at the vertical midpoint of the whole card, straddling the edge (`-6px`,
@@ -134,9 +145,9 @@ layout, text behind the stamp would be covered, not blended through it.
 `LeftoverCard.tsx` currently has no visual stamp at all (only the buttons
 below the card serve as affordances) — this phase adds one, reusing the same
 `.duel-stamp` CSS class and pattern (`keep`/`let go` instead of
-`sooner`/`later`), since `LeftoverCard.tsx` shares `decideSwipeDirection` /
-`planDuelFling` with `DuelCard` already. See Deliverables for the markup
-change this requires.
+`stays-ahead`/`loses-spot`), since `LeftoverCard.tsx` shares
+`decideSwipeDirection` / `planDuelFling` with `DuelCard` already. See
+Deliverables for the markup change this requires.
 
 ### Text colors inside the card
 
@@ -153,32 +164,36 @@ yet per CLAUDE.md §2.
 
 ## Deliverables
 
-- [ ] `.duel-card` / `.leftover-card`: background gradient, border, shadow,
+- [x] `.duel-card` / `.leftover-card`: background gradient, border, shadow,
       and base text color updated per above (`src/styles/global.css`).
-- [ ] `.duel-ghost`: updated to the flatter dark variant, shadow removed.
-- [ ] `.duel-card::before` / `.leftover-card::before`: ghosted shift-mark
+- [x] `.duel-ghost`: updated to the flatter dark variant, shadow removed.
+- [x] `.duel-card::before` / `.leftover-card::before`: ghosted shift-mark
       motif added, positioned fully inside card bounds (`top: 16px; right:
       16px; width: 100px; height: 100px`).
-- [ ] `.duel-stamp` repositioned to vertically centered left/right edges with
-      opaque background, per the CSS above — confirm visually it never
-      overlaps `.duel-card-title` at both the shortest and longest realistic
-      task titles (test with a 4-word and a 12-word title).
-- [ ] `LeftoverCard.tsx`: add the two stamp `<motion.span>` elements (mirroring
-      `DuelCard`'s `duel-stamp` markup/opacity-transform wiring in
-      `CompareDuel.tsx:141-146`), wired to the same `x` motion value already
-      present in `LeftoverCard.tsx`, labelled `keep` / `let go`.
-- [ ] `.duel-card-meta` / `.leftover-card` meta text color updated for
+- [x] `.duel-stamp` repositioned to vertically centered left/right edges with
+      opaque background, per the CSS above. (Visual overlap check against
+      4-word/12-word titles left for the user's manual pass, per this
+      session's instruction not to test.)
+- [x] `LeftoverCard.tsx`: added the two stamp `<motion.span>` elements
+      (mirroring `DuelCard`'s `duel-stamp` markup/opacity-transform wiring),
+      wired to the same `x` motion value already present in
+      `LeftoverCard.tsx`, labelled `keep` / `let go`. Reuses the
+      `stays-ahead`/`loses-spot` stamp classes (keep = positive/right
+      direction like stays-ahead, let go = negative/left like loses-spot) so
+      no new CSS class was needed.
+- [x] `.duel-card-meta` / `.leftover-card` meta text color updated for
       legibility on dark ground.
-- [ ] Confirm `overflow: hidden` remains set on both card classes so the
-      ghosted motif never bleeds past the rounded corners.
+- [x] Confirmed `overflow: hidden` remains set on both card classes so the
+      ghosted motif never bleeds past the rounded corners (added it to
+      `.leftover-card`, which didn't have it before this phase).
 
 ## Explicitly out of scope
 
 - No change to drag physics, thresholds, or fling math (`swipe.ts`,
   `planDuelFling`) — purely visual.
-- No new stamp copy — "sooner"/"later"/"keep"/"let go" are the existing
-  product copy (`branding.md` §4); this phase only adds the missing visual
-  stamp to the leftover card, it does not invent new words.
+- No new stamp copy — "stays ahead"/"loses spot"/"keep"/"let go" are the
+  existing product copy (`branding.md` §4); this phase only adds the missing
+  visual stamp to the leftover card, it does not invent new words.
 - No change to `.duel-card-title` font size/weight/line-height — only color.
 
 ## Test it yourself
@@ -189,16 +204,16 @@ yet per CLAUDE.md §2.
 2. Trigger the compare duel. Confirm: card face is a dark violet gradient
    (not flat), the shift mark is faintly visible in the top-right corner with
    all three bars and the chevron notch intact (not clipped), and dragging
-   left/right reveals the "later"/"sooner" stamp at the card's edge without
-   ever touching the title text — test with both a short task title
+   left/right reveals the "loses spot"/"stays ahead" stamp at the card's edge
+   without ever touching the title text — test with both a short task title
    ("call mom") and a long one ("finish reviewing Q3 budget variance report
    with finance team before Friday standup").
 3. Trigger the leftover-triage step. Confirm the same card face treatment,
    and confirm the new "keep"/"let go" stamps appear on drag, correctly
    positioned.
-4. Regression: swipe-to-commit and the button fallbacks (`← later` / `sooner
-   →`, `← let it go` / `keep →`) still work identically — only appearance
-   changed.
+4. Regression: swipe-to-commit and the button fallbacks (`← loses spot` /
+   `stays ahead →`, `← let it go` / `keep →`) still work identically — only
+   appearance changed.
 
 ## Risk / atomicity note
 

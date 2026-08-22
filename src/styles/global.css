@@ -673,22 +673,36 @@ button {
 }
 
 /* Decision stamps: the canon's rotated badge, set in the product's own
-   lowercase voice. Coral = card's task stays ahead, violet = it loses its
-   spot to the new task — never a red/green pair. */
+   lowercase voice. Coral marks the eventful outcome (card loses its spot to
+   the new task); violet-soft marks the calm/unchanged one (card stays
+   ahead). Coral is not "bad" here, just "this is where something moved" —
+   never a red/green pair. */
 .duel-stamp {
   position: absolute;
-  top: 26px;
-  padding: 7px 14px;
-  border-radius: 10px;
-  border: 2.5px solid currentColor;
+  top: 50%;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 2px solid currentColor;
+  background: var(--paper);
+  box-shadow: 0 8px 20px -8px rgba(23, 19, 53, 0.25);
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
   pointer-events: none;
 }
-.duel-stamp.stays-ahead { left: 24px; transform: rotate(-11deg); color: var(--signal-coral); }
-.duel-stamp.loses-spot { right: 24px; transform: rotate(11deg); color: var(--violet); }
+.duel-stamp.stays-ahead {
+  left: -6px;
+  transform: translateY(-50%) rotate(-9deg);
+  color: var(--violet-soft);
+}
+.duel-stamp.loses-spot {
+  right: -6px;
+  transform: translateY(-50%) rotate(9deg);
+  color: var(--signal-coral);
+}
 
 .duel-actions {
   display: flex;
@@ -712,12 +726,12 @@ button {
 }
 .duel-action:hover { background: var(--mist); color: var(--ink); }
 .duel-action:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 2px; }
-.duel-action.stays-ahead { color: var(--violet); font-weight: 600; }
-.duel-action.stays-ahead:hover { border-color: var(--violet-soft); color: var(--violet); }
+.duel-action.loses-spot { color: var(--signal-coral); font-weight: 600; }
+.duel-action.loses-spot:hover { border-color: var(--signal-coral); color: var(--signal-coral); }
 
 .duel-progress { display: flex; justify-content: center; gap: 6px; margin-top: 18px; }
 .duel-progress .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--haze); }
-.duel-progress .dot.done { background: var(--violet); }
+.duel-progress .dot.done { background: var(--violet-soft); }
 .duel-progress .dot.active { background: var(--signal-coral); }
 
 .task-list-dimmed { opacity: 0.25; transition: opacity 0.2s ease; pointer-events: none; }
@@ -756,7 +770,14 @@ button {
   padding: 10px 16px;
   margin: 0;
 }
-.leftover-shell { display: grid; place-items: center; min-height: 70vh; min-height: 70dvh; padding: 24px; position: relative; }
+.leftover-shell {
+  display: grid;
+  place-items: center;
+  min-height: 70vh;
+  min-height: 70dvh;
+  padding: 24px;
+  position: relative;
+}
 .leftover-kicker {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -795,7 +816,8 @@ button {
 }
 .leftover-hint:hover { background: var(--mist); color: var(--ink); }
 .leftover-hint:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 2px; }
-.leftover-hint.keep { color: var(--violet); font-weight: 600; }
+.leftover-hint.drop { color: var(--signal-coral); font-weight: 600; }
+.leftover-hint.drop:hover { color: var(--signal-coral); }
 
 .braindump-shell { padding: 24px; max-width: 460px; margin: 0 auto; width: 100%; }
 .braindump-sub { color: var(--dusk); font-family: var(--font-body); font-size: 14px; margin: 0; }

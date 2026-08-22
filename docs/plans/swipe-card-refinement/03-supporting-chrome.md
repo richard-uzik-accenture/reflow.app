@@ -26,25 +26,44 @@ low-contrast or invisible once the ground goes dark.
   outline: 2px solid var(--violet-soft);
   outline-offset: 2px;
 }
-.duel-action.sooner {
+.duel-action.stays-ahead {
   color: var(--signal-coral);
   font-weight: 600;
 }
-.duel-action.sooner:hover {
+.duel-action.stays-ahead:hover {
   border-color: var(--signal-coral);
   color: var(--signal-coral);
 }
 ```
 
-Note: `.duel-action.sooner` moving to coral-colored *text* is a deliberate,
-narrow read of the coral-scarcity rule — the button itself has no coral
-fill/background, only the label color, and it only appears on the one
+> **Naming note:** the plan draft used `sooner`/`later` copy; the shipped
+> code uses `stays-ahead`/`loses-spot` (see the same note in
+> [02-card-face.md](02-card-face.md)). Apply the above to
+> `.duel-action.stays-ahead`, not `.duel-action.sooner`.
+
+Note: `.duel-action.stays-ahead` moving to coral-colored *text* is a
+deliberate, narrow read of the coral-scarcity rule — the button itself has no
+coral fill/background, only the label color, and it only appears on the one
 full-bleed decision screen where coral is already sanctioned everywhere else
 (the stamp, per branding.md's explicit carve-out: "the compare/duel" is one of
 the three named coral-allowed moments in §2). This preserves today's behavior
-(`.duel-action.sooner` is already `color: var(--violet)` today) — only the hue
-changes to match the corrected on-brand palette for this screen, not the
-scope of where coral appears.
+(`.duel-action.stays-ahead` is already `color: var(--violet)` today) — only
+the hue changes to match the corrected on-brand palette for this screen, not
+the scope of where coral appears.
+
+### `.duel-ghost-shimmer` (added after this plan was drafted)
+
+Not part of the original plan: a live reveal shimmer on the topmost ghost
+card was added to `CompareDuel.tsx`/`global.css` (`.duel-ghost-shimmer`,
+`global.css:619-636`) after this plan was written, driven by the drag
+position via `dragProgress`. Its gradient stops are still light-ground colors
+(`var(--mist)`, `var(--haze)`) and need a dark-ground pass alongside the rest
+of this phase, or the shimmer sweep will render as a near-invisible
+light-on-light streak once `.duel-ghost`'s base goes to `#1D1A3E` in Phase 02.
+Pick shimmer stops from the same family already used elsewhere on this
+ground (e.g. `rgba(250, 249, 251, 0.06)` → `rgba(250, 249, 251, 0.14)` →
+`rgba(250, 249, 251, 0.06)`, tuned by eye against the actual card) — no new
+token required, single use.
 
 ### `.duel-progress .dot`
 
@@ -75,8 +94,9 @@ scope of where coral appears.
 ```
 
 `.leftover-hint.keep` moving to coral matches the same reasoning as
-`.duel-action.sooner` above — "keep" is the leftover screen's decision-moment
-action, already inside the compare/duel's coral-sanctioned surface.
+`.duel-action.stays-ahead` above — "keep" is the leftover screen's
+decision-moment action, already inside the compare/duel's coral-sanctioned
+surface.
 
 ### `.duel-card-rank` (mono rank indicator, if adopted from the artifact)
 
@@ -91,27 +111,29 @@ speculative additions beyond what was asked).
 
 ## Deliverables
 
-- [ ] `.duel-action` (base, hover, focus-visible, `.sooner` variant) recolored
-      for the dark ground.
-- [ ] `.duel-progress .dot` (base, `.done`, `.active`) recolored for the dark
+- [x] `.duel-action` (base, hover, focus-visible, `.stays-ahead` variant)
+      recolored for the dark ground.
+- [x] `.duel-ghost-shimmer` gradient stops recolored so the sweep is visible
+      against the Phase 02 `#1D1A3E` ghost background.
+- [x] `.duel-progress .dot` (base, `.done`, `.active`) recolored for the dark
       ground.
-- [ ] `.leftover-hint` (base, hover, focus-visible, `.keep` variant)
+- [x] `.leftover-hint` (base, hover, focus-visible, `.keep` variant)
       recolored for the dark ground.
 - [ ] Confirm every recolored element still meets WCAG AA contrast against
       the ink-violet ground (4.5:1 for text, 3:1 for UI component boundaries)
       — spot-check `#B7B2D1` on `#171335` and the coral/violet-soft dot
-      colors against the same ground.
+      colors against the same ground. **Left for the user's manual test pass.**
 - [ ] Confirm `:focus-visible` outlines remain clearly visible on the dark
       ground (outline color `--violet-soft` on ink-violet — verify by eye,
       it's a light violet on dark violet, should read but check at actual
-      size).
+      size). **Left for the user's manual test pass.**
 
 ## Explicitly out of scope
 
 - No new rank/progress information added beyond what exists today (see the
   rank-glyph note above).
-- No change to button/hint copy — "later", "sooner", "let it go", "keep" stay
-  exactly as-is.
+- No change to button/hint copy — "loses spot", "stays ahead", "let it go",
+  "keep" stay exactly as-is.
 - No change to `.duel-progress` dot count/behavior logic — purely color.
 
 ## Test it yourself
@@ -120,7 +142,8 @@ speculative additions beyond what was asked).
 2. Trigger the compare duel with a list of 4+ tasks so multiple progress dots
    render. Confirm: action buttons are legible against the dark ground,
    hover/focus states are visible, progress dots show clear done/active/
-   pending states.
+   pending states. While dragging the live card, confirm the topmost ghost's
+   shimmer sweep is visible against its dark background, not washed out.
 3. Trigger the leftover-triage step with 2+ leftover tasks. Confirm the
    `← let it go` / `keep →` hints are legible and the `keep` hint reads in
    coral.

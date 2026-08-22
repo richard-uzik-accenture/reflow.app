@@ -19,6 +19,8 @@ export function LeftoverCard({ task, remaining, onResolve }: LeftoverCardProps) 
   const committed = useRef(false);
 
   const rotate = useTransform(x, [-300, 0, 300], reducedMotion ? [0, 0, 0] : [-16, 0, 16], { clamp: true });
+  const keepOpacity = useTransform(x, [40, 130], [0, 1], { clamp: true });
+  const dropOpacity = useTransform(x, [-130, -40], [1, 0], { clamp: true });
 
   function commit(direction: 1 | -1, velocityX = 0, velocityY = 0) {
     if (committed.current) return;
@@ -59,6 +61,13 @@ export function LeftoverCard({ task, remaining, onResolve }: LeftoverCardProps) 
           onDragEnd={handleDragEnd}
           whileDrag={{ cursor: 'grabbing' }}
         >
+          <motion.span className="duel-stamp stays-ahead" style={{ opacity: keepOpacity }} aria-hidden>
+            keep
+          </motion.span>
+          <motion.span className="duel-stamp loses-spot" style={{ opacity: dropOpacity }} aria-hidden>
+            let go
+          </motion.span>
+
           {task.title}
         </motion.div>
         <div className="leftover-actions">

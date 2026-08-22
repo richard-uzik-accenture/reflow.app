@@ -80,19 +80,20 @@ rest of `Today.tsx` stays on `--paper` exactly as today.
 
 ## Deliverables
 
-- [ ] `.duel-screen` background updated to the ink-violet + violet-soft radial
+- [x] `.duel-screen` background updated to the ink-violet + violet-soft radial
       wash gradient (`src/styles/global.css`).
-- [ ] `.leftover-shell` background updated identically.
-- [ ] `.duel-question` and `.duel-question .ref-title` colors updated for
-      legibility on the new dark ground.
-- [ ] `.leftover-kicker` color updated for legibility on the new dark ground.
-- [ ] `.leftover-error` given an explicit dark-ground treatment so it's never
+- [x] `.leftover-shell` background updated identically.
+- [x] `.duel-question` color updated for legibility on the new dark ground
+      (`.duel-question .ref-title` does not exist in current code — no such
+      class in `CompareDuel.tsx`; nothing to change).
+- [x] `.leftover-kicker` color updated for legibility on the new dark ground.
+- [x] `.leftover-error` given an explicit dark-ground treatment so it's never
       dark-text-on-dark-background.
-- [ ] Confirm no other selector inherits a light-background assumption inside
-      these two screens (search `.duel-` and `.leftover-` prefixes in
-      `global.css` for any remaining `var(--ink)` / `var(--dusk)` /
-      `var(--mist)` usage not yet covered — those land in Phase 03 if they're
-      on chrome rather than the screen ground itself).
+- [x] Confirmed no other selector inherits a light-background assumption
+      inside these two screens — also caught and fixed `.duel-caption`
+      (`var(--dusk)` → light-on-dark), which the original deliverable list
+      missed. Card-face selectors (`.duel-card`, `.duel-ghost`, etc.) are
+      correctly left on `var(--paper)`/`var(--haze)` for now — that's Phase 02.
 
 ## Explicitly out of scope
 

@@ -24,7 +24,7 @@ plan:
    card to ink-violet while the screen stays white creates a bright white gutter
    around a dark card — reads as a mistake, not a choice. Both screens move to
    ink-violet together with the card (Phase 01).
-2. The decision stamps ("sooner"/"later", "keep"/"let go") were positioned by
+2. The decision stamps ("stays ahead"/"loses spot", "keep"/"let go") were positioned by
    `top` offset alone and could drift over the card title on shorter cards.
    Fixed placement: vertically centered on the card's left/right edges, clear
    of the text column, with an opaque backing so they never visually merge
@@ -60,11 +60,23 @@ changing it. If the dark screen feels jarring in practice after Phase 01 ships,
 that's a follow-up phase (e.g. a brief cross-fade on the underlying task list),
 not a reason to keep the screen on `--paper`.
 
+## Post-draft correction (2026-08-22)
+
+This plan was drafted before the duel card's copy/classes were renamed from
+`sooner`/`later` to **`stays-ahead`/`loses-spot`**, and before a live
+drag-derived shimmer was added to the topmost ghost card
+(`.duel-ghost-shimmer`). Phases 02 and 03 have been updated in place to match
+current code — see the naming notes inline in each phase file. `LeftoverCard`'s
+`keep`/`let go` naming was never renamed and needs no correction. No other
+drift from the swipe mechanics (`swipe.ts`, `planDuelFling`,
+`decideSwipeDirection`) was found; Phase 01's screen-ground fix and Phase 02's
+gradient/motif/stamp-position fixes still apply as written.
+
 ## Global constraints (inherited, still binding)
 
 - **Coral only at the live decision stamp.** No new resting coral on chrome,
   buttons, or badges anywhere in these phases.
-- **No red/green pair.** Violet = later/let-go, coral = sooner/keep — unchanged.
+- **No red/green pair.** Violet = loses-spot/let-go, coral = stays-ahead/keep — unchanged.
 - **Motion vocabulary unchanged** — reuse `transitions.ts` / `reflowSpring` /
   `planDuelFling`; no new animation primitives.
 - **Tone of voice unchanged** — no copy changes in this plan.
