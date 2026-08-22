@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useAuth } from './useAuth';
+import type { Session } from '@supabase/supabase-js';
 import { listActiveTasks, createTask, updateTask, updateTaskStatus, updateTaskRanks, markTriaged, hasCompletedToday, normalizeTask, type Task } from '../lib/tasks';
 import { rankBetween, renumber } from '../lib/ranking';
 import { upsertActiveTask } from '../lib/realtimeMerge';
@@ -19,8 +19,7 @@ function describeFailure(action: string, err: unknown): string {
     : `${action} — something went wrong on our end, try again in a bit`;
 }
 
-export function useTasks() {
-  const { session } = useAuth();
+export function useTasks(session: Session | null) {
   const userId = session?.user.id;
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,16 +32,28 @@ export function useTasks() {
     if (!userId) return;
     setLoading(true);
     setError(null);
-    try {
+    const fetchTasks = async () => {
       const [data, completed] = await Promise.all([
         DEV_MODE ? mockTasksApi.list() : listActiveTasks(),
         DEV_MODE ? mockTasksApi.hasCompletedToday() : hasCompletedToday(),
       ]);
       setTasks(data);
       setCompletedToday(completed);
+    };
+    try {
+      await fetchTasks();
     } catch (err) {
-      console.error('reload failed', err);
-      setError(describeFailure("couldn't load your tasks", err));
+      // The first fetch right after sign-in can race the client settling its
+      // token against the server, especially on slower mobile connections —
+      // one short retry absorbs that without surfacing a spurious error.
+      console.error('reload failed, retrying once', err);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      try {
+        await fetchTasks();
+      } catch (err2) {
+        console.error('reload retry failed', err2);
+        setError(describeFailure("couldn't load your tasks", err2));
+      }
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { Session } from '@supabase/supabase-js';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTasks } from '../hooks/useTasks';
@@ -18,11 +19,11 @@ import { SignOut } from '../components/icons/SignOut';
 import type { Task } from '../lib/tasks';
 import { allKnownTags } from '../lib/tags';
 
-export function Today() {
+export function Today({ session }: { session: Session }) {
   const {
     tasks, loading, error, dismissError, completedToday, realtimeStale, addTask, completeTask, editTask, dropTask,
     reorderTasks, commitReorder, insertTaskAtIndex, keepLeftover,
-  } = useTasks();
+  } = useTasks(session);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [failedRowId, setFailedRowId] = useState<string | null>(null);
 
