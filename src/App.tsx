@@ -36,7 +36,7 @@ function App() {
           exit="exit"
         >
           {screen === 'loading' && <AppLoading />}
-          {screen === 'today' && <Today session={session} />}
+          {screen === 'today' && session && <Today session={session} />}
           {screen === 'auth' && <Auth onBack={() => setShowAuth(false)} />}
           {screen === 'landing' && <Landing onGetStarted={() => setShowAuth(true)} />}
         </motion.div>
