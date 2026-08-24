@@ -1,0 +1,25 @@
+- + FAB is covering x button on task if list is too long
+
+- combat cads are still very simple - implement polish
+
+- if text is too big on morning flow let it go and keep buttons are not aligned correclty. keep button is in the middle instead of being aligned right with right edge
+of task container
+
+- celebration on complete - at least small
+
+- hard to complete task on phone because od small area. Maybe add just horizontal swipe right and left to complete and dismiss - this just for phone, keep as is on desktop
+
+- refresh button or refresh on scroll down on phone
+
+
+- when logging in pn phonepr desktop for some reason it does not allow me to save credentials. its not like pn any other site
+
+- its just cosmetic, but depending on task length the cell height is different and it doesnt look cleen. brainstorm improvements
+- next to today text on mobile screen is white space, we can add next task as we have on desktop view
+- hard to navigate in text on phone if bug text, brainstorm improvements
+- all input fields validation and protection from retarted inputs or hacks or sql injection
+
+Title: App.tsx passes possibly-null Session where non-null is required
+
+Summary: App.tsx:39 assigns a Session | null value to a prop/variable typed as Session, causing a tsc error (TS2322). Pre-existing, unrelated to the duel/kettle work — confirmed present before this session's changes via git stash.
+

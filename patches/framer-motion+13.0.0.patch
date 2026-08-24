@@ -1,0 +1,27 @@
+diff --git a/node_modules/framer-motion/dist/cjs/index.js b/node_modules/framer-motion/dist/cjs/index.js
+index 690947d..2f61385 100644
+--- a/node_modules/framer-motion/dist/cjs/index.js
++++ b/node_modules/framer-motion/dist/cjs/index.js
+@@ -877,8 +877,8 @@ function useMapTransform(inputValue, inputRange, outputMap, options) {
+     return output;
+ }
+ 
+-const threshold = 50;
+-const maxSpeed = 25;
++const threshold = 80;
++const maxSpeed = 5;
+ const overflowStyles = new Set(["auto", "scroll"]);
+ // Track initial scroll limits per scrollable element (Bug 1 fix)
+ const initialScrollLimits = new WeakMap();
+diff --git a/node_modules/framer-motion/dist/es/components/Reorder/utils/auto-scroll.mjs b/node_modules/framer-motion/dist/es/components/Reorder/utils/auto-scroll.mjs
+index a2e4a8f..fe979d3 100644
+--- a/node_modules/framer-motion/dist/es/components/Reorder/utils/auto-scroll.mjs
++++ b/node_modules/framer-motion/dist/es/components/Reorder/utils/auto-scroll.mjs
+@@ -1,5 +1,5 @@
+-const threshold = 50;
+-const maxSpeed = 25;
++const threshold = 80;
++const maxSpeed = 5;
+ const overflowStyles = new Set(["auto", "scroll"]);
+ // Track initial scroll limits per scrollable element (Bug 1 fix)
+ const initialScrollLimits = new WeakMap();

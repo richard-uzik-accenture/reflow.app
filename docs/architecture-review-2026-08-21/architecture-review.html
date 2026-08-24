@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Architecture review — reflow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
+    </script>
+    <style>
+      body { font-family: ui-serif, Georgia, 'Times New Roman', serif; }
+      .sans { font-family: ui-sans-serif, system-ui, -apple-system, sans-serif; }
+      .seam-line { stroke-dasharray: 5 5; }
+      .leak-line { stroke: #dc2626; }
+      .deep-box { background: linear-gradient(135deg, #0f172a, #1e293b); }
+      .badge { font-family: ui-sans-serif, system-ui, sans-serif; }
+      .diagram-box { height: 320px; }
+      .mass-bar { transition: none; }
+    </style>
+  </head>
+  <body class="bg-stone-50 text-slate-900">
+    <main class="max-w-5xl mx-auto px-6 py-14 space-y-16">
+
+      <header class="sans space-y-4 border-b border-slate-200 pb-8">
+        <div class="flex items-baseline justify-between flex-wrap gap-3">
+          <h1 class="font-serif text-3xl tracking-tight">Architecture review — reflow</h1>
+          <span class="text-sm text-slate-500">2026-08-21 · hot spots: drag-and-drop, compare/duel swipe</span>
+        </div>
+        <div class="flex flex-wrap gap-6 text-xs uppercase tracking-wider text-slate-500">
+          <span class="flex items-center gap-2"><span class="inline-block w-5 h-3 border-2 border-slate-700"></span>module</span>
+          <span class="flex items-center gap-2"><span class="inline-block w-5 border-t-2 border-dashed border-slate-500"></span>seam</span>
+          <span class="flex items-center gap-2"><span class="inline-block w-5 border-t-2 border-red-600"></span>leakage</span>
+          <span class="flex items-center gap-2"><span class="inline-block w-5 h-3 deep-box"></span>deep module</span>
+        </div>
+      </header>
+
+      <section id="candidates" class="space-y-20">
+
+        <!-- Candidate 1 -->
+        <article id="candidate-1" class="space-y-6">
+          <div class="sans flex flex-wrap items-center gap-3">
+            <h2 class="font-serif text-2xl">1. Give the duel commit its own module</h2>
+            <span class="badge inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">Strong</span>
+            <span class="badge inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-300">in-process</span>
+          </div>
+
+          <p class="sans text-sm text-slate-500 font-mono">
+            src/lib/swipe.ts · src/components/CompareDuel.tsx (DuelCard.commit)
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="sans text-xs uppercase tracking-wider text-slate-500 mb-2">Problem</h3>
+              <p>A pure function was extracted for testability — <code class="sans text-sm bg-slate-100 px-1 rounded">decideSwipe</code> — but it only answers "which way." The actual duel behavior (fling distance, velocity-scaled duration, haptic pulse, snap-back spring, when <code class="sans text-sm bg-slate-100 px-1 rounded">onResolved</code> fires) lives inside <code class="sans text-sm bg-slate-100 px-1 rounded">DuelCard.commit</code>, untested, un-testable through any interface but the rendered component. <code class="sans text-sm bg-slate-100 px-1 rounded">swipe.ts</code> is the only file in <code class="sans text-sm bg-slate-100 px-1 rounded">src/lib</code> with no sibling <code class="sans text-sm bg-slate-100 px-1 rounded">*.test.ts</code> — because the module that would need testing isn't the one that got extracted.</p>
+            </div>
+            <div>
+              <h3 class="sans text-xs uppercase tracking-wider text-slate-500 mb-2">Solution</h3>
+              <p>Deepen <code class="sans text-sm bg-slate-100 px-1 rounded">swipe.ts</code> into a duel-resolution module: given offset, velocity, and threshold, it returns a plan (direction, fling duration, distance, whether a haptic fires) rather than just a direction. <code class="sans text-sm bg-slate-100 px-1 rounded">DuelCard</code> becomes an adapter that plays the plan through <code class="sans text-sm bg-slate-100 px-1 rounded">framer-motion</code>'s <code class="sans text-sm bg-slate-100 px-1 rounded">animate()</code> and calls <code class="sans text-sm bg-slate-100 px-1 rounded">navigator.vibrate</code> — no decisions left in the component, only playback.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 diagram-box">
+            <div class="rounded-lg border border-slate-200 bg-white p-4 flex flex-col">
+              <div class="sans text-xs uppercase tracking-wider text-slate-500 mb-3">Before — logic split across the seam</div>
+              <div class="flex-1 relative">
+                <svg viewBox="0 0 280 260" class="w-full h-full">
+                  <rect x="10" y="10" width="120" height="50" fill="white" stroke="#334155" stroke-width="2"/>
+                  <text x="70" y="40" text-anchor="middle" class="sans" font-size="10" fill="#334155">decideSwipe()</text>
+                  <text x="70" y="52" text-anchor="middle" class="sans" font-size="8" fill="#64748b">tested</text>
+
+                  <rect x="150" y="10" width="120" height="50" fill="#ecfdf5" stroke="#059669" stroke-width="2" stroke-dasharray="4 4"/>
+                  <text x="210" y="40" text-anchor="middle" class="sans" font-size="9" fill="#065f46">seam (interface)</text>
+
+                  <line x1="130" y1="35" x2="150" y2="35" stroke="#334155" stroke-width="2" marker-end="url(#arrow1)"/>
+
+                  <rect x="40" y="110" width="200" height="130" fill="white" stroke="#dc2626" stroke-width="2"/>
+                  <text x="140" y="128" text-anchor="middle" class="sans" font-size="10" font-weight="600" fill="#7f1d1d">DuelCard.commit()</text>
+                  <text x="140" y="148" text-anchor="middle" class="sans" font-size="8" fill="#7f1d1d">fling distance calc</text>
+                  <text x="140" y="163" text-anchor="middle" class="sans" font-size="8" fill="#7f1d1d">velocity → duration curve</text>
+                  <text x="140" y="178" text-anchor="middle" class="sans" font-size="8" fill="#7f1d1d">haptic pulse</text>
+                  <text x="140" y="193" text-anchor="middle" class="sans" font-size="8" fill="#7f1d1d">snap-back spring</text>
+                  <text x="140" y="208" text-anchor="middle" class="sans" font-size="8" fill="#7f1d1d">onResolved timing</text>
+                  <text x="140" y="225" text-anchor="middle" class="sans" font-size="8" fill="#dc2626" font-style="italic">untested</text>
+
+                  <line x1="200" y1="60" x2="140" y2="110" stroke="#dc2626" stroke-width="2" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+
+                  <defs>
+                    <marker id="arrow1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#334155"/></marker>
+                    <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#dc2626"/></marker>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+            <div class="rounded-lg border border-slate-200 bg-white p-4 flex flex-col">
+              <div class="sans text-xs uppercase tracking-wider text-slate-500 mb-3">After — one deep module, one adapter</div>
+              <div class="flex-1 relative">
+                <svg viewBox="0 0 280 260" class="w-full h-full">
+                  <rect x="20" y="20" width="240" height="90" class="deep-box" rx="4"/>
+                  <text x="140" y="45" text-anchor="middle" class="sans" font-size="11" font-weight="600" fill="white">resolveDuel()</text>
+                  <text x="140" y="63" text-anchor="middle" class="sans" font-size="8" fill="#cbd5e1">offset, velocity, threshold →</text>
+                  <text x="140" y="77" text-anchor="middle" class="sans" font-size="8" fill="#cbd5e1">{ direction, duration, distance, haptic }</text>
+                  <text x="140" y="95" text-anchor="middle" class="sans" font-size="8" fill="#86efac">fully tested</text>
+
+                  <line x1="140" y1="110" x2="140" y2="150" stroke="#334155" stroke-width="2" stroke-dasharray="4 4"/>
+                  <text x="155" y="135" class="sans" font-size="8" fill="#64748b">seam</text>
+
+                  <rect x="60" y="150" width="160" height="70" fill="white" stroke="#334155" stroke-width="2"/>
+                  <text x="140" y="180" text-anchor="middle" class="sans" font-size="10" font-weight="600" fill="#334155">DuelCard</text>
+                  <text x="140" y="197" text-anchor="middle" class="sans" font-size="8" fill="#64748b">adapter: plays the plan</text>
+                  <text x="140" y="210" text-anchor="middle" class="sans" font-size="8" fill="#64748b">via framer-motion</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="sans text-xs uppercase tracking-wider text-slate-500 mb-2">Wins</h3>
+            <ul class="sans text-sm space-y-1 list-disc list-inside text-slate-700">
+              <li>Locality: fling/haptic bugs concentrate in one module</li>
+              <li>Interface is the test surface — commit logic testable at last</li>
+              <li>DuelCard shrinks to pure playback, no decisions</li>
+              <li>Leverage: one resolver, reusable if swipe UX appears elsewhere</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Candidate 2 -->
+        <article id="candidate-2" class="space-y-6">
+          <div class="sans flex flex-wrap items-center gap-3">
+            <h2 class="font-serif text-2xl">2. Collapse Today's duplicated failed-row handlers</h2>
+            <span class="badge inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300">Worth exploring</span>
+            <span class="badge inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-300">in-process</span>
+          </div>
+
+          <p class="sans text-sm text-slate-500 font-mono">src/pages/Today.tsx (handleComplete, handleDrop)</p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="sans text-xs uppercase tracking-wider text-slate-500 mb-2">Problem</h3>
+              <p><code class="sans text-sm bg-slate-100 px-1 rounded">handleComplete</code> and <code class="sans text-sm bg-slate-100 px-1 rounded">handleDrop</code> are the same four lines twice: call the mutator, and on failure set <code class="sans text-sm bg-slate-100 px-1 rounded">failedRowId</code> then clear it after a fixed 2000ms via a guarded timeout. Today.tsx's interface (its local handler functions) is doing work that belongs to the task list's failure-feedback behavior, not page wiring. A third row action (e.g. a future "snooze") would copy-paste a third copy.</p>
+            </div>
+            <div>
+              <h3 class="sans text-xs uppercase tracking-wider text-slate-500 mb-2">Solution</h3>
+              <p>Wrap in one helper — <code class="sans text-sm bg-slate-100 px-1 rounded">withFailedRowFlash(id, mutate)</code> — that runs any row-scoped mutator and manages the flash timer. Today.tsx calls it twice with different mutators instead of hand-rolling the flash logic twice.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 diagram-box">
+            <div class="rounded-lg border border-slate-200 bg-white p-4 flex flex-col">
+              <div class="sans text-xs uppercase tracking-wider text-slate-500 mb-3">Before — two copies</div>
+              <div class="flex-1 flex flex-col justify-center gap-4">
+                <div class="border-2 border-red-300 rounded p-3 bg-red-50">
+                  <div class="sans text-xs font-semibold text-red-800 mb-1">handleComplete(id)</div>
+                  <div class="sans text-[10px] text-red-700 leading-relaxed">await completeTask(id)<br/>if !ok → setFailedRowId<br/>setTimeout 2000ms → clear</div>
+                </div>
+                <div class="border-2 border-red-300 rounded p-3 bg-red-50">
+                  <div class="sans text-xs font-semibold text-red-800 mb-1">handleDrop(id)</div>
+                  <div class="sans text-[10px] text-red-700 leading-relaxed">await dropTask(id)<br/>if !ok → setFailedRowId<br/>setTimeout 2000ms → clear</div>
+                </div>
+              </div>
+            </div>
+            <div class="rounded-lg border border-slate-200 bg-white p-4 flex flex-col">
+              <div class="sans text-xs uppercase tracking-wider text-slate-500 mb-3">After — one helper, two callers</div>
+              <div class="flex-1 flex flex-col justify-center gap-3">
+                <div class="deep-box rounded p-3">
+                  <div class="sans text-xs font-semibold text-white mb-1">withFailedRowFlash(id, mutate)</div>
+                  <div class="sans text-[10px] text-slate-300">owns the flash timer once</div>
+                </div>
+                <div class="flex gap-3 justify-center">
+                  <div class="border border-slate-300 rounded px-3 py-2 sans text-[10px] text-slate-600">onComplete = (id) =&gt; withFailedRowFlash(id, completeTask)</div>
+                </div>
+                <div class="flex gap-3 justify-center">
+                  <div class="border border-slate-300 rounded px-3 py-2 sans text-[10px] text-slate-600">onDrop = (id) =&gt; withFailedRowFlash(id, dropTask)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="sans text-xs uppercase tracking-wider text-slate-500 mb-2">Wins</h3>
+            <ul class="sans text-sm space-y-1 list-disc list-inside text-slate-700">
+              <li>Locality: flash-timer bug fixed once, not twice</li>
+              <li>Today.tsx interface shrinks by one duplicated shape</li>
+              <li>Leverage: next row action reuses the helper for free</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Candidate 3 -->
+        <article id="candidate-3" class="space-y-6">
+          <div class="sans flex flex-wrap items-center gap-3">
+            <h2 class="font-serif text-2xl">3. Deepen useTasks around one optimistic-mutation primitive</h2>
+            <span class="badge inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-300">Worth exploring</span>
+            <span class="badge inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-300">in-process</span>
+          </div>
+
+          <p class="sans text-sm text-slate-500 font-mono">src/hooks/useTasks.ts (completeTask, editTask, dropTask, keepLeftover, commitReorder)</p>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="sans text-xs uppercase tracking-wider text-slate-500 mb-2">Problem</h3>
+              <p>Five of <code class="sans text-sm bg-slate-100 px-1 rounded">useTasks</code>'s nine exported functions repeat the same shape: snapshot <code class="sans text-sm bg-slate-100 px-1 rounded">previous = tasks</code>, apply an optimistic <code class="sans text-sm bg-slate-100 px-1 rounded">setTasks</code>, await the Supabase call, and on failure restore <code class="sans text-sm bg-slate-100 px-1 rounded">previous</code> plus set a describeFailure error. The interface (9 async functions) is nearly as wide as summing up the implementation, because the implementation is the same 6-line pattern repeated with a different mutator and a different failure string. Mass diagram below makes it concrete.</p>
+            </div>
+            <div>
+              <h3 class="sans text-xs uppercase tracking-wider text-slate-500 mb-2">Solution</h3>
+              <p>Extract a single internal <code class="sans text-sm bg-slate-100 px-1 rounded">optimisticMutate(optimisticNext, apiCall, failureLabel)</code> that owns the snapshot/apply/rollback/error dance. <code class="sans text-sm bg-slate-100 px-1 rounded">completeTask</code>, <code class="sans text-sm bg-slate-100 px-1 rounded">dropTask</code>, <code class="sans text-sm bg-slate-100 px-1 rounded">editTask</code>, <code class="sans text-sm bg-slate-100 px-1 rounded">keepLeftover</code> become one-line callers. This is an internal seam only — <code class="sans text-sm bg-slate-100 px-1 rounded">useTasks</code>'s external interface (the 9 functions Today.tsx calls) stays exactly the same, so nothing downstream changes.</p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4 diagram-box">
+            <div class="rounded-lg border border-slate-200 bg-white p-4 flex flex-col">
+              <div class="sans text-xs uppercase tracking-wider text-slate-500 mb-3">Before — interface ≈ implementation</div>
+              <div class="flex-1 flex items-end justify-around gap-2 pb-2">
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-10 bg-red-200 border border-red-400 mass-bar" style="height:70px"></div>
+                  <div class="sans text-[8px] text-slate-500">complete</div>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-10 bg-red-200 border border-red-400 mass-bar" style="height:75px"></div>
+                  <div class="sans text-[8px] text-slate-500">edit</div>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-10 bg-red-200 border border-red-400 mass-bar" style="height:68px"></div>
+                  <div class="sans text-[8px] text-slate-500">drop</div>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-10 bg-red-200 border border-red-400 mass-bar" style="height:72px"></div>
+                  <div class="sans text-[8px] text-slate-500">keepLeftover</div>
+                </div>
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-10 bg-red-200 border border-red-400 mass-bar" style="height:65px"></div>
+                  <div class="sans text-[8px] text-slate-500">commitReorder</div>
+                </div>
+              </div>
+              <div class="sans text-[9px] text-center text-red-700 mt-1">5 near-identical bars — same pattern, 5 places to fix a bug</div>
+            </div>
+            <div class="rounded-lg border border-slate-200 bg-white p-4 flex flex-col">
+              <div class="sans text-xs uppercase tracking-wider text-slate-500 mb-3">After — one deep bar, thin callers</div>
+              <div class="flex-1 flex items-end justify-around gap-2 pb-2">
+                <div class="flex flex-col items-center gap-1">
+                  <div class="w-16 deep-box mass-bar" style="height:100px"></div>
+                  <div class="sans text-[8px] text-slate-500">optimisticMutate()</div>
+                </div>
+                <div class="flex flex-col items-center gap-6">
+                  <div class="flex flex-col items-center gap-1"><div class="w-8 bg-emerald-100 border border-emerald-400" style="height:16px"></div><div class="sans text-[7px] text-slate-500">complete</div></div>
+                  <div class="flex flex-col items-center gap-1"><div class="w-8 bg-emerald-100 border border-emerald-400" style="height:16px"></div><div class="sans text-[7px] text-slate-500">edit</div></div>
+                  <div class="flex flex-col items-center gap-1"><div class="w-8 bg-emerald-100 border border-emerald-400" style="height:16px"></div><div class="sans text-[7px] text-slate-500">drop</div></div>
+                </div>
+              </div>
+              <div class="sans text-[9px] text-center text-emerald-700 mt-1">rollback logic tested once, behind one internal seam</div>
+            </div>
+          </div>
+
+          <div class="rounded border border-amber-300 bg-amber-50 p-3 sans text-xs text-amber-900">
+            Note: <code class="bg-amber-100 px-1 rounded">commitReorder</code>'s rollback restores a ref snapshot taken at drag-start, not the pre-call <code class="bg-amber-100 px-1 rounded">tasks</code> — it doesn't fit the primitive as cleanly as the other four. Worth confirming during design whether it joins the primitive or stays a documented exception.
+          </div>
+
+          <div>
+            <h3 class="sans text-xs uppercase tracking-wider text-slate-500 mb-2">Wins</h3>
+            <ul class="sans text-sm space-y-1 list-disc list-inside text-slate-700">
+              <li>Locality: rollback bugs fixed in one place, not four-to-five</li>
+              <li>Interface shrinks relative to implementation it now hides</li>
+              <li>External seam (useTasks's 9 functions) unchanged — no ripple</li>
+              <li>New optimistic mutations become one-liners</li>
+            </ul>
+          </div>
+        </article>
+
+      </section>
+
+      <section id="top-recommendation" class="border-t border-slate-200 pt-10">
+        <div class="rounded-xl border-2 border-emerald-400 bg-emerald-50 p-8 sans">
+          <div class="text-xs uppercase tracking-wider text-emerald-700 mb-2">Top recommendation</div>
+          <h2 class="font-serif text-2xl text-emerald-900 mb-3">
+            <a href="#candidate-1" class="hover:underline">1. Give the duel commit its own module</a>
+          </h2>
+          <p class="text-emerald-900 text-sm leading-relaxed">
+            It's the only candidate with a missing test file sitting right next to its passing siblings — the gap in <code class="bg-emerald-100 px-1 rounded">src/lib</code>'s test coverage points straight at it. It's also in the hottest part of the repo by recent commit history (drag-and-drop and duel swipe mechanics), and the fix is contained: one file gains behavior, one component loses decisions, the seam these two negotiate barely moves.
+          </p>
+        </div>
+      </section>
+
+    </main>
+  </body>
+</html>

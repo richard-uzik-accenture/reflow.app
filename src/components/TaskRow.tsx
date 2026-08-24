@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, Reorder } from 'framer-motion';
 import type { Task } from '../lib/tasks';
-import { useLongPressDrag } from '../hooks/useLongPressDrag';
+import { useLongPressDrag, LONG_PRESS_MS } from '../hooks/useLongPressDrag';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { dueLabel, isPast } from '../lib/dueTime';
 import { Check } from './icons/Check';
@@ -19,10 +19,8 @@ interface TaskRowProps {
   failed?: boolean;
 }
 
-const LONG_PRESS_MS = 350;
-
 export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, failed }: TaskRowProps) {
-  const { dragControls, charging, onPointerDown, onPointerMove, onPointerUp, onPointerCancel } = useLongPressDrag();
+  const { dragControls, charging, ref, onPointerDown } = useLongPressDrag();
   const [now, setNow] = useState(() => new Date());
   const reducedMotion = useReducedMotion();
 
@@ -41,14 +39,12 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
 
   return (
     <Reorder.Item
+      ref={ref}
       value={task}
       dragListener={false}
       dragControls={dragControls}
-      onDragEnd={onReorderCommit}
       onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerCancel={onPointerCancel}
+      onDragEnd={onReorderCommit}
       className="task-row"
       initial={{ opacity: 0, height: 0, marginBottom: 0 }}
       animate={{
@@ -60,7 +56,11 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
         x: failed && !reducedMotion ? [0, -6, 6, -4, 4, 0] : 0,
       }}
       exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-      whileDrag={{ scale: 1.02, boxShadow: '0 12px 24px -10px rgba(23, 19, 53, 0.35)' }}
+      whileDrag={{
+        scale: 1.02,
+        boxShadow: '0 12px 24px -10px rgba(23, 19, 53, 0.35)',
+        transition: { boxShadow: { duration: 0.15 } },
+      }}
       transition={{
         layout: { type: 'spring', stiffness: 300, damping: 30, mass: 0.9 },
         opacity: { duration: 0.2 },
@@ -70,7 +70,6 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
         backgroundColor: { duration: LONG_PRESS_MS / 1000 },
         x: { duration: 0.4 },
       }}
-      style={{ touchAction: 'pan-y' }}
     >
       <span className="rank" aria-hidden="true" />
       <motion.button

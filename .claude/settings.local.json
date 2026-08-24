@@ -1,4 +1,9 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(magick -version)"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
@@ -27,9 +32,8 @@
     ]
   },
   "description": "Impeccable design detector: immediate-tier checks after Edit/Write/MultiEdit on UI files, full-rule deep pass on Stop.",
-  "permissions": {
-    "allow": [
-      "Bash(magick -version)"
-    ]
-  }
+  "enabledMcpjsonServers": [
+    "playwright",
+    "supabase"
+  ]
 }

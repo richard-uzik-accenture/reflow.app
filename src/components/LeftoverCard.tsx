@@ -1,6 +1,6 @@
 import { animate, motion, useMotionValue, useTransform, type PanInfo } from 'framer-motion';
 import { useRef } from 'react';
-import { decideSwipe } from '../lib/swipe';
+import { decideSwipeDirection, planDuelFling } from '../lib/swipe';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import type { Task } from '../lib/tasks';
 
@@ -19,29 +19,29 @@ export function LeftoverCard({ task, remaining, onResolve }: LeftoverCardProps) 
   const committed = useRef(false);
 
   const rotate = useTransform(x, [-300, 0, 300], reducedMotion ? [0, 0, 0] : [-16, 0, 16], { clamp: true });
+  const keepOpacity = useTransform(x, [40, 130], [0, 1], { clamp: true });
+  const dropOpacity = useTransform(x, [-130, -40], [1, 0], { clamp: true });
 
   function commit(direction: 1 | -1, velocityX = 0, velocityY = 0) {
     if (committed.current) return;
     committed.current = true;
-    navigator.vibrate?.(10); // branding.md §6: light haptic on commit
 
-    const distance = window.innerWidth + 240;
-    const speed = Math.abs(velocityX);
-    const duration = reducedMotion ? 0.1 : Math.min(0.3, Math.max(0.16, 0.32 - speed / 6000));
+    const plan = planDuelFling(direction, velocityX, window.innerWidth, reducedMotion);
+    if (plan.haptic) navigator.vibrate?.(10); // branding.md §6: light haptic on commit
+
     const ease: [number, number, number, number] = [0.32, 0.72, 0, 1];
-
-    animate(y, y.get() + velocityY * 0.1, { duration, ease });
-    animate(x, direction * distance, {
-      duration,
+    animate(y, y.get() + velocityY * 0.1, { duration: plan.duration, ease });
+    animate(x, plan.direction * plan.distance, {
+      duration: plan.duration,
       ease,
-      onComplete: () => onResolve(direction === 1),
+      onComplete: () => onResolve(plan.direction === 1),
     });
   }
 
   function handleDragEnd(_event: unknown, info: PanInfo) {
-    const decision = decideSwipe(info.offset.x, info.velocity.x, SWIPE_THRESHOLD_PX);
-    if (decision !== null) {
-      commit(decision, info.velocity.x, info.velocity.y);
+    const direction = decideSwipeDirection(info.offset.x, info.velocity.x, SWIPE_THRESHOLD_PX);
+    if (direction !== null) {
+      commit(direction, info.velocity.x, info.velocity.y);
       return;
     }
     const spring = { type: 'spring' as const, stiffness: 520, damping: 34 };
@@ -61,6 +61,13 @@ export function LeftoverCard({ task, remaining, onResolve }: LeftoverCardProps) 
           onDragEnd={handleDragEnd}
           whileDrag={{ cursor: 'grabbing' }}
         >
+          <motion.span className="duel-stamp stays-ahead" style={{ opacity: keepOpacity }} aria-hidden>
+            keep
+          </motion.span>
+          <motion.span className="duel-stamp loses-spot" style={{ opacity: dropOpacity }} aria-hidden>
+            let go
+          </motion.span>
+
           {task.title}
         </motion.div>
         <div className="leftover-actions">

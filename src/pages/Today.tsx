@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import type { Session } from '@supabase/supabase-js';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTasks } from '../hooks/useTasks';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../hooks/useTheme';
 import { useCompareInsertion } from '../hooks/useCompareInsertion';
 import { useMorningFlow } from '../hooks/useMorningFlow';
 import { useRolloverPrompt } from '../hooks/useRolloverPrompt';
@@ -15,14 +17,15 @@ import { TaskListSkeleton } from '../components/TaskListSkeleton';
 import { InstallPrompt } from '../components/InstallPrompt';
 import { Mark } from '../components/icons/Mark';
 import { SignOut } from '../components/icons/SignOut';
+import { ThemeToggle } from '../components/icons/ThemeToggle';
 import type { Task } from '../lib/tasks';
 import { allKnownTags } from '../lib/tags';
 
-export function Today() {
+export function Today({ session }: { session: Session }) {
   const {
     tasks, loading, error, dismissError, completedToday, realtimeStale, addTask, completeTask, editTask, dropTask,
     reorderTasks, commitReorder, insertTaskAtIndex, keepLeftover,
-  } = useTasks();
+  } = useTasks(session);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [failedRowId, setFailedRowId] = useState<string | null>(null);
 
@@ -42,6 +45,7 @@ export function Today() {
     }
   }
   const { signOut, signingOut, sessionError, dismissSessionError } = useAuth();
+  const { isDark, toggle: toggleTheme } = useTheme(session.user.id);
   const { pendingTitle, candidate, active, placedAt, progress, begin, decide } = useCompareInsertion({
     tasks,
     onInsert: insertTaskAtIndex,
@@ -106,6 +110,13 @@ export function Today() {
           </div>
         )}
         <div className="rail-spacer" />
+        <button
+          className="rail-theme-toggle"
+          aria-label={isDark ? 'switch to light mode' : 'switch to dark mode'}
+          onClick={toggleTheme}
+        >
+          <ThemeToggle isDark={isDark} />
+        </button>
         <button className="rail-action" onClick={morning.start}>start my day</button>
         <button className="rail-signout" onClick={signOut} disabled={signingOut}>
           {signingOut ? 'signing out…' : 'sign out'}
@@ -119,6 +130,13 @@ export function Today() {
         </div>
         <div className="header-right">
           {!loading && <span className="count-chip">{allClear ? 'all clear' : `${tasks.length} today`}</span>}
+          <button
+            className="header-signout"
+            aria-label={isDark ? 'switch to light mode' : 'switch to dark mode'}
+            onClick={toggleTheme}
+          >
+            <ThemeToggle isDark={isDark} width={20} height={20} />
+          </button>
           <button
             className="header-signout"
             aria-label={signingOut ? 'signing out' : 'sign out'}

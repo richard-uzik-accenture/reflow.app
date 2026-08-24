@@ -1,7 +1,12 @@
 - CLAUDE.md rework - Done
 - empty states - done
-- error states 
+- error states - done
+- auth for google and github - done
+- real logo and favicon -> i want good proper profesional custom branded logo which will be as well the favicon. logo should be visible on main screen for authed user which is not now. No logo on authscreen to simplify the auth screen - done
+---------------------------------------
+- reordering is buggy -> on mornign flow reordering creating new tasks, it also select text. whole drag and drop reordering require forensic audit
 - loading -> skeletons
 - visible feedback / confirmations on each action 
 - duel rework
 - seemless flow between screens
+- toast messages disappear too fast
