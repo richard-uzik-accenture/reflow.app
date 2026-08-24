@@ -18,7 +18,8 @@ export interface DuelPlan {
 
 /**
  * Decide which way a drag release commits, or null if it's under threshold and
- * should snap back instead.
+ * should snap back instead. In the duel, +1 (right) means the new task outranks
+ * the compared one; -1 (left) means it ranks below.
  */
 export function decideSwipeDirection(offsetX: number, velocityX: number, thresholdPx: number): 1 | -1 | null {
   if (offsetX > thresholdPx || (velocityX > SWIPE_VELOCITY_PX_S && offsetX > 0)) return 1;
