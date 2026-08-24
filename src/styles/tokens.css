@@ -26,6 +26,51 @@
   --dusk: #7D7A8C;
   --ink: #1A1A2E;
 
+  /* In-app Mark placements invert with theme (light: ink-violet tile / paper
+     bars; dark: paper tile / ink-violet bars) — the literal app-icon/favicon
+     asset stays the fixed light-mode version regardless (branding.md §1). */
+  --mark-bg: #171335;
+  --mark-fg: #FAF9FB;
+}
+
+/* Dark theme — see branding.md §2 "Dark". Same token names, redefined values,
+   so every existing var(--paper)/var(--ink)/etc. usage repaints automatically.
+   Explicit user choice (data-theme) wins over prefers-color-scheme; the
+   :not([data-theme="light"]) guard lets an explicit "dark" choice also win
+   when the OS is in light mode, matching the other branch's specificity.
+
+   Inverted shade relationship (chosen over a conventional light-on-dark
+   scheme): the ground (--paper) is a *lighter* violet than the raised
+   surfaces (--mist/--haze) sitting on top of it — elements are darker than
+   the page, not lighter. See dark-mode-options artifact, Option B. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #2C2854;
+    --mist: #171533;
+    --haze: #100E28;
+    --dusk: #B7B3D6;
+    --ink: #F5F4FA;
+    --violet: #C3BBF0;
+    --violet-soft: #9C93D6;
+    --coral-wash: #3D2A2A;
+    --mark-bg: #FAF9FB;
+    --mark-fg: #171335;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #2C2854;
+  --mist: #171533;
+  --haze: #100E28;
+  --dusk: #B7B3D6;
+  --ink: #F5F4FA;
+  --violet: #C3BBF0;
+  --violet-soft: #9C93D6;
+  --coral-wash: #3D2A2A;
+  --mark-bg: #FAF9FB;
+  --mark-fg: #171335;
+}
+
+:root {
   /* Type */
   --font-display: 'General Sans', 'Switzer', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;

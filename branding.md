@@ -107,6 +107,25 @@ Three rounded horizontal bars — a ranked list. The middle bar breaks right int
 | `--dusk` | dusk | `#7D7A8C` | Secondary text |
 | `--ink` | ink | `#1A1A2E` | Body text |
 
+### Dark
+
+Dark mode is a preference, not a low-light-only mode — it leans into ink-violet as its own confident identity rather than a dimmed clone of light mode. It uses an **inverted shade relationship**: the page ground is *lighter* violet, and elements (cards, rows, panels) sitting on top are *darker* — the opposite of the usual "light content floats on a dark page" convention, chosen deliberately over that convention after comparing both directly.
+
+| Token | Light | Dark | Role |
+|---|---|---|---|
+| `--paper` | `#FAF9FB` | `#2C2854` | page ground (lighter than elements) |
+| `--mist` | `#F0EEF5` | `#171533` | raised surface (darker than ground) |
+| `--haze` | `#D9D6E4` | `#100E28` | hairlines, deepest surfaces |
+| `--dusk` | `#7D7A8C` | `#B7B3D6` | secondary text |
+| `--ink` | `#1A1A2E` | `#F5F4FA` | body text |
+| `--violet` | `#4B3F8F` | `#C3BBF0` | primary accent |
+| `--violet-soft` | `#7A70B8` | `#9C93D6` | secondary accent |
+| `--coral-wash` | `#FFE1D6` | `#3D2A2A` | resting trace of a decision |
+
+`--signal-coral` (`#FF6B4A`) and `--ink-violet` (`#171335`) are unchanged across themes — the coral rule (§2 above) holds exactly as-is in dark mode: coral stays scoped to the compare/duel, the task being slotted, and the single next action, never chrome. All pairings verified at WCAG AA (4.84:1–17.22:1) against `#2C2854` and `#171533`.
+
+**In-app `Mark` placements invert with theme** (rail/header lockup, landing hero, app-loading, install prompt): light mode is ink-violet tile / paper bars as documented in §1; dark mode swaps to paper tile / ink-violet bars, via `--mark-bg`/`--mark-fg` tokens. This differs from the literal **app-icon/favicon asset** (`public/favicon.svg`, PWA/apple-touch icons), which stays the fixed light-mode version always — those live outside the page's own theming (OS chrome, browser tab, home screen) and aren't rendered through `tokens.css`.
+
 ### Why this palette
 
 **Ink violet, not blue or teal.** Deep, saturated violet is uncommon as an app primary — distinct from Todoist (red), Things and most calendars (blue), Linear and Notion (purple-leaning grey, but desaturated where this is fully committed), and distinct from this app's own earlier teal direction, which read as too close to wellness/finance apps. Violet is cool enough to feel considered, saturated enough to not read as washed out.

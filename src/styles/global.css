@@ -117,6 +117,22 @@ button {
 }
 
 .rail-spacer { flex: 1; }
+.rail-theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--dusk);
+  cursor: pointer;
+  margin-bottom: 4px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.rail-theme-toggle:hover { background: var(--haze); color: var(--ink); }
+.rail-theme-toggle:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 2px; }
 .rail-action, .rail-signout {
   font-family: var(--font-mono);
   font-size: 12px;
