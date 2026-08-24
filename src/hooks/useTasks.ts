@@ -40,23 +40,29 @@ export function useTasks(session: Session | null) {
       setTasks(data);
       setCompletedToday(completed);
     };
-    try {
-      await fetchTasks();
-    } catch (err) {
-      // The first fetch right after sign-in can race the client settling its
-      // token against the server, especially on slower mobile connections —
-      // one short retry absorbs that without surfacing a spurious error.
-      console.error('reload failed, retrying once', err);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    // The first fetch right after sign-in can race the client settling its
+    // token against the server, especially on slower mobile connections or a
+    // brand-new account — retry a few times with backoff before surfacing
+    // a spurious error.
+    const retryDelaysMs = [1000, 2000, 3000];
+    let lastErr: unknown;
+    for (let attempt = 0; attempt <= retryDelaysMs.length; attempt++) {
       try {
         await fetchTasks();
-      } catch (err2) {
-        console.error('reload retry failed', err2);
-        setError(describeFailure("couldn't load your tasks", err2));
+        lastErr = null;
+        break;
+      } catch (err) {
+        lastErr = err;
+        console.error(`reload failed (attempt ${attempt + 1})`, err);
+        if (attempt < retryDelaysMs.length) {
+          await new Promise((resolve) => setTimeout(resolve, retryDelaysMs[attempt]));
+        }
       }
-    } finally {
-      setLoading(false);
     }
+    if (lastErr) {
+      setError(describeFailure("couldn't load your tasks", lastErr));
+    }
+    setLoading(false);
   }, [userId]);
 
   useEffect(() => {

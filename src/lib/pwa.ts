@@ -13,6 +13,12 @@ export function isIOS(): boolean {
   return /iphone|ipad|ipod/i.test(navigator.userAgent);
 }
 
+/** The install banner is a mobile "add to home screen" nudge — desktop Chrome also fires `beforeinstallprompt`, but the framing doesn't apply there. */
+export function isMobile(): boolean {
+  if (typeof navigator === 'undefined') return false;
+  return /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+}
+
 function isDismissed(): boolean {
   if (typeof localStorage === 'undefined') return false;
   return localStorage.getItem(DISMISSED_KEY) === '1';
@@ -29,7 +35,7 @@ export interface ShouldOfferInstallOpts {
 
 /** Which install affordance to offer, or null if none applies. */
 export function shouldOfferInstall(opts: ShouldOfferInstallOpts): 'android' | 'ios' | null {
-  if (isStandalone() || isDismissed()) return null;
+  if (isStandalone() || isDismissed() || !isMobile()) return null;
   if (opts.hasCapturedPrompt) return 'android';
   if (isIOS()) return 'ios';
   return null;
