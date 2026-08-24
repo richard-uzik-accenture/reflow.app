@@ -8,6 +8,7 @@ import { Auth } from './pages/Auth';
 import { Today } from './pages/Today';
 import { AppLoading } from './components/AppLoading';
 import { VersionBadge } from './components/VersionBadge';
+import { UpdateBanner } from './components/UpdateBanner';
 import { Analytics } from '@vercel/analytics/react';
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           {screen === 'landing' && <Landing onGetStarted={() => setShowAuth(true)} />}
         </motion.div>
       </AnimatePresence>
+      <UpdateBanner />
       <VersionBadge />
       <Analytics />
     </>
