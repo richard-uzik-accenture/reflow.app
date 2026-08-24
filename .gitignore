@@ -7,3 +7,4 @@ dist
 .impeccable/questions/
 .vercel
 .playwright-mcp
+board.json
