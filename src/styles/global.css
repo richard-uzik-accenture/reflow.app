@@ -1054,32 +1054,6 @@ button {
 .rollover-dismiss:hover { background: var(--haze); color: var(--ink); }
 .rollover-dismiss:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 2px; }
 
-.error-banner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 14px;
-  background: var(--mist);
-  color: var(--ink);
-  font-size: 13px;
-  overflow: hidden;
-}
-.error-dismiss {
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--dusk);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 8px;
-  flex-shrink: 0;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.error-dismiss:hover { background: var(--haze); color: var(--ink); }
-.error-dismiss:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 2px; }
 
 .realtime-stale-banner {
   padding: 10px 16px;
@@ -1242,11 +1216,26 @@ button {
   font-family: var(--font-body);
   font-size: 16px;
   transition: border-color 0.15s ease;
+  color-scheme: dark light;
 }
 .auth-input::placeholder { color: var(--dusk); }
 .auth-input:focus {
   outline: none;
   border-color: var(--violet-soft);
+}
+.auth-input:-webkit-autofill,
+.auth-input:-webkit-autofill:hover,
+.auth-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 100px var(--paper) inset;
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  border-color: var(--haze);
+  transition: background-color 0s 9999s, border-color 0.15s ease;
+}
+/* Native password reveal / clear buttons (Edge/Chrome) — match placeholder */
+.auth-input::-ms-reveal,
+.auth-input::-ms-clear {
+  color: var(--dusk);
 }
 .auth-error {
   font-family: var(--font-body);
@@ -1315,7 +1304,10 @@ button {
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
-.auth-oauth-button:hover { background: var(--mist); }
+.auth-oauth-button:hover {
+  background: color-mix(in srgb, var(--violet-soft) 12%, var(--paper));
+  border-color: var(--violet-soft);
+}
 .auth-oauth-button:disabled { opacity: 0.6; cursor: default; }
 .auth-switch {
   width: 100%;
