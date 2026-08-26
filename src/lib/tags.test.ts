@@ -41,6 +41,15 @@ describe('addTag', () => {
   it('ignores empty or whitespace-only input', () => {
     expect(addTag(['work'], '   ')).toEqual(['work']);
   });
+
+  it('rejects a tag over the max length', () => {
+    expect(addTag([], 'a'.repeat(31))).toEqual([]);
+  });
+
+  it('rejects adding an 11th tag', () => {
+    const ten = Array.from({ length: 10 }, (_, i) => `tag${i}`);
+    expect(addTag(ten, 'eleventh')).toEqual(ten);
+  });
 });
 
 describe('removeTag', () => {

@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { TITLE_MAX_LENGTH, validateTitle } from '../lib/validation';
 
 interface BrainDumpProps {
   onAdd: (title: string) => void;
@@ -11,10 +12,10 @@ export function BrainDump({ onAdd, onDone }: BrainDumpProps) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const title = value.trim();
-    if (!title) return;
-    onAdd(title);
-    setEntries((prev) => [...prev, title]);
+    const result = validateTitle(value);
+    if (!result.ok) return;
+    onAdd(result.value);
+    setEntries((prev) => [...prev, result.value]);
     setValue('');
   }
 
@@ -28,6 +29,7 @@ export function BrainDump({ onAdd, onDone }: BrainDumpProps) {
           onChange={(e) => setValue(e.target.value)}
           placeholder="add a task"
           className="braindump-input"
+          maxLength={TITLE_MAX_LENGTH}
         />
         <button type="submit" className="braindump-add">add</button>
       </form>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -8,6 +8,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useCompareInsertion } from '../hooks/useCompareInsertion';
 import { useMorningFlow } from '../hooks/useMorningFlow';
 import { useRolloverPrompt } from '../hooks/useRolloverPrompt';
+import { useToast } from '../hooks/useToast';
 import { TaskList } from '../components/TaskList';
 import { AddTaskFab } from '../components/AddTaskFab';
 import { CompareDuel } from '../components/CompareDuel';
@@ -15,6 +16,7 @@ import { MorningFlow } from '../components/MorningFlow';
 import { TaskModal } from '../components/TaskModal';
 import { TaskListSkeleton } from '../components/TaskListSkeleton';
 import { InstallPrompt } from '../components/InstallPrompt';
+import { ToastContainer } from '../components/Toast';
 import { Mark } from '../components/icons/Mark';
 import { SignOut } from '../components/icons/SignOut';
 import { ThemeToggle } from '../components/icons/ThemeToggle';
@@ -28,10 +30,13 @@ export function Today({ session }: { session: Session }) {
   } = useTasks(session);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [failedRowId, setFailedRowId] = useState<string | null>(null);
+  const { toasts, showToast, removeToast } = useToast();
 
   async function handleComplete(id: string) {
     const ok = await completeTask(id);
-    if (!ok) {
+    if (ok) {
+      showToast('settled', 'success');
+    } else {
       setFailedRowId(id);
       window.setTimeout(() => setFailedRowId((current) => (current === id ? null : current)), 2000);
     }
@@ -39,16 +44,49 @@ export function Today({ session }: { session: Session }) {
 
   async function handleDrop(id: string) {
     const ok = await dropTask(id);
-    if (!ok) {
+    if (ok) {
+      showToast('let go', 'success');
+    } else {
       setFailedRowId(id);
       window.setTimeout(() => setFailedRowId((current) => (current === id ? null : current)), 2000);
     }
   }
+
+  async function handleInsertTaskAtIndex(title: string, index: number, tags?: string[]) {
+    await insertTaskAtIndex(title, index, tags);
+    const position = index + 1;
+    const total = tasks.length + 1;
+    showToast(`task added — #${position} of ${total}`, 'success');
+  }
   const { signOut, signingOut, sessionError, dismissSessionError } = useAuth();
   const { isDark, toggle: toggleTheme } = useTheme(session.user.id);
+
+  // Surface task and session errors as toasts instead of inline banners
+  const shownError = useRef<string | null>(null);
+  useEffect(() => {
+    if (error && error !== shownError.current) {
+      shownError.current = error;
+      showToast(error, 'error');
+      dismissError();
+    } else if (!error) {
+      shownError.current = null;
+    }
+  }, [error, showToast, dismissError]);
+
+  const shownSessionError = useRef<string | null>(null);
+  useEffect(() => {
+    if (sessionError && sessionError !== shownSessionError.current) {
+      shownSessionError.current = sessionError;
+      showToast(sessionError, 'error');
+      dismissSessionError();
+    } else if (!sessionError) {
+      shownSessionError.current = null;
+    }
+  }, [sessionError, showToast, dismissSessionError]);
+
   const { pendingTitle, candidate, active, placedAt, progress, begin, decide } = useCompareInsertion({
     tasks,
-    onInsert: insertTaskAtIndex,
+    onInsert: handleInsertTaskAtIndex,
   });
 
   const morning = useMorningFlow({ tasks, keepLeftover, dropTask, addTask });
@@ -149,33 +187,6 @@ export function Today({ session }: { session: Session }) {
       </header>
 
       <main className="today-main">
-        <div aria-live="polite" className="visually-hidden">{error || sessionError}</div>
-        <AnimatePresence>
-          {error && (
-            <motion.div
-              className="error-banner"
-              initial={{ opacity: 0, height: 0, marginBottom: 0 }}
-              animate={{ opacity: 1, height: 'auto', marginBottom: 18 }}
-              exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <span>{error}</span>
-              <button className="error-dismiss" onClick={dismissError}>dismiss</button>
-            </motion.div>
-          )}
-          {sessionError && (
-            <motion.div
-              className="error-banner"
-              initial={{ opacity: 0, height: 0, marginBottom: 0 }}
-              animate={{ opacity: 1, height: 'auto', marginBottom: 18 }}
-              exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <span>{sessionError}</span>
-              <button className="error-dismiss" onClick={dismissSessionError}>dismiss</button>
-            </motion.div>
-          )}
-        </AnimatePresence>
         {realtimeStale && (
           <div className="realtime-stale-banner" role="status">
             live updates paused — changes may not sync until you reload
@@ -189,12 +200,22 @@ export function Today({ session }: { session: Session }) {
             <button className="rollover-dismiss" onClick={rollover.dismiss}>not now</button>
           </div>
         )}
-        <h1 className="list-heading">today</h1>
-        {!loading && (
-          <p className="list-sub">
-            {allClear ? "today's settled." : `${tasks.length} thing${tasks.length === 1 ? '' : 's'}, in order.`}
-          </p>
-        )}
+        <div className="list-heading-row">
+          <div>
+            <h1 className="list-heading">today</h1>
+            {!loading && (
+              <p className="list-sub">
+                {allClear ? "today's settled." : `${tasks.length} thing${tasks.length === 1 ? '' : 's'}, in order.`}
+              </p>
+            )}
+          </div>
+          {!loading && tasks.length > 0 && (
+            <div className="list-heading-glance">
+              <span className="list-heading-glance-label">up next</span>
+              <span className="list-heading-glance-task">{tasks[0].title}</span>
+            </div>
+          )}
+        </div>
         {loading ? (
           <TaskListSkeleton />
         ) : (
@@ -221,7 +242,10 @@ export function Today({ session }: { session: Session }) {
           knownTags={knownTags}
           onSubmit={async (values) => {
             const ok = await editTask(editingTask.id, values);
-            if (ok) setEditingTask(null);
+            if (ok) {
+              showToast('saved', 'success');
+              setEditingTask(null);
+            }
             return ok;
           }}
           onClose={() => setEditingTask(null)}
@@ -261,6 +285,7 @@ export function Today({ session }: { session: Session }) {
         </AnimatePresence>
         <AddTaskFab onAdd={begin} knownTags={knownTags} disabled={active} />
         <InstallPrompt taskCount={tasks.length} />
+        <ToastContainer toasts={toasts} onDismiss={removeToast} />
       </>,
       document.body,
     )}

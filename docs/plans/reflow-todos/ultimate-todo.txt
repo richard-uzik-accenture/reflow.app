@@ -6,8 +6,15 @@
 of task container
 
 - celebration on complete - at least small
+Prompt: I would like add toast notification on adding task, updating task, completing task and deleting task. In case some of it already exists, its almost unnoticable
+so we need to adjust how long the toast message appears. This needs to be optimized for both desktop and mobile view.
 
 - hard to complete task on phone because od small area. Maybe add just horizontal swipe right and left to complete and dismiss - this just for phone, keep as is on desktop
+Prompt:
+On mobile screen i want to improve usability of completed and x buttons on task. right now the buttons are too small to point with big finger. i would like to explore effort
+to remove those buttons and instead add mechanic of horizontal swipe of the task simmilar to email in email apps : meaning that swipe to right removing, swipe to left completing
+with some nice animations of the task row according to brending. for desktop it should be untouched.
+
 
 - refresh button or refresh on scroll down on phone
 
@@ -19,7 +26,20 @@ of task container
 - hard to navigate in text on phone if bug text, brainstorm improvements
 - all input fields validation and protection from retarted inputs or hacks or sql injection
 
-Title: App.tsx passes possibly-null Session where non-null is required
 
-Summary: App.tsx:39 assigns a Session | null value to a prop/variable typed as Session, causing a tsc error (TS2322). Pre-existing, unrelated to the duel/kettle work — confirmed present before this session's changes via git stash.
+-----------------------------------------------------------
+Todo folders / multiple todolists
+- currently we have tags, each task can have multiple tags
+- aim is to provide function for user to split todolists based on tags
+- conflicting morning flow and combatduel
 
+Prompt for brainstorming:
+I would like to brainstorm following future feature idea.  Currently the
+whole application is ment to be 1 todo list and it was designed from the
+data model perspective to be 1 todolist per user. 
+
+I want to explore options to provide user functionality of having many
+todolists. Basically it would be grouping of tasks to todolists based on tag. user
+would be able to filter tasks based on tags, see todolist and navigate between them.
+
+Please review current codebase and asses options, risks. Raise any potential conflicting issue with current setup.

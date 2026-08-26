@@ -50,7 +50,7 @@ button {
   padding: calc(18px + var(--safe-top)) calc(20px + var(--safe-right)) 14px calc(20px + var(--safe-left));
   border-bottom: 1px solid var(--mist);
 }
-.today-main { padding: 16px calc(16px + var(--safe-right)) calc(40px + var(--safe-bottom)) calc(16px + var(--safe-left)); }
+.today-main { padding: 16px calc(16px + var(--safe-right)) calc(64px + var(--safe-bottom)) calc(16px + var(--safe-left)); }
 
 @media (min-width: 900px) {
   .today-shell {
@@ -179,6 +179,12 @@ button {
   border-radius: 999px;
 }
 
+.list-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
 .list-heading {
   font-family: var(--font-display);
   font-size: 24px;
@@ -188,6 +194,39 @@ button {
   letter-spacing: -0.01em;
 }
 .list-sub { font-size: 13px; color: var(--dusk); margin: 0 0 28px; }
+
+.list-heading-glance {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  max-width: 55%;
+  text-align: right;
+  padding-right: 10px;
+  border-right: 1.75px solid var(--haze);
+}
+.list-heading-glance-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dusk);
+}
+.list-heading-glance-task {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media (min-width: 900px) {
+  .list-heading-glance { display: none; }
+}
 
 .task-row {
   display: grid;
@@ -254,7 +293,7 @@ button {
   .task-row {
     grid-template-columns: 24px 20px 1fr 22px 22px;
     background: transparent;
-    border-radius: 0;
+    border-radius: 14px;
     border-bottom: 1px solid var(--mist);
     padding: 13px 0;
     margin-bottom: 0;
@@ -367,6 +406,10 @@ button {
   font-family: var(--font-body);
   font-size: 16px;
   margin-bottom: 16px;
+  resize: none;
+  overflow-y: auto;
+  max-height: 160px;
+  line-height: 1.4;
 }
 .due-time-field { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
 .due-time-clear {
@@ -1054,32 +1097,6 @@ button {
 .rollover-dismiss:hover { background: var(--haze); color: var(--ink); }
 .rollover-dismiss:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 2px; }
 
-.error-banner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border-radius: 14px;
-  background: var(--mist);
-  color: var(--ink);
-  font-size: 13px;
-  overflow: hidden;
-}
-.error-dismiss {
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--dusk);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 8px;
-  flex-shrink: 0;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.error-dismiss:hover { background: var(--haze); color: var(--ink); }
-.error-dismiss:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 2px; }
 
 .realtime-stale-banner {
   padding: 10px 16px;
@@ -1242,11 +1259,26 @@ button {
   font-family: var(--font-body);
   font-size: 16px;
   transition: border-color 0.15s ease;
+  color-scheme: dark light;
 }
 .auth-input::placeholder { color: var(--dusk); }
 .auth-input:focus {
   outline: none;
   border-color: var(--violet-soft);
+}
+.auth-input:-webkit-autofill,
+.auth-input:-webkit-autofill:hover,
+.auth-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 100px var(--paper) inset;
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  border-color: var(--haze);
+  transition: background-color 0s 9999s, border-color 0.15s ease;
+}
+/* Native password reveal / clear buttons (Edge/Chrome) — match placeholder */
+.auth-input::-ms-reveal,
+.auth-input::-ms-clear {
+  color: var(--dusk);
 }
 .auth-error {
   font-family: var(--font-body);
@@ -1315,7 +1347,10 @@ button {
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
-.auth-oauth-button:hover { background: var(--mist); }
+.auth-oauth-button:hover {
+  background: color-mix(in srgb, var(--violet-soft) 12%, var(--paper));
+  border-color: var(--violet-soft);
+}
 .auth-oauth-button:disabled { opacity: 0.6; cursor: default; }
 .auth-switch {
   width: 100%;
