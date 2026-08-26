@@ -1,4 +1,5 @@
 import type { Task } from './tasks';
+import { TAGS_MAX_COUNT, TAG_MAX_LENGTH } from './validation';
 
 export function normalizeTag(raw: string): string {
   return raw.trim().replace(/^#/, '').replace(/\s+/g, ' ').toLowerCase();
@@ -7,6 +8,8 @@ export function normalizeTag(raw: string): string {
 export function addTag(tags: string[], raw: string): string[] {
   const normalized = normalizeTag(raw);
   if (!normalized) return tags;
+  if (normalized.length > TAG_MAX_LENGTH) return tags;
+  if (tags.length >= TAGS_MAX_COUNT) return tags;
   if (tags.some((t) => t.toLowerCase() === normalized)) return tags;
   return [...tags, normalized];
 }

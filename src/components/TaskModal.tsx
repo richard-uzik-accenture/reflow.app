@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { TITLE_MAX_LENGTH, validateTitle } from '../lib/validation';
 import { TagInput } from './TagInput';
 import { TimePicker } from './TimePicker';
 
@@ -39,11 +40,12 @@ export function TaskModal({ mode, initial, knownTags = [], onSubmit, onClose }: 
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const title = value.trim();
-    if (!title) {
-      setTitleError('give this task a name');
+    const titleResult = validateTitle(value);
+    if (!titleResult.ok) {
+      setTitleError(titleResult.error);
       return;
     }
+    const title = titleResult.value;
     setSubmitError(null);
     setSubmitting(true);
     const result = mode === 'edit'
@@ -81,6 +83,7 @@ export function TaskModal({ mode, initial, knownTags = [], onSubmit, onClose }: 
           className={titleError ? 'modal-input modal-input-error' : 'modal-input'}
           rows={1}
           autoFocus
+          maxLength={TITLE_MAX_LENGTH}
           value={value}
           onChange={(e) => {
             setValue(e.target.value);

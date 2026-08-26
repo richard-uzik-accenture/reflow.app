@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { EMAIL_MAX_LENGTH, PASSWORD_MAX_LENGTH, validateEmail, validatePassword } from '../lib/validation';
 import { ChevronLeft } from '../components/icons/ChevronLeft';
 import { GoogleMark } from '../components/icons/GoogleMark';
 import { GithubMark } from '../components/icons/GithubMark';
@@ -49,15 +50,25 @@ export function Auth({ onBack }: AuthProps) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setSubmitting(true);
     setError(null);
+    const emailResult = validateEmail(email);
+    if (!emailResult.ok) {
+      setError(emailResult.error);
+      return;
+    }
+    const passwordResult = validatePassword(password, mode);
+    if (!passwordResult.ok) {
+      setError(passwordResult.error);
+      return;
+    }
+    setSubmitting(true);
     if (mode === 'signin') {
-      const { error } = await signIn(email, password);
+      const { error } = await signIn(emailResult.value, password);
       setSubmitting(false);
       if (error) setError(toBrandVoice(error, mode));
       return;
     }
-    const { error, confirmationSent } = await signUp(email, password);
+    const { error, confirmationSent } = await signUp(emailResult.value, password);
     setSubmitting(false);
     if (error) {
       setError(toBrandVoice(error, mode));
@@ -99,6 +110,7 @@ export function Auth({ onBack }: AuthProps) {
                 onChange={(e) => setEmail(e.target.value)}
                 autoComplete="username"
                 className="auth-input"
+                maxLength={EMAIL_MAX_LENGTH}
                 required
               />
               <input
@@ -108,6 +120,7 @@ export function Auth({ onBack }: AuthProps) {
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
                 className="auth-input"
+                maxLength={PASSWORD_MAX_LENGTH}
                 required
               />
               <AnimatePresence>
