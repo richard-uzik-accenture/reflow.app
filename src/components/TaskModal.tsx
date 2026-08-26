@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { TagInput } from './TagInput';
@@ -20,6 +20,22 @@ export function TaskModal({ mode, initial, knownTags = [], onSubmit, onClose }: 
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const reducedMotion = useReducedMotion();
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+
+  useLayoutEffect(() => {
+    const el = titleRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    const borderHeight = el.offsetHeight - el.clientHeight;
+    el.style.height = `${el.scrollHeight + borderHeight}px`;
+  }, [value]);
+
+  function handleTitleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.currentTarget.form?.requestSubmit();
+    }
+  }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -59,16 +75,18 @@ export function TaskModal({ mode, initial, knownTags = [], onSubmit, onClose }: 
         <label className="modal-label" htmlFor="task-modal-input">
           {mode === 'add' ? 'what needs doing?' : 'edit this'}
         </label>
-        <input
+        <textarea
           id="task-modal-input"
+          ref={titleRef}
           className={titleError ? 'modal-input modal-input-error' : 'modal-input'}
-          type="text"
+          rows={1}
           autoFocus
           value={value}
           onChange={(e) => {
             setValue(e.target.value);
             if (titleError) setTitleError(null);
           }}
+          onKeyDown={handleTitleKeyDown}
           placeholder="e.g. call the plumber back"
           aria-invalid={titleError ? true : undefined}
         />
