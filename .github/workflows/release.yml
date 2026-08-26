@@ -10,8 +10,6 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   OCTOPUS_URL: ${{ secrets.OCTOPUS_SERVER_URL }}
   OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
   OCTOPUS_SPACE: Default
@@ -19,6 +17,15 @@ env:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - env_name: dev
+            vercel_project_id_secret: VERCEL_PROJECT_ID_DEV
+          - env_name: preprod
+            vercel_project_id_secret: VERCEL_PROJECT_ID_PREPROD
+          - env_name: prod
+            vercel_project_id_secret: VERCEL_PROJECT_ID_PROD
     steps:
       - uses: actions/checkout@v4
 
@@ -30,7 +37,10 @@ jobs:
 
       - run: npm install --global vercel@latest
 
-      - name: Pull Vercel project config
+      - name: Pull Vercel project config for ${{ matrix.env_name }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets[matrix.vercel_project_id_secret] }}
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Inject build version
@@ -38,14 +48,17 @@ jobs:
           echo "VITE_APP_VERSION=0.0.${{ github.run_number }}" >> .vercel/.env.production.local
           echo "VITE_APP_COMMIT=${GITHUB_SHA::7}" >> .vercel/.env.production.local
 
-      - name: Build for Vercel
+      - name: Build for Vercel (${{ matrix.env_name }})
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets[matrix.vercel_project_id_secret] }}
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Create package
         id: create_package
         uses: OctopusDeploy/create-zip-package-action@v4
         with:
-          package_id: reflow
+          package_id: reflow-${{ matrix.env_name }}
           version: 0.0.${{ github.run_number }}
           base_path: .
           output_folder: ./package
@@ -57,6 +70,14 @@ jobs:
         with:
           packages: ${{ steps.create_package.outputs.package_file_path }}
 
+  create-release:
+    needs: build-and-release
+    runs-on: ubuntu-latest
+    env:
+      OCTOPUS_URL: ${{ secrets.OCTOPUS_SERVER_URL }}
+      OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+      OCTOPUS_SPACE: Default
+    steps:
       - name: Create Octopus release
         uses: OctopusDeploy/create-release-action@v4
         with:
