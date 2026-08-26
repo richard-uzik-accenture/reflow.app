@@ -179,6 +179,12 @@ button {
   border-radius: 999px;
 }
 
+.list-heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
 .list-heading {
   font-family: var(--font-display);
   font-size: 24px;
@@ -188,6 +194,39 @@ button {
   letter-spacing: -0.01em;
 }
 .list-sub { font-size: 13px; color: var(--dusk); margin: 0 0 28px; }
+
+.list-heading-glance {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  max-width: 55%;
+  text-align: right;
+  padding-right: 10px;
+  border-right: 1.75px solid var(--haze);
+}
+.list-heading-glance-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dusk);
+}
+.list-heading-glance-task {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.35;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media (min-width: 900px) {
+  .list-heading-glance { display: none; }
+}
 
 .task-row {
   display: grid;

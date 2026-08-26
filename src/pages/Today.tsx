@@ -200,12 +200,22 @@ export function Today({ session }: { session: Session }) {
             <button className="rollover-dismiss" onClick={rollover.dismiss}>not now</button>
           </div>
         )}
-        <h1 className="list-heading">today</h1>
-        {!loading && (
-          <p className="list-sub">
-            {allClear ? "today's settled." : `${tasks.length} thing${tasks.length === 1 ? '' : 's'}, in order.`}
-          </p>
-        )}
+        <div className="list-heading-row">
+          <div>
+            <h1 className="list-heading">today</h1>
+            {!loading && (
+              <p className="list-sub">
+                {allClear ? "today's settled." : `${tasks.length} thing${tasks.length === 1 ? '' : 's'}, in order.`}
+              </p>
+            )}
+          </div>
+          {!loading && tasks.length > 0 && (
+            <div className="list-heading-glance">
+              <span className="list-heading-glance-label">up next</span>
+              <span className="list-heading-glance-task">{tasks[0].title}</span>
+            </div>
+          )}
+        </div>
         {loading ? (
           <TaskListSkeleton />
         ) : (
