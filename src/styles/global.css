@@ -237,6 +237,7 @@ button {
   -webkit-touch-callout: none;
   align-items: center;
   gap: 12px;
+  min-height: 51px;
   padding: 14px 13px;
   border-radius: 14px;
   background: var(--mist);
@@ -258,7 +259,35 @@ button {
 }
 .task-row .check:hover { border-color: var(--violet); color: var(--violet); background: var(--haze); }
 .task-row .check:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 2px; }
-.task-row .title { font-size: 14px; color: var(--ink); line-height: 1.35; }
+.title-group { position: relative; }
+.task-row .title {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.35;
+  display: block;
+  overflow: hidden;
+  max-height: calc(1.35em * 2);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  transition: max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.task-row .title.title-truncated {
+  mask-image: linear-gradient(to bottom, black calc(100% - 1.35em), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 1.35em), transparent 100%);
+}
+@media (hover: hover) {
+  .task-row:hover .title,
+  .task-row:focus-within .title {
+    max-height: var(--title-expanded-height, 500px);
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
+.task-row .title.title-expanded {
+  max-height: var(--title-expanded-height, 500px);
+}
 .title-group { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .task-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .task-row .edit {

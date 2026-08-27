@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, Reorder } from 'framer-motion';
 import type { Task } from '../lib/tasks';
 import { useLongPressDrag, LONG_PRESS_MS } from '../hooks/useLongPressDrag';
@@ -23,6 +23,24 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
   const { dragControls, charging, ref, onPointerDown } = useLongPressDrag();
   const [now, setNow] = useState(() => new Date());
   const reducedMotion = useReducedMotion();
+  const titleRef = useRef<HTMLSpanElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const [truncated, setTruncated] = useState(false);
+
+  const measureTitleHeight = () => {
+    const el = titleRef.current;
+    if (el) el.style.setProperty('--title-expanded-height', `${el.scrollHeight}px`);
+  };
+
+  const handleTitleTap = () => {
+    measureTitleHeight();
+    setExpanded((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const el = titleRef.current;
+    if (el) setTruncated(el.scrollHeight > el.clientHeight);
+  }, [task.title]);
 
   useEffect(() => {
     if (!task.due_time) return;
@@ -45,6 +63,8 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
       dragControls={dragControls}
       onPointerDown={onPointerDown}
       onDragEnd={onReorderCommit}
+      onMouseEnter={measureTitleHeight}
+      onFocus={measureTitleHeight}
       className="task-row"
       initial={{ opacity: 0, height: 0, marginBottom: 0 }}
       animate={{
@@ -82,7 +102,18 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
         <Check width={12} height={12} />
       </motion.button>
       <span className="title-group">
-        <span className="title">{task.title}</span>
+        <span
+          ref={titleRef}
+          className={[
+            'title',
+            expanded && 'title-expanded',
+            truncated && !expanded && 'title-truncated',
+          ].filter(Boolean).join(' ')}
+          aria-expanded={expanded}
+          onClick={handleTitleTap}
+        >
+          {task.title}
+        </span>
         {(task.tags.length > 0 || task.due_time) && (
           <span className="task-tags">
             {task.due_time && (
