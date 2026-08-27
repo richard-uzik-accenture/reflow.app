@@ -1,9 +1,4 @@
-- + FAB is covering x button on task if list is too long
-
-- combat cads are still very simple - implement polish
-
-- if text is too big on morning flow let it go and keep buttons are not aligned correclty. keep button is in the middle instead of being aligned right with right edge
-of task container
+NO USER NAME ANYWHERE, we should add it so that user knows what account he loaded
 
 - celebration on complete - at least small
 Prompt: I would like add toast notification on adding task, updating task, completing task and deleting task. In case some of it already exists, its almost unnoticable
@@ -16,12 +11,10 @@ to remove those buttons and instead add mechanic of horizontal swipe of the task
 with some nice animations of the task row according to brending. for desktop it should be untouched.
 
 
-- refresh button or refresh on scroll down on phone
-
-
 - when logging in pn phonepr desktop for some reason it does not allow me to save credentials. its not like pn any other site
 
 - its just cosmetic, but depending on task length the cell height is different and it doesnt look cleen. brainstorm improvements
+
 - next to today text on mobile screen is white space, we can add next task as we have on desktop view
 - hard to navigate in text on phone if bug text, brainstorm improvements
 - all input fields validation and protection from retarted inputs or hacks or sql injection
