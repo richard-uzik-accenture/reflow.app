@@ -17,7 +17,10 @@ import { TaskModal } from '../components/TaskModal';
 import { TaskListSkeleton } from '../components/TaskListSkeleton';
 import { InstallPrompt } from '../components/InstallPrompt';
 import { ToastContainer } from '../components/Toast';
+import { UpdateBanner } from '../components/UpdateBanner';
+import { forceReloadApp } from '../hooks/useAppUpdate';
 import { Mark } from '../components/icons/Mark';
+import { Refresh } from '../components/icons/Refresh';
 import { SignOut } from '../components/icons/SignOut';
 import { ThemeToggle } from '../components/icons/ThemeToggle';
 import type { Task } from '../lib/tasks';
@@ -30,6 +33,7 @@ export function Today({ session }: { session: Session }) {
   } = useTasks(session);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [failedRowId, setFailedRowId] = useState<string | null>(null);
+  const [reloading, setReloading] = useState(false);
   const { toasts, showToast, removeToast } = useToast();
 
   async function handleComplete(id: string) {
@@ -170,6 +174,17 @@ export function Today({ session }: { session: Session }) {
           {!loading && <span className="count-chip">{allClear ? 'all clear' : `${tasks.length} today`}</span>}
           <button
             className="header-signout"
+            aria-label="reload app"
+            disabled={reloading}
+            onClick={() => {
+              setReloading(true);
+              window.setTimeout(forceReloadApp, 600);
+            }}
+          >
+            <Refresh width={20} height={20} className={reloading ? 'spin' : undefined} />
+          </button>
+          <button
+            className="header-signout"
             aria-label={isDark ? 'switch to light mode' : 'switch to dark mode'}
             onClick={toggleTheme}
           >
@@ -216,7 +231,7 @@ export function Today({ session }: { session: Session }) {
             </div>
           )}
         </div>
-        {loading ? (
+        {loading || reloading ? (
           <TaskListSkeleton />
         ) : (
           <TaskList
@@ -286,6 +301,7 @@ export function Today({ session }: { session: Session }) {
         <AddTaskFab onAdd={begin} knownTags={knownTags} disabled={active} />
         <InstallPrompt taskCount={tasks.length} />
         <ToastContainer toasts={toasts} onDismiss={removeToast} />
+        <UpdateBanner />
       </>,
       document.body,
     )}

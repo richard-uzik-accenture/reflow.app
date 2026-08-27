@@ -9,6 +9,11 @@ const UPDATE_CHECK_INTERVAL_MS = 60 * 60 * 1000;
 
 type UpdateSW = (reloadPage?: boolean) => Promise<void>;
 
+/** Reload the page — a waiting SW (if any) will activate on next load automatically. */
+export function forceReloadApp() {
+  window.location.reload();
+}
+
 export function useAppUpdate() {
   const [needsRefresh, setNeedsRefresh] = useState(false);
   const updateSWRef = useRef<UpdateSW | null>(null);
