@@ -2,6 +2,8 @@ import { animate, motion, useMotionValue, useTransform, type PanInfo } from 'fra
 import { useRef } from 'react';
 import { decideSwipeDirection, planDuelFling } from '../lib/swipe';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { Check } from './icons/Check';
+import { Close } from './icons/Close';
 import type { Task } from '../lib/tasks';
 
 interface LeftoverCardProps {
@@ -19,8 +21,16 @@ export function LeftoverCard({ task, remaining, onResolve }: LeftoverCardProps) 
   const committed = useRef(false);
 
   const rotate = useTransform(x, [-300, 0, 300], reducedMotion ? [0, 0, 0] : [-16, 0, 16], { clamp: true });
-  const keepOpacity = useTransform(x, [40, 130], [0, 1], { clamp: true });
-  const dropOpacity = useTransform(x, [-130, -40], [1, 0], { clamp: true });
+  // Drag-progress-driven, not timed: the badge tracks the gesture 1:1, same as
+  // CompareDuel's dragProgress, scaled to this card's shorter swipe threshold.
+  const keepProgress = useTransform(x, [0, SWIPE_THRESHOLD_PX], [0, 1], { clamp: true });
+  const dropProgress = useTransform(x, [0, -SWIPE_THRESHOLD_PX], [0, 1], { clamp: true });
+  const keepScale = useTransform(keepProgress, [0, 1], [0.6, 1]);
+  const dropScale = useTransform(dropProgress, [0, 1], [0.6, 1]);
+  // The card rotates about its center as it's dragged, sweeping its top edge
+  // into the kicker above — fade the kicker out rather than chase the overlap
+  // with more static spacing.
+  const kickerOpacity = useTransform(x, [-60, 0, 60], [0, 1, 0], { clamp: true });
 
   function commit(direction: 1 | -1, velocityX = 0, velocityY = 0) {
     if (committed.current) return;
@@ -52,7 +62,7 @@ export function LeftoverCard({ task, remaining, onResolve }: LeftoverCardProps) 
   return (
     <div className="leftover-shell">
       <div>
-        <p className="leftover-kicker">still open · {remaining} left</p>
+        <motion.p className="leftover-kicker" style={{ opacity: kickerOpacity }}>still open · {remaining} left</motion.p>
         <motion.div
           className="leftover-card"
           drag
@@ -61,12 +71,12 @@ export function LeftoverCard({ task, remaining, onResolve }: LeftoverCardProps) 
           onDragEnd={handleDragEnd}
           whileDrag={{ cursor: 'grabbing' }}
         >
-          <motion.span className="duel-stamp stays-ahead" style={{ opacity: keepOpacity }} aria-hidden>
-            keep
-          </motion.span>
-          <motion.span className="duel-stamp loses-spot" style={{ opacity: dropOpacity }} aria-hidden>
-            let go
-          </motion.span>
+          <motion.div className="leftover-badge keep" style={{ opacity: keepProgress, scale: keepScale }} aria-hidden>
+            <Check />
+          </motion.div>
+          <motion.div className="leftover-badge drop" style={{ opacity: dropProgress, scale: dropScale }} aria-hidden>
+            <Close />
+          </motion.div>
 
           {task.title}
         </motion.div>
