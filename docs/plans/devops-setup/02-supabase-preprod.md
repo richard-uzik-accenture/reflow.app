@@ -37,14 +37,14 @@ data. QUALITY gets a new `preprod` schema in that same project.
 This phase's actual Supabase/schema work is done (all items above are checked). It's
 still sitting un-archived, on purpose, as a visible reminder of one real gap:
 
-- **Prod's `public.tasks` is missing the `tags`/`due_time` columns** that migrations
-  `0002_task_fields.sql` and `0003_align_task_schema.sql` add — prod is behind the
-  migrations already in the repo (discovered while building the prod→preprod data
-  copy query in this phase; see git history). The app sends `tags` on every insert,
-  so this is a live bug risk on prod, not just a migration hygiene issue. Not caused
-  by and not fixable as part of devops-setup — needs its own fix (apply the missing
-  migrations to prod), tracked here so it isn't lost. Once fixed (or explicitly
-  deferred by the user with a reason), archive this file.
+- **Prod's `public.tasks` is missing the `tags` column** that migration
+  `0002_task_fields.sql` adds — prod is behind the migrations already in the repo
+  (discovered while building the prod→preprod data copy query in this phase; see git
+  history). The app sends `tags` on every insert, so this is a live bug risk on prod,
+  not just a migration hygiene issue. Not caused by and not fixable as part of
+  devops-setup — needs its own fix (apply the missing migration to prod), tracked here
+  so it isn't lost. Once fixed (or explicitly deferred by the user with a reason),
+  archive this file.
 
 ## Explicitly out of scope for this pass
 

@@ -3,12 +3,9 @@ import { motion, Reorder } from 'framer-motion';
 import type { Task } from '../lib/tasks';
 import { useLongPressDrag, LONG_PRESS_MS } from '../hooks/useLongPressDrag';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { dueLabel, isPast } from '../lib/dueTime';
 import { Check } from './icons/Check';
 import { Close } from './icons/Close';
 import { Pencil } from './icons/Pencil';
-
-const DUE_TIME_TICK_MS = 60_000;
 
 interface TaskRowProps {
   task: Task;
@@ -21,7 +18,6 @@ interface TaskRowProps {
 
 export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, failed }: TaskRowProps) {
   const { dragControls, charging, ref, onPointerDown } = useLongPressDrag();
-  const [now, setNow] = useState(() => new Date());
   const reducedMotion = useReducedMotion();
   const titleRef = useRef<HTMLSpanElement>(null);
   const [expanded, setExpanded] = useState(false);
@@ -41,19 +37,6 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
     const el = titleRef.current;
     if (el) setTruncated(el.scrollHeight > el.clientHeight);
   }, [task.title]);
-
-  useEffect(() => {
-    if (!task.due_time) return;
-    const tick = () => setNow(new Date());
-    const interval = window.setInterval(tick, DUE_TIME_TICK_MS);
-    window.addEventListener('focus', tick);
-    document.addEventListener('visibilitychange', tick);
-    return () => {
-      window.clearInterval(interval);
-      window.removeEventListener('focus', tick);
-      document.removeEventListener('visibilitychange', tick);
-    };
-  }, [task.due_time]);
 
   return (
     <Reorder.Item
@@ -114,13 +97,8 @@ export function TaskRow({ task, onComplete, onDrop, onReorderCommit, onEdit, fai
         >
           {task.title}
         </span>
-        {(task.tags.length > 0 || task.due_time) && (
+        {task.tags.length > 0 && (
           <span className="task-tags">
-            {task.due_time && (
-              <span className={isPast(task.due_time, now) ? 'due-chip due-chip-past' : 'due-chip'}>
-                {dueLabel(task.due_time, now)}
-              </span>
-            )}
             {task.tags.map((tag) => (
               <span key={tag} className="tag-chip">{tag}</span>
             ))}

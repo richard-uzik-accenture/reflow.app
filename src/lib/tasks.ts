@@ -11,7 +11,6 @@ export interface Task {
   completed_at: string | null;
   last_triaged_on: string; // ISO date, e.g. "2026-08-09"
   tags: string[];
-  due_time: string | null; // "HH:MM" / "HH:MM:SS", null if unset
 }
 
 /** Some existing rows predate the `tags` column and have it as null rather than '{}'. */
@@ -52,7 +51,7 @@ export async function updateTaskStatus(taskId: string, status: Task['status']): 
 
 export async function updateTask(
   taskId: string,
-  patch: { title?: string; tags?: string[]; due_time?: string | null },
+  patch: { title?: string; tags?: string[] },
 ): Promise<void> {
   const { error } = await supabase.from('tasks').update(patch).eq('id', taskId);
   if (error) throw error;

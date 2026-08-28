@@ -251,7 +251,7 @@ export function Today({ session, isDark, toggleTheme }: { session: Session; isDa
       {editingTask && (
         <TaskModal
           mode="edit"
-          initial={{ title: editingTask.title, tags: editingTask.tags, due_time: editingTask.due_time }}
+          initial={{ title: editingTask.title, tags: editingTask.tags }}
           knownTags={knownTags}
           onSubmit={async (values) => {
             const ok = await editTask(editingTask.id, values);

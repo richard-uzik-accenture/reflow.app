@@ -440,19 +440,6 @@ button {
   max-height: 160px;
   line-height: 1.4;
 }
-.due-time-field { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.due-time-clear {
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--dusk);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px 2px;
-  transition: color 0.15s ease;
-}
-.due-time-clear:hover { color: var(--ink); }
-.due-time-clear:focus-visible { outline: 2px solid var(--violet-soft); outline-offset: 2px; }
 
 .time-picker { display: inline-flex; align-items: center; gap: 10px; }
 .time-picker-field {
@@ -553,21 +540,7 @@ button {
   padding: 3px 9px;
   line-height: 1.4;
 }
-.due-chip {
-  display: inline-flex;
-  align-items: center;
-  background: var(--mist);
-  color: var(--dusk);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
-  border: 1px solid var(--haze);
-  border-radius: 999px;
-  padding: 3px 9px;
-  line-height: 1.4;
-}
-.due-chip-past { color: var(--haze); }
+
 .tag-chip-removable { padding-right: 5px; }
 .tag-chip-remove {
   display: grid;

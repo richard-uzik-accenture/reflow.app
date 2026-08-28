@@ -12,8 +12,7 @@ promoted by **Octopus Deploy** from a single build produced on `main`.
   still needs retargeting — Phase 6. No `preprod` branch (intentional).
 - Supabase: one project holds both DEV (`public` schema) and QUALITY (`preprod`
   schema, empty — data copy deferred), one separate project holds PROD. **PROD is
-  missing migrations 0002/0003** (`tags`/`due_time` columns) — flagged, unfixed,
-  not part of devops-setup.
+  missing migration 0002** (`tags` column) — flagged, unfixed, not part of devops-setup.
 - Vercel: three projects (DEV/QUALITY/PROD), domains set, git auto-deploy disabled,
   `VITE_SUPABASE_ANON_KEY` unmarked as "Sensitive" on all three.
 - GitHub Actions (Phase 5, archived): every push to `main` builds via `vercel
@@ -52,7 +51,7 @@ promoted by **Octopus Deploy** from a single build produced on `main`.
 2. Phase 6: retarget `feature/combat-screen-polish` onto `dev`, update README to
    describe the branch model, archive Phase 4 once fully done.
 3. Before real users/payments: the RLS/security audit noted above.
-4. Optional cleanup: PROD's missing schema migrations (0002/0003) — unrelated bug
+4. Optional cleanup: PROD's missing migration 0002 (`tags` column) — unrelated bug
    found during this work, still open.
 
 ## Target state

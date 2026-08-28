@@ -110,7 +110,7 @@ src/
   main.tsx           entry point
   pages/             Landing, Auth, Today — route-level screens
   components/        UI pieces (TaskList, TaskRow, MorningFlow, CompareDuel,
-                      BrainDump, LeftoverCard, TagInput, TimePicker, AddTaskFab,
+                      BrainDump, LeftoverCard, TagInput, AddTaskFab,
                       TaskModal, InstallPrompt, VersionBadge, BorderGlow)
   components/icons/  hand-written stroke icons (24px grid, 1.75px stroke — see
                       branding.md for the icon system, don't pull in an icon lib)
@@ -120,7 +120,7 @@ src/
   lib/               framework-free logic + its co-located *.test.ts:
                       tasks.ts (Supabase CRUD), ranking.ts (rank-gap math),
                       compare.ts (binary-search comparator), triage.ts
-                      (leftover keep/drop), tags.ts, dueTime.ts, swipe.ts,
+                      (leftover keep/drop), tags.ts, swipe.ts,
                       realtimeMerge.ts, transitions.ts, pwa.ts, supabase.ts
                       (client init), devMock.ts (VITE_DEV_MODE bypass)
 supabase/migrations/  hand-applied SQL, run in filename order via the Supabase
