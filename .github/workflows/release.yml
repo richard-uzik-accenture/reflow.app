@@ -85,7 +85,6 @@ jobs:
           project: reflow
           release_number: 0.0.${{ github.run_number }}
           package_version: 0.0.${{ github.run_number }}
-          git_ref: ${{ github.ref }}
-          git_commit: ${{ github.sha }}
           release_notes: |
+            CommitSha: ${{ github.sha }}
             Commit: [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
