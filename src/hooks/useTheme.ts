@@ -42,8 +42,11 @@ export function useTheme(userId: string | null) {
 
   useEffect(() => {
     const root = document.documentElement;
+    root.classList.add('theme-transitioning');
     if (preference === 'system') root.removeAttribute('data-theme');
     else root.setAttribute('data-theme', preference);
+    const t = setTimeout(() => root.classList.remove('theme-transitioning'), 350);
+    return () => clearTimeout(t);
   }, [preference]);
 
   async function updatePreference(theme: ThemePreference) {
