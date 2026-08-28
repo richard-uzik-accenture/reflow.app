@@ -10,3 +10,4 @@ dist
 board.json
 ${userHome}/*
 .vscode
+.env*
