@@ -13,6 +13,23 @@
     <link rel="preload" href="/fonts/GeneralSans-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/GeneralSans-Medium.woff2" as="font" type="font/woff2" crossorigin />
     <title>reflow</title>
+    <!-- Blocking theme script: applies data-theme before first paint to prevent flash.
+         Reads reflow-theme-last (written by useTheme on every authenticated session).
+         Falls back to light so unauthenticated screens are never dark by default. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('reflow-theme-last');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.setAttribute('data-theme', t);
+          } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

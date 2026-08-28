@@ -8,4 +8,5 @@ dist
 .vercel
 .playwright-mcp
 board.json
-
+${userHome}/*
+.vscode
