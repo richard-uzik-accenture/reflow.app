@@ -64,6 +64,7 @@ jobs:
           output_folder: ./package
           files: |
             .vercel/output/**/*.*
+            .vercel/project.json
 
       - name: Push package to Octopus
         uses: OctopusDeploy/push-package-action@v4
