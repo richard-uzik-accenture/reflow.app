@@ -147,7 +147,7 @@ export function useTasks(session: Session | null) {
     }
   }
 
-  async function editTask(id: string, patch: { title?: string; tags?: string[]; due_time?: string | null }): Promise<boolean> {
+  async function editTask(id: string, patch: { title?: string; tags?: string[] }): Promise<boolean> {
     const previous = tasks;
     setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, ...patch } : t)));
     try {

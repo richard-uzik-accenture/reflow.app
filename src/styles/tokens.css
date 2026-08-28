@@ -69,6 +69,19 @@
   --mark-bg: #FAF9FB;
   --mark-fg: #171335;
 }
+/* Explicit light override — wins over prefers-color-scheme: dark on OS */
+:root[data-theme="light"] {
+  --paper: #FAF9FB;
+  --mist: #F0EEF5;
+  --haze: #D9D6E4;
+  --dusk: #7D7A8C;
+  --ink: #1A1A2E;
+  --violet: #4B3F8F;
+  --violet-soft: #7A70B8;
+  --coral-wash: #FFE1D6;
+  --mark-bg: #171335;
+  --mark-fg: #FAF9FB;
+}
 
 :root {
   /* Type */
@@ -80,10 +93,25 @@
   --ease-reflow: cubic-bezier(0.34, 1.56, 0.64, 1);
   --duration-reflow: 380ms;
   --duration-decide: 175ms;
+  --duration-theme: 300ms;
 
   /* Safe areas (notch / Dynamic Island / home indicator) */
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* Smooth theme transition — cross-fade color tokens when data-theme changes.
+   Applied only while .theme-transitioning is on <html> (set/cleared by useTheme)
+   so it doesn't interfere with hover states, framer-motion, or other animations.
+   Skipped for users who prefer reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-transitioning *,
+  html.theme-transitioning *::before,
+  html.theme-transitioning *::after {
+    transition-property: background-color, color, border-color, outline-color, fill, stroke;
+    transition-duration: var(--duration-theme);
+    transition-timing-function: ease;
+  }
 }

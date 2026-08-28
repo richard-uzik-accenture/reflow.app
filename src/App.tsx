@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from './hooks/useAuth';
+import { useTheme } from './hooks/useTheme';
 import { useReducedMotion } from './hooks/useReducedMotion';
 import { pageVariants } from './lib/transitions';
 import { Landing } from './pages/Landing';
@@ -15,6 +16,7 @@ function App() {
   const { session, loading } = useAuth();
   const [showAuth, setShowAuth] = useState(false);
   const reducedMotion = useReducedMotion();
+  const { isDark, toggle: toggleTheme } = useTheme(session?.user.id ?? null);
 
   // The initial auth check can't be skipped, but which screen it resolves to
   // is genuinely unknown until it does — showing Today's skeleton as a guess
@@ -37,7 +39,7 @@ function App() {
           exit="exit"
         >
           {screen === 'loading' && <AppLoading />}
-          {screen === 'today' && session && <Today session={session} />}
+          {screen === 'today' && session && <Today session={session} isDark={isDark} toggleTheme={toggleTheme} />}
           {screen === 'auth' && <Auth onBack={() => setShowAuth(false)} />}
           {screen === 'landing' && <Landing onGetStarted={() => setShowAuth(true)} />}
         </motion.div>

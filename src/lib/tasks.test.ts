@@ -13,7 +13,6 @@ function makeTask(overrides: Partial<Task>): Task {
     completed_at: null,
     last_triaged_on: '2026-08-01',
     tags: [],
-    due_time: null,
     ...overrides,
   };
 }

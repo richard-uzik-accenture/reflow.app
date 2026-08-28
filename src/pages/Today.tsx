@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTasks } from '../hooks/useTasks';
 import { useAuth } from '../hooks/useAuth';
-import { useTheme } from '../hooks/useTheme';
 import { useCompareInsertion } from '../hooks/useCompareInsertion';
 import { useMorningFlow } from '../hooks/useMorningFlow';
 import { useRolloverPrompt } from '../hooks/useRolloverPrompt';
@@ -17,19 +16,23 @@ import { TaskModal } from '../components/TaskModal';
 import { TaskListSkeleton } from '../components/TaskListSkeleton';
 import { InstallPrompt } from '../components/InstallPrompt';
 import { ToastContainer } from '../components/Toast';
+import { UpdateBanner } from '../components/UpdateBanner';
+import { forceReloadApp } from '../hooks/useAppUpdate';
 import { Mark } from '../components/icons/Mark';
+import { Refresh } from '../components/icons/Refresh';
 import { SignOut } from '../components/icons/SignOut';
 import { ThemeToggle } from '../components/icons/ThemeToggle';
 import type { Task } from '../lib/tasks';
 import { allKnownTags } from '../lib/tags';
 
-export function Today({ session }: { session: Session }) {
+export function Today({ session, isDark, toggleTheme }: { session: Session; isDark: boolean; toggleTheme: () => void }) {
   const {
     tasks, loading, error, dismissError, completedToday, realtimeStale, addTask, completeTask, editTask, dropTask,
     reorderTasks, commitReorder, insertTaskAtIndex, keepLeftover,
   } = useTasks(session);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [failedRowId, setFailedRowId] = useState<string | null>(null);
+  const [reloading, setReloading] = useState(false);
   const { toasts, showToast, removeToast } = useToast();
 
   async function handleComplete(id: string) {
@@ -59,7 +62,6 @@ export function Today({ session }: { session: Session }) {
     showToast(`task added — #${position} of ${total}`, 'success');
   }
   const { signOut, signingOut, sessionError, dismissSessionError } = useAuth();
-  const { isDark, toggle: toggleTheme } = useTheme(session.user.id);
 
   // Surface task and session errors as toasts instead of inline banners
   const shownError = useRef<string | null>(null);
@@ -170,6 +172,17 @@ export function Today({ session }: { session: Session }) {
           {!loading && <span className="count-chip">{allClear ? 'all clear' : `${tasks.length} today`}</span>}
           <button
             className="header-signout"
+            aria-label="reload app"
+            disabled={reloading}
+            onClick={() => {
+              setReloading(true);
+              window.setTimeout(forceReloadApp, 600);
+            }}
+          >
+            <Refresh width={20} height={20} className={reloading ? 'spin' : undefined} />
+          </button>
+          <button
+            className="header-signout"
             aria-label={isDark ? 'switch to light mode' : 'switch to dark mode'}
             onClick={toggleTheme}
           >
@@ -216,7 +229,7 @@ export function Today({ session }: { session: Session }) {
             </div>
           )}
         </div>
-        {loading ? (
+        {loading || reloading ? (
           <TaskListSkeleton />
         ) : (
           <TaskList
@@ -238,7 +251,7 @@ export function Today({ session }: { session: Session }) {
       {editingTask && (
         <TaskModal
           mode="edit"
-          initial={{ title: editingTask.title, tags: editingTask.tags, due_time: editingTask.due_time }}
+          initial={{ title: editingTask.title, tags: editingTask.tags }}
           knownTags={knownTags}
           onSubmit={async (values) => {
             const ok = await editTask(editingTask.id, values);
@@ -286,6 +299,7 @@ export function Today({ session }: { session: Session }) {
         <AddTaskFab onAdd={begin} knownTags={knownTags} disabled={active} />
         <InstallPrompt taskCount={tasks.length} />
         <ToastContainer toasts={toasts} onDismiss={removeToast} />
+        <UpdateBanner />
       </>,
       document.body,
     )}

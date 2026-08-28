@@ -3,20 +3,18 @@ import { motion } from 'framer-motion';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { TITLE_MAX_LENGTH, validateTitle } from '../lib/validation';
 import { TagInput } from './TagInput';
-import { TimePicker } from './TimePicker';
 
 interface TaskModalProps {
   mode: 'add' | 'edit';
-  initial?: { title: string; tags?: string[]; due_time?: string | null };
+  initial?: { title: string; tags?: string[] };
   knownTags?: string[];
-  onSubmit: (values: { title: string; tags: string[]; due_time?: string | null }) => void | Promise<boolean>;
+  onSubmit: (values: { title: string; tags: string[] }) => void | Promise<boolean>;
   onClose: () => void;
 }
 
 export function TaskModal({ mode, initial, knownTags = [], onSubmit, onClose }: TaskModalProps) {
   const [value, setValue] = useState(initial?.title ?? '');
   const [tags, setTags] = useState(initial?.tags ?? []);
-  const [dueTime, setDueTime] = useState(initial?.due_time ?? '');
   const [titleError, setTitleError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -48,9 +46,7 @@ export function TaskModal({ mode, initial, knownTags = [], onSubmit, onClose }: 
     const title = titleResult.value;
     setSubmitError(null);
     setSubmitting(true);
-    const result = mode === 'edit'
-      ? await onSubmit({ title, tags, due_time: dueTime || null })
-      : await onSubmit({ title, tags });
+    const result = await onSubmit({ title, tags });
     setSubmitting(false);
     if (result === false) {
       setSubmitError("couldn't save — try again");
@@ -96,14 +92,6 @@ export function TaskModal({ mode, initial, knownTags = [], onSubmit, onClose }: 
         {titleError && <p className="modal-field-error" role="alert">{titleError}</p>}
         <label className="modal-label" htmlFor="task-modal-tags">tags</label>
         <TagInput value={tags} known={knownTags} onChange={setTags} />
-        {mode === 'edit' && (
-          <>
-            <label className="modal-label" htmlFor="task-modal-due-time">due time (optional)</label>
-            <div className="due-time-field">
-              <TimePicker id="task-modal-due-time" value={dueTime} onChange={setDueTime} />
-            </div>
-          </>
-        )}
         {submitError && <p className="modal-field-error" role="alert">{submitError}</p>}
         <div className="modal-actions">
           <button type="button" className="modal-cancel" onClick={onClose}>cancel</button>
