@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTasks } from '../hooks/useTasks';
 import { useAuth } from '../hooks/useAuth';
-import { useTheme } from '../hooks/useTheme';
 import { useCompareInsertion } from '../hooks/useCompareInsertion';
 import { useMorningFlow } from '../hooks/useMorningFlow';
 import { useRolloverPrompt } from '../hooks/useRolloverPrompt';
@@ -26,7 +25,7 @@ import { ThemeToggle } from '../components/icons/ThemeToggle';
 import type { Task } from '../lib/tasks';
 import { allKnownTags } from '../lib/tags';
 
-export function Today({ session }: { session: Session }) {
+export function Today({ session, isDark, toggleTheme }: { session: Session; isDark: boolean; toggleTheme: () => void }) {
   const {
     tasks, loading, error, dismissError, completedToday, realtimeStale, addTask, completeTask, editTask, dropTask,
     reorderTasks, commitReorder, insertTaskAtIndex, keepLeftover,
@@ -63,7 +62,6 @@ export function Today({ session }: { session: Session }) {
     showToast(`task added — #${position} of ${total}`, 'success');
   }
   const { signOut, signingOut, sessionError, dismissSessionError } = useAuth();
-  const { isDark, toggle: toggleTheme } = useTheme(session.user.id);
 
   // Surface task and session errors as toasts instead of inline banners
   const shownError = useRef<string | null>(null);

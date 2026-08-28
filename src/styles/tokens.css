@@ -69,6 +69,19 @@
   --mark-bg: #FAF9FB;
   --mark-fg: #171335;
 }
+/* Explicit light override — wins over prefers-color-scheme: dark on OS */
+:root[data-theme="light"] {
+  --paper: #FAF9FB;
+  --mist: #F0EEF5;
+  --haze: #D9D6E4;
+  --dusk: #7D7A8C;
+  --ink: #1A1A2E;
+  --violet: #4B3F8F;
+  --violet-soft: #7A70B8;
+  --coral-wash: #FFE1D6;
+  --mark-bg: #171335;
+  --mark-fg: #FAF9FB;
+}
 
 :root {
   /* Type */
