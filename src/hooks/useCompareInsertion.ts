@@ -7,15 +7,12 @@ interface UseCompareInsertionArgs {
   onInsert: (title: string, index: number, tags?: string[]) => Promise<void>;
 }
 
-const PLACED_CONFIRMATION_MS = 900;
-
 export function useCompareInsertion({ tasks, onInsert }: UseCompareInsertionArgs) {
   const [pendingTitle, setPendingTitle] = useState<string | null>(null);
   const [pendingTags, setPendingTags] = useState<string[]>([]);
   const [state, setState] = useState<CompareState | null>(null);
   const [totalSteps, setTotalSteps] = useState(0);
   const [stepsDone, setStepsDone] = useState(0);
-  const [placedAt, setPlacedAt] = useState<{ title: string; index: number } | null>(null);
 
   function begin(title: string, tags: string[] = []) {
     const initial = startCompare(tasks.length);
@@ -36,11 +33,9 @@ export function useCompareInsertion({ tasks, onInsert }: UseCompareInsertionArgs
     setStepsDone((n) => n + 1);
     if ('done' in result) {
       onInsert(pendingTitle, result.insertIndex, pendingTags);
-      setPlacedAt({ title: pendingTitle, index: result.insertIndex });
       setPendingTitle(null);
       setPendingTags([]);
       setState(null);
-      window.setTimeout(() => setPlacedAt(null), PLACED_CONFIRMATION_MS);
     } else {
       setState(result);
     }
@@ -52,7 +47,6 @@ export function useCompareInsertion({ tasks, onInsert }: UseCompareInsertionArgs
     pendingTitle,
     candidate,
     active: pendingTitle !== null,
-    placedAt,
     progress: { done: stepsDone, total: totalSteps },
     begin,
     decide,

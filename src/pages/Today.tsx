@@ -86,7 +86,7 @@ export function Today({ session, isDark, toggleTheme }: { session: Session; isDa
     }
   }, [sessionError, showToast, dismissSessionError]);
 
-  const { pendingTitle, candidate, active, placedAt, progress, begin, decide } = useCompareInsertion({
+  const { pendingTitle, candidate, active, progress, begin, decide } = useCompareInsertion({
     tasks,
     onInsert: handleInsertTaskAtIndex,
   });
@@ -274,26 +274,6 @@ export function Today({ session, isDark, toggleTheme }: { session: Session; isDa
         <AnimatePresence>
           {active && candidate && pendingTitle && (
             <CompareDuel candidate={candidate} newTaskTitle={pendingTitle} progress={progress} onDecide={decide} />
-          )}
-        </AnimatePresence>
-        <AnimatePresence>
-          {placedAt && (
-            <motion.div
-              className="placed-confirmation"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <motion.div
-                className="placed-confirmation-card"
-                initial={{ scale: 0.9, y: 6 }}
-                animate={{ scale: 1, y: 0 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 24 }}
-              >
-                placed as #{placedAt.index + 1} today
-              </motion.div>
-            </motion.div>
           )}
         </AnimatePresence>
         <AddTaskFab onAdd={begin} knownTags={knownTags} disabled={active} />
