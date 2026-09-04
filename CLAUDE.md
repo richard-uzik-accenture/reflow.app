@@ -176,8 +176,9 @@ Three environments (DEV/QUALITY/PROD), each its own Vercel project, promoted by
 who-can-merge-what rules, and CI/CD pipeline design live in the **`devops-workflow`
 skill** (`.claude/skills/devops-workflow/SKILL.md`) — invoke it rather than
 re-deriving this from scratch when merging, deploying, or touching
-`.github/workflows/*`. Current rollout state/open issues are tracked in
-`docs/plans/devops-setup/00-overview.md`.
+`.github/workflows/*`. The pipeline is built and in use; the rollout history and
+the open items left behind are in `docs/plans/devops-setup/archive/00-overview.md`
+(archived — see `docs/BACKLOG.md` for the still-open ones).
 
 ## Other docs in this repo
 

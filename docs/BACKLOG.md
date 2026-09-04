@@ -10,6 +10,16 @@ and remove it from this list — don't track it in both places.
       needs a matching filter icon (see `src/components/icons/`)
 - [ ] Reposition tags in `TaskRow` to float on the right side instead of stacking under the title
 
+## Infrastructure (carried over from the archived `devops-setup` plan)
+
+- [ ] PROD Supabase project is missing migration `0002_task_fields.sql` (the `tags` column).
+      Surfaces as an opaque HTTP 400 on insert. Apply it via the SQL Editor.
+- [ ] RLS / security audit across all Supabase tables — deliberately deferred, wanted before
+      real users or payments.
+- [ ] Octopus → Pushcut deploy notification links to Octopus's generic Tasks page, which has
+      nothing actionable on it; it should land somewhere the next stage can be triggered from.
+      Three ranked fix options are in `docs/plans/devops-setup/archive/04-octopus-setup.md`.
+
 ## Verification / spot-checks (likely already fine, unconfirmed)
 
 - [ ] Confirm toast display duration (currently 4375ms success / 6250ms error in `useToast.ts`)
@@ -20,6 +30,6 @@ and remove it from this list — don't track it in both places.
 
 ## Open product question (not a scoped task)
 
-- The multi-list brainstorm (`docs/plans/multi-list/00-brainstorm.md`) has 6 unresolved open
-  questions blocking any implementation start — see that file directly, don't duplicate its
-  questions here.
+- The multi-list brainstorm (`docs/plans/multi-list/archive/00-brainstorm.md`) has 6 unresolved
+  open questions blocking any implementation start — see that file directly, don't duplicate its
+  questions here. Archived as parked, not as done; note it also predates `due_time`'s removal.
