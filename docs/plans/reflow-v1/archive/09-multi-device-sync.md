@@ -1,5 +1,10 @@
 # Phase 9: Multi-Device Sync
 
+> **Archived 2026-09-04 as shipped.** The checkboxes below were never ticked, but the work
+> is in the codebase: `src/lib/realtimeMerge.ts` + its tests exist, `useTasks.ts` subscribes
+> to `postgres_changes`, and the app is deployed across three Vercel environments. The
+> unchecked boxes are stale bookkeeping, not outstanding work.
+
 > Depends on: Phase 8. Read `docs/plans/reflow-v1/archive/00-overview.md` — multi-device sync is a locked product requirement (`PRODUCT.md` Operating Context).
 
 **Goal of this phase:** changes made on one device appear on another without a manual refresh, via Supabase Realtime. Also covers getting the app onto a phone for real testing (LAN dev server, then a proper deploy) since this phase can't be meaningfully tested on one laptop tab alone.

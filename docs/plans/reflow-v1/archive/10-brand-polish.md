@@ -1,5 +1,10 @@
 # Phase 10: Brand Polish
 
+> **Archived 2026-09-04 as shipped.** The checkboxes below were never ticked, but the work
+> is in the codebase: `public/fonts/GeneralSans-*.woff2` and the `@fontsource` packages,
+> `src/components/icons/Check.tsx` + `Close.tsx`, `vite-plugin-pwa`, and the quick-add
+> keyboard shortcut in `AddTaskFab.tsx`. Stale bookkeeping, not outstanding work.
+
 > Depends on: Phase 9 (the whole app is functionally complete) and [04b-design-system-revision.md](04b-design-system-revision.md) (color palette and structural layout — rail/column desktop, responsive rows, floating add button, single-card duel, morning-flow step indicator — were already revised there, mid-build). Read `branding.md` in full before starting this phase — it's the source of truth for every task below, more than this file's paraphrasing of it, and note it now specifies **ink violet + signal coral**, not the original petrol-teal + amber this file's hex values below have already been updated to match.
 
 **Goal of this phase:** by this point every screen has real color and real structural layout (from 04b), but still uses system fonts, a text "×" instead of a real icon, and `easeOut` tweens instead of tuned spring physics. This phase closes those specific remaining gaps against `branding.md` — fonts, icons, motion tuning, tone-of-voice copy, and PWA installability — in one pass. **This phase does not touch color or layout** — that scope moved to 04b once it became clear redoing styling twice (once now, once "properly" later) wasted more effort than fixing it once, mid-build.

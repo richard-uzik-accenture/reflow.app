@@ -1,5 +1,10 @@
 # Phase 6 — Create a docs-maintenance skill so this cleanup doesn't just repeat itself
 
+> **Archived 2026-09-04.** Tasks 1–3 are done: `.claude/skills/docs-maintenance/SKILL.md`
+> exists and CLAUDE.md references it. Task 4's live dry-run stays unchecked — it will happen
+> naturally the next time a real code change lands, and doesn't warrant holding a plan folder
+> open on its own.
+
 Phases 1-5 fix the current mess. Without something that runs automatically, the same drift comes
 back: `docs/ARCHITECTURE.md` goes stale the moment a module is renamed, `docs/BACKLOG.md`
 accumulates shipped items nobody removes, and CLAUDE.md's project-structure tree falls behind

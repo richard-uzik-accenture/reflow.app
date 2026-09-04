@@ -1,5 +1,11 @@
 # Phase 6 — Close the loop
 
+> **Archived 2026-09-04, partly moot.** The pipeline was proved end to end by a real
+> production deployment (see `04-octopus-setup.md`), so the dry-run box is satisfied in
+> substance. The `feature/combat-screen-polish` retarget no longer applies — that branch
+> no longer exists. The README branch-model note was never written; it was judged not
+> worth a dedicated phase. Still-open infrastructure items moved to `docs/BACKLOG.md`.
+
 Prove the pipeline end to end, then bring existing work back in line with the new
 model.
 

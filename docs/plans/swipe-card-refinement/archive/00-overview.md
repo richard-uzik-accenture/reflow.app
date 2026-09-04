@@ -1,5 +1,14 @@
 # Swipe card refinement — Direction A ("brave within brand")
 
+> **Archived 2026-09-04 as superseded — NOT as shipped.** None of this landed: `.duel-screen`
+> is still `var(--paper)`, there is no `ink-violet` anywhere in the duel/leftover selectors,
+> and the action buttons still use `--mist`/`--ink`. Phases 01 and 02 sit in this folder with
+> their boxes checked, but the code disagrees with them — treat those two files as a design
+> record, not a description of the app. The plan's premise also expired afterwards: a full
+> light/dark theme system landed (`src/styles/tokens.css`), so "make the duel screen
+> permanently dark" now collides with a theme the user can toggle. If the bolder duel card is
+> ever wanted again, re-plan it in theme-token terms rather than resuming these phases.
+
 Both the compare-duel card (`CompareDuel.tsx`) and the leftover-triage card
 (`LeftoverCard.tsx`) currently render as plain `--paper`/`--mist` rectangles.
 This plan takes them to the bolder-but-still-on-brand direction approved from

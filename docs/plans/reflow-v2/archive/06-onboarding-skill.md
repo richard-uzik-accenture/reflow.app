@@ -1,5 +1,10 @@
 # Feature F — Project-state onboarding skill
 
+> **Archived 2026-09-04 as superseded — never built.** `/reflow-status` does not exist. The
+> briefing it would have assembled is now covered by `docs/ARCHITECTURE.md` (data model,
+> module map, cross-cutting patterns), `docs/BACKLOG.md` (what's open), and the
+> `project-specs` skill (stack summary) — all of which landed after this was written.
+
 **Request:** there's no quick way for a fresh session to understand the project's state. Provide one.
 
 **Goal:** a user-invocable Claude Code skill, `/reflow-status`, that in a fresh session produces an accurate, current briefing of the project: what Reflow is, the stack, the architecture, what's built, what's in flight (reflow-v2), and where the authoritative docs live — assembled from live repo signals, not a frozen snapshot that rots.
