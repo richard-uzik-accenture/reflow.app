@@ -1,5 +1,8 @@
 # App Idea: Interrupt-Resilient Day Planner
 
+> Historical: this is the original problem-framing draft that `PRODUCT.md` was built from.
+> It predates the product's current shape — read `PRODUCT.md` for what's actually true today.
+
 ## The Problem
 
 I start most days with a clear plan of 3-5 things to do. But my job (team lead, data
