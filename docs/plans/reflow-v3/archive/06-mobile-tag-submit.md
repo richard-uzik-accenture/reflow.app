@@ -37,12 +37,12 @@ Keep the existing behaviour where, if a suggestion is highlighted (`activeIndex 
 
 ## Deliverables
 
-- [ ] `TagInput.tsx`: add `onBlur` on the `<input>` that commits `query` when `query.trim()` is non-empty (reuse `commit`). Verify no double-add with suggestion selection.
-- [ ] `TagInput.tsx`: render an "add" tap-target button inside `.tag-input-field`, visible only when `query.trim()` is non-empty, calling `commit(query)`. Keep it `type="button"` so it never submits the surrounding `<form>` in `TaskModal`.
-- [ ] `TagInput.tsx`: add `enterKeyHint="done"`, `autoCapitalize="none"`, `autoCorrect="off"`, `autoComplete="off"`, `inputMode="text"` to the input.
-- [ ] `src/styles/global.css`: style the new add button to match the chip/mono register (violet-on-hover, no coral); ensure it doesn't disrupt the flex-wrap layout of `.tag-input-field`.
-- [ ] Confirm the add button does **not** submit/close the `TaskModal` form (it's `type="button"`; the modal's submit is a separate `type="submit"`).
-- [ ] Extend `src/lib/tags.test.ts` (or add a case) covering that committing via the query path normalizes identically to the Enter path — the logic already lives in `addTag`, so this asserts blur/button reuse the same normalization and dedupe.
+- [x] `TagInput.tsx`: add `onBlur` on the `<input>` that commits `query` when `query.trim()` is non-empty (reuse `commit`). Verify no double-add with suggestion selection.
+- [x] `TagInput.tsx`: render an "add" tap-target button inside `.tag-input-field`, visible only when `query.trim()` is non-empty, calling `commit(query)`. Keep it `type="button"` so it never submits the surrounding `<form>` in `TaskModal`.
+- [x] `TagInput.tsx`: add `enterKeyHint="done"`, `autoCapitalize="none"`, `autoCorrect="off"`, `autoComplete="off"`, `inputMode="text"` to the input.
+- [x] `src/styles/global.css`: style the new add button to match the chip/mono register (violet-on-hover, no coral); ensure it doesn't disrupt the flex-wrap layout of `.tag-input-field`.
+- [x] Confirm the add button does **not** submit/close the `TaskModal` form (it's `type="button"`; the modal's submit is a separate `type="submit"`).
+- [x] Extend `src/lib/tags.test.ts` (or add a case) covering that committing via the query path normalizes identically to the Enter path — the logic already lives in `addTag`, so this asserts blur/button reuse the same normalization and dedupe.
 
 ## Explicitly out of scope
 

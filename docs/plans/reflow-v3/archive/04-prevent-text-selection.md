@@ -35,11 +35,11 @@ Scoping to the three surface classes is the surgical choice.
 
 ## Deliverables
 
-- [ ] `src/styles/global.css` — add to `.task-row`:
+- [x] `src/styles/global.css` — add to `.task-row`:
       `user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;`
-- [ ] `src/styles/global.css` — add the same three declarations to `.swipe-card`.
-- [ ] `src/styles/global.css` — add the same three declarations to `.leftover-card`.
-- [ ] Verify the tag input, title input, and due-time input inside the modal are **still selectable/editable** (they are not descendants of these three classes, so they're unaffected — confirm by inspection).
+- [x] `src/styles/global.css` — add the same three declarations to `.swipe-card`.
+- [x] `src/styles/global.css` — add the same three declarations to `.leftover-card`.
+- [x] Verify the tag input, title input, and due-time input inside the modal are **still selectable/editable** (they are not descendants of these three classes, so they're unaffected — confirm by inspection).
 
 ## Explicitly out of scope
 

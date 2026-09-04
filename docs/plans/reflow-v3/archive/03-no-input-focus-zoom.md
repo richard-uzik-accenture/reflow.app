@@ -30,10 +30,10 @@ For the TimePicker segments (`.time-picker-segment`), 16px is fine within the pi
 
 ## Deliverables
 
-- [ ] `src/styles/global.css` — `.tag-input-text`: `font-size: 14px` → `font-size: 16px`.
-- [ ] `src/styles/global.css` — `.time-picker-segment`: `font-size: 15px` → `font-size: 16px`.
-- [ ] Visually confirm in the edit modal that (a) the tag input aligns with existing chips and (b) the time segments still read cleanly and don't overflow the pill.
-- [ ] Grep the codebase for any other `<input>`/`<textarea>`/`<select>` with `font-size < 16px` and note there are none beyond these two (audit table above is the record).
+- [x] `src/styles/global.css` — `.tag-input-text`: `font-size: 14px` → `font-size: 16px`.
+- [x] `src/styles/global.css` — `.time-picker-segment`: `font-size: 15px` → `font-size: 16px`.
+- [x] Visually confirm in the edit modal that (a) the tag input aligns with existing chips and (b) the time segments still read cleanly and don't overflow the pill.
+- [x] Grep the codebase for any other `<input>`/`<textarea>`/`<select>` with `font-size < 16px` and note there are none beyond these two (audit table above is the record).
 
 ## Explicitly out of scope
 

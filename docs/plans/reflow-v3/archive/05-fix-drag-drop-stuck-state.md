@@ -46,12 +46,12 @@ If a real-device repro shows the `whileDrag` scale/shadow still sticking after B
 
 ## Deliverables
 
-- [ ] Reproduce the stuck state first (see "Test it yourself" step 2) and note **which** artifact sticks: lifted scale, drop shadow, or charged background. Record it in the PR/commit so the fix is verified against the real symptom.
-- [ ] `TaskRow.tsx`: add an explicit resting `boxShadow` target in the `animate` object so the `whileDrag` shadow has something to animate back to.
-- [ ] `TaskRow.tsx`: change `onDragEnd={onReorderCommit}` → `onDragEnd={() => { onReorderCommit(); onPointerUp(); }}` (destructure `onPointerUp` from `useLongPressDrag`, which is already returned).
-- [ ] `useLongPressDrag.ts`: confirm `cancel()` is idempotent (it is — guards on `timerRef`/`startPointRef`) so the extra call from `onDragEnd` is safe.
-- [ ] Only if the repro survives A+B: implement variant **C** (state-driven `isDragging` lift, remove `whileDrag`). Otherwise leave `whileDrag` in place.
-- [ ] Verify the drop still triggers the rank persistence (`commitReorder`) exactly once and the reorder spring (`layout` transition) still plays.
+- [x] Reproduce the stuck state first (see "Test it yourself" step 2) and note **which** artifact sticks: lifted scale, drop shadow, or charged background. Record it in the PR/commit so the fix is verified against the real symptom.
+- [x] `TaskRow.tsx`: add an explicit resting `boxShadow` target in the `animate` object so the `whileDrag` shadow has something to animate back to.
+- [x] `TaskRow.tsx`: change `onDragEnd={onReorderCommit}` → `onDragEnd={() => { onReorderCommit(); onPointerUp(); }}` (destructure `onPointerUp` from `useLongPressDrag`, which is already returned).
+- [x] `useLongPressDrag.ts`: confirm `cancel()` is idempotent (it is — guards on `timerRef`/`startPointRef`) so the extra call from `onDragEnd` is safe.
+- [x] Only if the repro survives A+B: implement variant **C** (state-driven `isDragging` lift, remove `whileDrag`). Otherwise leave `whileDrag` in place.
+- [x] Verify the drop still triggers the rank persistence (`commitReorder`) exactly once and the reorder spring (`layout` transition) still plays.
 
 ## Explicitly out of scope
 
