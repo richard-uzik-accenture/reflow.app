@@ -1,6 +1,6 @@
 # Phase 5: Drag Reorder
 
-> Depends on: Phase 4 and [04b-design-system-revision.md](04b-design-system-revision.md) (done/drop with `layout` animation working, on the revised rail+column layout and ink-violet/coral tokens). Read `docs/plans/reflow/00-overview.md`, especially the locked constraint: mobile reordering must be true long-press drag, never up/down buttons.
+> Depends on: Phase 4 and [04b-design-system-revision.md](04b-design-system-revision.md) (done/drop with `layout` animation working, on the revised rail+column layout and ink-violet/coral tokens). Read `docs/plans/reflow-v1/archive/00-overview.md`, especially the locked constraint: mobile reordering must be true long-press drag, never up/down buttons.
 
 **Goal of this phase:** manually drag any row to a new position, on both mouse and touch, with ranks renumbered and persisted once the drag ends. This is also the last piece `06-compare-duel.md` needs — the reflow spring animation this phase wires up is reused, unchanged, for compare-insertion.
 

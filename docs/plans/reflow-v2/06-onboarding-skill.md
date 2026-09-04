@@ -12,7 +12,7 @@ A static `STATE.md` goes stale the moment code moves. A skill re-derives the bri
 
 Frontmatter + instructions. The skill, when invoked, directs the assistant to:
 
-1. **Read the anchors** (in this order, stop early if enough): `PRODUCT.md`, `branding.md`, `docs/plans/reflow/00-overview.md`, `docs/plans/reflow-v2/00-overview.md`, `README.md`.
+1. **Read the anchors** (in this order, stop early if enough): `PRODUCT.md`, `branding.md`, `docs/plans/reflow-v1/archive/00-overview.md`, `docs/plans/reflow-v2/00-overview.md`, `README.md`.
 2. **Sample the code reality:** `package.json` (stack + scripts), `supabase/migrations/*` (data model as actually migrated), `src/` component/hook/lib inventory (one-line each), and the most recent ~10 `git log` entries for momentum.
 3. **Diff intent vs. state:** which reflow-v1 phases are done (present in `src/`), which reflow-v2 features are planned vs. started (cross-reference the plan files against existing files).
 4. **Emit a fixed-shape briefing:**

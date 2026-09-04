@@ -1,6 +1,6 @@
 # Phase 9: Multi-Device Sync
 
-> Depends on: Phase 8. Read `docs/plans/reflow/00-overview.md` — multi-device sync is a locked product requirement (`PRODUCT.md` Operating Context).
+> Depends on: Phase 8. Read `docs/plans/reflow-v1/archive/00-overview.md` — multi-device sync is a locked product requirement (`PRODUCT.md` Operating Context).
 
 **Goal of this phase:** changes made on one device appear on another without a manual refresh, via Supabase Realtime. Also covers getting the app onto a phone for real testing (LAN dev server, then a proper deploy) since this phase can't be meaningfully tested on one laptop tab alone.
 

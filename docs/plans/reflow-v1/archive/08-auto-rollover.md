@@ -1,6 +1,6 @@
 # Phase 8: Automatic Rollover Detection
 
-> Depends on: Phase 7 (morning flow works when manually triggered) and [04b-design-system-revision.md](04b-design-system-revision.md) (rail+header layout, ink-violet/coral tokens). Read `docs/plans/reflow/00-overview.md`.
+> Depends on: Phase 7 (morning flow works when manually triggered) and [04b-design-system-revision.md](04b-design-system-revision.md) (rail+header layout, ink-violet/coral tokens). Read `docs/plans/reflow-v1/archive/00-overview.md`.
 
 **Goal of this phase:** stop relying on manually clicking "start my day" in the desktop rail. When the app loads and leftovers exist (from `isLeftover`/`getLeftoverTasks`, Phase 7), show a calm, dismissible prompt instead — never force-navigate into the flow, since you might open the app mid-task and not be ready to triage yet. "Nothing silently falls off" (a `PRODUCT.md` principle) is satisfied by the prompt reappearing every time the app loads with leftovers still untriaged, not by forcing the flow. **This is also where the mobile trigger gap flagged in `07-morning-flow.md`'s Task 6 gets closed** — mobile's compact header has no "start my day" control of its own; the banner this phase adds is that control on narrow viewports, appearing whenever there's something to triage. (Mobile with *zero* leftovers still has no manual trigger after this phase — flagged again below, not silently dropped.)
 

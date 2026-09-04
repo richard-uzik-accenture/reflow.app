@@ -1,4 +1,0 @@
-Add dynamic tags filter - mean that from active tasks always construct clickable buttons which imidiatelly filter list - with small animations
-+ fix contrasts
-+ fix positioning of tag in taskrow to right side floating
-+ better filter icon 

@@ -1,6 +1,6 @@
 # Phase 6: The Compare Duel
 
-> Depends on: Phase 5 (reflow/layout animation established via `Reorder.Item`) and [04b-design-system-revision.md](04b-design-system-revision.md) (single-card duel layout spec, ink-violet/coral tokens). Read `docs/plans/reflow/00-overview.md`.
+> Depends on: Phase 5 (reflow/layout animation established via `Reorder.Item`) and [04b-design-system-revision.md](04b-design-system-revision.md) (single-card duel layout spec, ink-violet/coral tokens). Read `docs/plans/reflow-v1/archive/00-overview.md`.
 
 **Goal of this phase:** the signature mechanic. Adding a task while 2+ tasks already exist triggers a binary-search "duel" — the new task compared against the list's midpoint, narrowing until its exact rank is found — instead of a plain append. This is the one place coral and the fast (150–200ms) decisive motion appear, per branding.md. **UI note:** the duel is now a single Tinder-style swipeable card against a fixed reference question (see Task 4), not the two-box side-by-side layout an earlier draft of this phase specified — 04b's Task 6 documents why that changed.
 

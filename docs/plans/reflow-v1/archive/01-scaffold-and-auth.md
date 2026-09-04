@@ -1,6 +1,6 @@
 # Phase 1: Scaffold and Auth
 
-> Depends on: nothing (first phase). Read `docs/plans/reflow/00-overview.md` first for global constraints and tech stack.
+> Depends on: nothing (first phase). Read `docs/plans/reflow-v1/archive/00-overview.md` first for global constraints and tech stack.
 
 **Goal of this phase:** a running Vite/React/TypeScript app, connected to a real Supabase project, that shows a public landing page, lets a visitor sign in or sign up, and — once authenticated — shows an empty authenticated shell with a working sign-out control. Nothing product-specific yet; this phase is pure plumbing plus the full auth workflow (landing → sign in/up → app → sign out).
 

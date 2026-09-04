@@ -3,9 +3,11 @@
 -- collide. Run this once, by hand, in the SQL Editor of the existing dev
 -- Supabase project (the one currently holding the "public" schema data).
 --
--- This is the final-state equivalent of migrations 0001-0003 applied to a
+-- This is the final-state equivalent of migrations 0001-0002 applied to a
 -- schema named "preprod" instead of "public". It is not meant to be replayed
--- against public — public already has this shape.
+-- against public — public already has this shape. See
+-- preprod_profiles_and_input_limits.sql for the preprod equivalent of
+-- 0004/0005.
 
 create schema if not exists preprod;
 

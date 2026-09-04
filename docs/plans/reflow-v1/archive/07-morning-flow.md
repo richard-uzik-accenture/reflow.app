@@ -1,6 +1,6 @@
 # Phase 7: Morning "Start My Day" Flow
 
-> Depends on: Phase 6 (compare duel; brain-dump reuses plain `addTask`, merge reuses Phase 5's drag) and [04b-design-system-revision.md](04b-design-system-revision.md) (step-indicator + desktop-panel layout spec, ink-violet/coral tokens). Read `docs/plans/reflow/00-overview.md`.
+> Depends on: Phase 6 (compare duel; brain-dump reuses plain `addTask`, merge reuses Phase 5's drag) and [04b-design-system-revision.md](04b-design-system-revision.md) (step-indicator + desktop-panel layout spec, ink-violet/coral tokens). Read `docs/plans/reflow-v1/archive/00-overview.md`.
 
 **Goal of this phase:** the three-phase morning ritual from `idea.md` — leftover triage (swipe keep/drop), brain dump (flat capture, no ranking), and merge (one drag pass over the combined list) — as a single full-screen flow, manually triggered by a "start my day" button. Automatic triggering on an actual day boundary is Phase 8; this phase builds the flow itself and you trigger it by hand to test it. **UI note:** the flow now has a persistent step indicator and a desktop-specific centered-panel presentation (see Task 6) that an earlier draft of this phase didn't specify — 04b's Task 6 documents why that was added.
 

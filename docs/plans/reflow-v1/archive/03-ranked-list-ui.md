@@ -1,6 +1,6 @@
 # Phase 3: Ranked List UI
 
-> Depends on: Phase 2 (data layer). Read `docs/plans/reflow/00-overview.md` for brand tokens and the structural brief (persistent bottom quick-add bar, list fills the space above it).
+> Depends on: Phase 2 (data layer). Read `docs/plans/reflow-v1/archive/00-overview.md` for brand tokens and the structural brief (persistent bottom quick-add bar, list fills the space above it).
 >
 > **Superseded by [04b-design-system-revision.md](04b-design-system-revision.md).** This file is kept as a historical record of what was actually built and committed at the time — the persistent bottom `AddBar` and petrol/amber colors described below were replaced (floating "+" + modal, ink-violet/coral palette) once Phase 4 was done. If you're implementing this app fresh rather than resuming an in-progress build, skip straight to 04b's version of these components instead of building this file's `AddBar` only to delete it.
 

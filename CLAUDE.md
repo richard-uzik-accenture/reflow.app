@@ -85,7 +85,7 @@ A phase is done when **every checkbox in the file is checked** (`- [x]`). At tha
 docs/plans/<plan-name>/<phase-file>.md  →  docs/plans/<plan-name>/archive/<phase-file>.md
 ```
 
-Active phases (not yet archived) are whatever files remain directly in the plan folder. To know which phase you're on, list that folder — the lowest-numbered file is the current phase. Active plans currently live under `docs/plans/` (e.g. `reflow-v1`, `reflow-v2`, `reflow-v3`, `devops-setup`); list that directory for the current set rather than relying on a static list here.
+Active phases (not yet archived) are whatever files remain directly in the plan folder. To know which phase you're on, list that folder — the lowest-numbered file is the current phase. List `docs/plans/` itself for the current set of active plan folders rather than relying on a static list here — it changes every time a plan finishes.
 
 ---
 
@@ -111,18 +111,23 @@ src/
   pages/             Landing, Auth, Today — route-level screens
   components/        UI pieces (TaskList, TaskRow, MorningFlow, CompareDuel,
                       BrainDump, LeftoverCard, TagInput, AddTaskFab,
-                      TaskModal, InstallPrompt, VersionBadge, BorderGlow)
+                      TaskModal, InstallPrompt, VersionBadge, BorderGlow,
+                      AppLoading, EmptyState, TaskListSkeleton, Toast,
+                      UpdateBanner)
   components/icons/  hand-written stroke icons (24px grid, 1.75px stroke — see
                       branding.md for the icon system, don't pull in an icon lib)
   hooks/             useAuth, useTasks, useMorningFlow, useCompareInsertion,
                       useLongPressDrag, useInstallPrompt, useRolloverPrompt,
-                      useReducedMotion
+                      useReducedMotion, useAppUpdate, useTheme, useToast
   lib/               framework-free logic + its co-located *.test.ts:
                       tasks.ts (Supabase CRUD), ranking.ts (rank-gap math),
                       compare.ts (binary-search comparator), triage.ts
                       (leftover keep/drop), tags.ts, swipe.ts,
                       realtimeMerge.ts, transitions.ts, pwa.ts, supabase.ts
-                      (client init), devMock.ts (VITE_DEV_MODE bypass)
+                      (client init), devMock.ts (VITE_DEV_MODE bypass),
+                      validation.ts (input limits), textScale.ts
+                      (length-to-font-size tiers), theme.ts (profile
+                      theme_preference)
 supabase/migrations/  hand-applied SQL, run in filename order via the Supabase
                       SQL Editor — there is no migration runner/CLI wired up
 ```
@@ -133,9 +138,12 @@ needs a Supabase call or React state lives in `src/hooks/*.ts` instead.
 
 ## Local setup (from zero)
 
-1. `npm install`
+`README.md` is the canonical human-facing setup doc; this section is a terser mirror for quick
+reference — if the two ever disagree, `README.md` wins.
+
+1. `npm install` — also runs `postinstall: patch-package`, applying `patches/framer-motion+13.0.0.patch`
 2. Create a Supabase project (free tier) at supabase.com. From **Project Settings → API**, note the **Project URL** and the **publishable ("anon") key**.
-3. In the Supabase dashboard: **Authentication → Providers** — confirm Email is enabled. **Authentication → Settings** — turn off "Confirm email" so sign-up works without an email round-trip.
+3. In the Supabase dashboard: **Authentication → Providers** — confirm Email is enabled, and leave "Confirm email" **on** (sign-up sends a confirmation link; Google/GitHub sign-in are also available, see `docs/plans/auth-oauth-and-email-confirm/archive/` for how this project's were set up).
 4. **SQL Editor** — run every file in `supabase/migrations/` in filename order, starting with `0001_tasks.sql`. Skipping a later migration leaves the DB disagreeing with the app (shows up as an opaque HTTP 400 on insert). Files are written to be safe to re-run. There is no migration CLI/runner — this is hand-applied SQL, run manually each time the schema changes.
 5. Copy `.env.example` → `.env.local` and fill in `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` (see table below). `.env.local` is gitignored — never commit real credentials.
 6. `npm run dev` — opens at `http://localhost:5173`.
@@ -176,4 +184,9 @@ re-deriving this from scratch when merging, deploying, or touching
 - `README.md` — human setup instructions (Supabase project creation, migrations, env vars). Read this, not CLAUDE.md, for "how do I get this running from zero."
 - `PRODUCT.md` — product purpose, target user, positioning, and the **binding** brand system reference (colors/type/tone/motion decided elsewhere in `branding.md`). Schema-managed by the `impeccable` skill — don't hand-edit its structure.
 - `branding.md` — full pinned visual identity system (logo, palette, type, iconography, motion timing). Binding, not inspiration.
-- `idea.md` — original problem-framing draft PRODUCT.md was built from; historical record.
+- `docs/idea.md` — original problem-framing draft PRODUCT.md was built from; historical record.
+- `docs/ARCHITECTURE.md` — living "how this app works" reference: data model, module map, and cross-cutting patterns (optimistic mutations, realtime sync, ranking/duel, morning flow), derived from current code.
+- `docs/BACKLOG.md` — open ideas and unresolved polish items not yet turned into a phase plan.
+- `.claude/skills/docs-maintenance/SKILL.md` — keeps `docs/ARCHITECTURE.md`, `docs/BACKLOG.md`,
+  and this file's project-structure tree in sync with the code; invoked automatically when a
+  task finishes rather than needing to be asked for each time.

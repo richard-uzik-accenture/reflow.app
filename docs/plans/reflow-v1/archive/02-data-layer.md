@@ -1,6 +1,6 @@
 # Phase 2: Data Layer
 
-> Depends on: Phase 1 (auth working, Supabase client connected). Read `docs/plans/reflow/00-overview.md` for the schema and global constraints.
+> Depends on: Phase 1 (auth working, Supabase client connected). Read `docs/plans/reflow-v1/archive/00-overview.md` for the schema and global constraints.
 
 **Goal of this phase:** the `tasks` table exists with RLS locked to the signed-in user, the ranking algorithm is implemented and unit-tested, and typed data-access functions exist for every operation later phases need. No visible UI change yet — this phase is verified via a temporary debug page and Vitest.
 

@@ -1,6 +1,6 @@
 # Phase 4b: Design System Revision
 
-> Depends on: Phase 4 (done/drop working). Read `docs/plans/reflow/00-overview.md` and the revised `branding.md` (§1 logo, §2 color) before starting — §2 was rewritten in this revision and is the source of truth for every hex value below.
+> Depends on: Phase 4 (done/drop working). Read `docs/plans/reflow-v1/archive/00-overview.md` and the revised `branding.md` (§1 logo, §2 color) before starting — §2 was rewritten in this revision and is the source of truth for every hex value below.
 
 **Goal of this phase:** Phases 1-4 shipped with placeholder layout (a plain centered form-page shell, a persistent bottom input bar, inline styles with no real hierarchy) and the original petrol-teal/amber palette. Both were revisited before continuing to Phase 5, because building three more phases (drag-reorder, compare-duel, morning-flow) on top of placeholder styling would mean redoing everything twice. This phase retrofits the color and structural decisions below into every screen that already exists, and locks the layout spec every later phase (5-10) must build against — replacing Phase 10's job of a pure polish pass with "polish, not redesign."
 

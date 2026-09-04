@@ -1,6 +1,6 @@
 # Phase 4: Done and Drop
 
-> Depends on: Phase 3 (ranked list renders and can add tasks). Read `docs/plans/reflow/00-overview.md` for the locked motion spec.
+> Depends on: Phase 3 (ranked list renders and can add tasks). Read `docs/plans/reflow-v1/archive/00-overview.md` for the locked motion spec.
 
 **Goal of this phase:** mark a task done, or drop it, from the main list — each with the correct animation from branding.md's motion table (soft fade/collapse, never a shake or red flash). This introduces Framer Motion for the first time; later phases (5, 6, 7) build directly on the patterns established here.
 
