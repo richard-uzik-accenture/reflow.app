@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="780" viewBox="0 0 900 780" role="img" aria-label="A day in reflow">
+<title>A day in reflow</title>
+<style>
+  @media (prefers-color-scheme: dark) {
+    .layer-l { display: none; }
+    .layer-d { display: inline !important; }
+  }
+</style>
+<g class="layer-l">
+<style>
+  .layer-l .t { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; fill: #0B1120; }
+  .layer-l .mono { font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace; }
+  .layer-l .muted { fill: #475569; }
+  .layer-l .title { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
+  .layer-l .subtitle { font-size: 12.5px; fill: #475569; }
+  .layer-l .h { font-size: 13.5px; font-weight: 600; }
+  .layer-l .b { font-size: 12px; }
+  .layer-l .s { font-size: 10.5px; }
+  .layer-l .box { fill: #FFFFFF; stroke: #E2E8F0; stroke-width: 1.25; }
+  .layer-l .box-alt { fill: #F1F5F9; stroke: #E2E8F0; stroke-width: 1.25; }
+  .layer-l .group { fill: none; stroke: #94A3B8; stroke-width: 1.25; stroke-dasharray: 5 4; opacity: 0.75; }
+  .layer-l .edge { fill: none; stroke: #94A3B8; stroke-width: 1.5; }
+  .layer-l .edge-accent { fill: none; stroke: #2563EB; stroke-width: 1.75; }
+  .layer-l .edge-dash { fill: none; stroke: #475569; stroke-width: 1.25; stroke-dasharray: 4 4; }
+</style>
+<defs>
+  <marker id="arrow-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+  </marker>
+  <marker id="arrow-accent-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#2563EB"/>
+  </marker>
+  <marker id="arrow-muted-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+  </marker>
+  <marker id="crowsfoot-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" orient="auto">
+    <path d="M10,0 L0,5 L10,10 M10,5 L0,5" fill="none" stroke="#94A3B8" stroke-width="1.4"/>
+  </marker>
+</defs>
+<rect width="900" height="780" fill="#F8FAFC"/>
+<text class="t title" x="32" y="42">A day in reflow</text>
+<text class="t subtitle" x="32" y="63">Triage what is left over, add what is new, then rank by comparing rather than by guessing.</text>
+<rect x="60" y="130" width="420" height="125" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<circle cx="98" cy="164" r="17" fill="#2563EB"/>
+<text class="t" x="98" y="170" text-anchor="middle" font-size="15" font-weight="600" fill="#FFFFFF">1</text>
+<g transform="translate(128,152) scale(0.9166666666666666)" fill="none" stroke="#2563EB" stroke-width="1.91" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3 M5.5 8.5 7.6 10.6 M18.5 8.5 16.4 10.6 M3 17h18 M8 17a4 4 0 0 1 8 0 M6 21h12"/></g>
+<text class="t" x="160" y="170" font-size="15" font-weight="600" fill="#0B1120">Start the day</text>
+<text class="t s" x="128" y="198" fill="#475569">Anything still open from yesterday comes back,</text>
+<text class="t s" x="128" y="217" fill="#475569">one card at a time. Keep it or let it go —</text>
+<text class="t s" x="128" y="236" fill="#475569">nothing is carried over behind your back.</text>
+<rect x="60" y="281" width="420" height="106" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<circle cx="98" cy="315" r="17" fill="#2563EB"/>
+<text class="t" x="98" y="321" text-anchor="middle" font-size="15" font-weight="600" fill="#FFFFFF">2</text>
+<g transform="translate(128,303) scale(0.9166666666666666)" fill="none" stroke="#2563EB" stroke-width="1.91" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16 M4 12h16 M4 17h10"/></g>
+<text class="t" x="160" y="321" font-size="15" font-weight="600" fill="#0B1120">Empty your head</text>
+<text class="t s" x="128" y="349" fill="#475569">Add everything else you are carrying around.</text>
+<text class="t s" x="128" y="368" fill="#475569">It joins the tasks you just kept, in one list.</text>
+<rect x="60" y="413" width="420" height="125" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<circle cx="98" cy="447" r="17" fill="#2563EB"/>
+<text class="t" x="98" y="453" text-anchor="middle" font-size="15" font-weight="600" fill="#FFFFFF">3</text>
+<g transform="translate(128,435) scale(0.9166666666666666)" fill="none" stroke="#2563EB" stroke-width="1.91" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12 M13 5l3 3-3 3 M20 16H8 M11 13l-3 3 3 3"/></g>
+<text class="t" x="160" y="453" font-size="15" font-weight="600" fill="#0B1120">Rank by comparing</text>
+<text class="t s" x="128" y="481" fill="#475569">When something new arrives mid-day, reflow</text>
+<text class="t s" x="128" y="500" fill="#475569">shows it against one task at a time and asks</text>
+<text class="t s" x="128" y="519" fill="#475569">which matters more. A few swipes place it.</text>
+<rect x="60" y="564" width="420" height="125" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<circle cx="98" cy="598" r="17" fill="#2563EB"/>
+<text class="t" x="98" y="604" text-anchor="middle" font-size="15" font-weight="600" fill="#FFFFFF">4</text>
+<g transform="translate(128,586) scale(0.9166666666666666)" fill="none" stroke="#2563EB" stroke-width="1.91" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5 9-11"/></g>
+<text class="t" x="160" y="604" font-size="15" font-weight="600" fill="#0B1120">Work down the list</text>
+<text class="t s" x="128" y="632" fill="#475569">Swipe right to finish, left to drop, drag to</text>
+<text class="t s" x="128" y="651" fill="#475569">reorder. Whatever is left becomes tomorrow’s</text>
+<text class="t s" x="128" y="670" fill="#475569">first question.</text>
+<path class="edge" d="M98,257 V277" marker-end="url(#arrow-l)"/>
+<path class="edge" d="M98,389 V409" marker-end="url(#arrow-l)"/>
+<path class="edge" d="M98,540 V560" marker-end="url(#arrow-l)"/>
+<path class="edge-dash" d="M98,689 V715 H38 V164 H56" marker-end="url(#arrow-muted-l)"/>
+<text class="t s muted" x="30" y="426.5" transform="rotate(-90 30 426.5)" text-anchor="middle" font-size="11.5" letter-spacing="0.3">the next morning</text>
+<text class="t h" x="540" y="148" text-anchor="start" >What "rank by comparing" looks like</text>
+<rect class="box" x="540" y="166" width="300" height="250" rx="14" />
+<rect x="564" y="190" width="252" height="34" rx="10" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.25"/>
+<text class="t s" x="578" y="211" fill="#2563EB" font-weight="600">Book the dentist</text>
+<text class="t s" x="802" y="211" text-anchor="end" fill="#2563EB">new</text>
+<text class="t s muted" x="690" y="246" text-anchor="middle" >more important than…</text>
+<rect x="564" y="258" width="252" height="44" rx="10" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1.25"/>
+<text class="t b" x="578" y="285" fill="#0B1120" font-weight="600">Finish the quarterly report</text>
+<rect x="564" y="318" width="120" height="36" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<text class="t s" x="624" y="341" text-anchor="middle" fill="#0B1120">← no, lower</text>
+<rect x="696" y="318" width="120" height="36" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<text class="t s" x="756" y="341" text-anchor="middle" fill="#0B1120">yes, higher →</text>
+<text class="t s muted" x="564" y="382" text-anchor="start" >Each answer halves what is left to check, so even</text>
+<text class="t s muted" x="564" y="400" text-anchor="start" >a long list only takes a handful of swipes.</text>
+<rect class="box-alt" x="540" y="448" width="300" height="176" rx="14" />
+<g transform="translate(564,468) scale(0.8333333333333334)" fill="none" stroke="#2563EB" stroke-width="2.10" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V6l8-3Z"/></g>
+<text class="t b" x="594" y="484" text-anchor="start" font-weight="600">Built for days that go wrong</text>
+<text class="t s muted" x="564" y="512" text-anchor="start" >Interruptions are expected, not a failure. The list</text>
+<text class="t s muted" x="564" y="530" text-anchor="start" >does not shame you for what you did not finish —</text>
+<text class="t s muted" x="564" y="548" text-anchor="start" >it just asks again tomorrow, once.</text>
+<text class="t s muted" x="564" y="576" text-anchor="start" >There is no scheduling, no calendar and no</text>
+<text class="t s muted" x="564" y="594" text-anchor="start" >streaks to break. One ranked list, every day.</text>
+</g>
+<g class="layer-d" display="none">
+<style>
+  .layer-d .t { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; fill: #F1F5F9; }
+  .layer-d .mono { font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace; }
+  .layer-d .muted { fill: #94A3B8; }
+  .layer-d .title { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
+  .layer-d .subtitle { font-size: 12.5px; fill: #94A3B8; }
+  .layer-d .h { font-size: 13.5px; font-weight: 600; }
+  .layer-d .b { font-size: 12px; }
+  .layer-d .s { font-size: 10.5px; }
+  .layer-d .box { fill: #1E293B; stroke: #2E3B4E; stroke-width: 1.25; }
+  .layer-d .box-alt { fill: #152033; stroke: #2E3B4E; stroke-width: 1.25; }
+  .layer-d .group { fill: none; stroke: #5B6B84; stroke-width: 1.25; stroke-dasharray: 5 4; opacity: 0.75; }
+  .layer-d .edge { fill: none; stroke: #5B6B84; stroke-width: 1.5; }
+  .layer-d .edge-accent { fill: none; stroke: #60A5FA; stroke-width: 1.75; }
+  .layer-d .edge-dash { fill: none; stroke: #94A3B8; stroke-width: 1.25; stroke-dasharray: 4 4; }
+</style>
+<defs>
+  <marker id="arrow-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#5B6B84"/>
+  </marker>
+  <marker id="arrow-accent-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#60A5FA"/>
+  </marker>
+  <marker id="arrow-muted-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+  </marker>
+  <marker id="crowsfoot-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" orient="auto">
+    <path d="M10,0 L0,5 L10,10 M10,5 L0,5" fill="none" stroke="#5B6B84" stroke-width="1.4"/>
+  </marker>
+</defs>
+<rect width="900" height="780" fill="#0A0F1C"/>
+<text class="t title" x="32" y="42">A day in reflow</text>
+<text class="t subtitle" x="32" y="63">Triage what is left over, add what is new, then rank by comparing rather than by guessing.</text>
+<rect x="60" y="130" width="420" height="125" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<circle cx="98" cy="164" r="17" fill="#60A5FA"/>
+<text class="t" x="98" y="170" text-anchor="middle" font-size="15" font-weight="600" fill="#0B1120">1</text>
+<g transform="translate(128,152) scale(0.9166666666666666)" fill="none" stroke="#60A5FA" stroke-width="1.91" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3 M5.5 8.5 7.6 10.6 M18.5 8.5 16.4 10.6 M3 17h18 M8 17a4 4 0 0 1 8 0 M6 21h12"/></g>
+<text class="t" x="160" y="170" font-size="15" font-weight="600" fill="#F1F5F9">Start the day</text>
+<text class="t s" x="128" y="198" fill="#94A3B8">Anything still open from yesterday comes back,</text>
+<text class="t s" x="128" y="217" fill="#94A3B8">one card at a time. Keep it or let it go —</text>
+<text class="t s" x="128" y="236" fill="#94A3B8">nothing is carried over behind your back.</text>
+<rect x="60" y="281" width="420" height="106" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<circle cx="98" cy="315" r="17" fill="#60A5FA"/>
+<text class="t" x="98" y="321" text-anchor="middle" font-size="15" font-weight="600" fill="#0B1120">2</text>
+<g transform="translate(128,303) scale(0.9166666666666666)" fill="none" stroke="#60A5FA" stroke-width="1.91" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16 M4 12h16 M4 17h10"/></g>
+<text class="t" x="160" y="321" font-size="15" font-weight="600" fill="#F1F5F9">Empty your head</text>
+<text class="t s" x="128" y="349" fill="#94A3B8">Add everything else you are carrying around.</text>
+<text class="t s" x="128" y="368" fill="#94A3B8">It joins the tasks you just kept, in one list.</text>
+<rect x="60" y="413" width="420" height="125" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<circle cx="98" cy="447" r="17" fill="#60A5FA"/>
+<text class="t" x="98" y="453" text-anchor="middle" font-size="15" font-weight="600" fill="#0B1120">3</text>
+<g transform="translate(128,435) scale(0.9166666666666666)" fill="none" stroke="#60A5FA" stroke-width="1.91" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12 M13 5l3 3-3 3 M20 16H8 M11 13l-3 3 3 3"/></g>
+<text class="t" x="160" y="453" font-size="15" font-weight="600" fill="#F1F5F9">Rank by comparing</text>
+<text class="t s" x="128" y="481" fill="#94A3B8">When something new arrives mid-day, reflow</text>
+<text class="t s" x="128" y="500" fill="#94A3B8">shows it against one task at a time and asks</text>
+<text class="t s" x="128" y="519" fill="#94A3B8">which matters more. A few swipes place it.</text>
+<rect x="60" y="564" width="420" height="125" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<circle cx="98" cy="598" r="17" fill="#60A5FA"/>
+<text class="t" x="98" y="604" text-anchor="middle" font-size="15" font-weight="600" fill="#0B1120">4</text>
+<g transform="translate(128,586) scale(0.9166666666666666)" fill="none" stroke="#60A5FA" stroke-width="1.91" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5 9-11"/></g>
+<text class="t" x="160" y="604" font-size="15" font-weight="600" fill="#F1F5F9">Work down the list</text>
+<text class="t s" x="128" y="632" fill="#94A3B8">Swipe right to finish, left to drop, drag to</text>
+<text class="t s" x="128" y="651" fill="#94A3B8">reorder. Whatever is left becomes tomorrow’s</text>
+<text class="t s" x="128" y="670" fill="#94A3B8">first question.</text>
+<path class="edge" d="M98,257 V277" marker-end="url(#arrow-d)"/>
+<path class="edge" d="M98,389 V409" marker-end="url(#arrow-d)"/>
+<path class="edge" d="M98,540 V560" marker-end="url(#arrow-d)"/>
+<path class="edge-dash" d="M98,689 V715 H38 V164 H56" marker-end="url(#arrow-muted-d)"/>
+<text class="t s muted" x="30" y="426.5" transform="rotate(-90 30 426.5)" text-anchor="middle" font-size="11.5" letter-spacing="0.3">the next morning</text>
+<text class="t h" x="540" y="148" text-anchor="start" >What "rank by comparing" looks like</text>
+<rect class="box" x="540" y="166" width="300" height="250" rx="14" />
+<rect x="564" y="190" width="252" height="34" rx="10" fill="#1E2E47" stroke="#60A5FA" stroke-width="1.25"/>
+<text class="t s" x="578" y="211" fill="#60A5FA" font-weight="600">Book the dentist</text>
+<text class="t s" x="802" y="211" text-anchor="end" fill="#60A5FA">new</text>
+<text class="t s muted" x="690" y="246" text-anchor="middle" >more important than…</text>
+<rect x="564" y="258" width="252" height="44" rx="10" fill="#152033" stroke="#2E3B4E" stroke-width="1.25"/>
+<text class="t b" x="578" y="285" fill="#F1F5F9" font-weight="600">Finish the quarterly report</text>
+<rect x="564" y="318" width="120" height="36" rx="10" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<text class="t s" x="624" y="341" text-anchor="middle" fill="#F1F5F9">← no, lower</text>
+<rect x="696" y="318" width="120" height="36" rx="10" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<text class="t s" x="756" y="341" text-anchor="middle" fill="#F1F5F9">yes, higher →</text>
+<text class="t s muted" x="564" y="382" text-anchor="start" >Each answer halves what is left to check, so even</text>
+<text class="t s muted" x="564" y="400" text-anchor="start" >a long list only takes a handful of swipes.</text>
+<rect class="box-alt" x="540" y="448" width="300" height="176" rx="14" />
+<g transform="translate(564,468) scale(0.8333333333333334)" fill="none" stroke="#60A5FA" stroke-width="2.10" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V6l8-3Z"/></g>
+<text class="t b" x="594" y="484" text-anchor="start" font-weight="600">Built for days that go wrong</text>
+<text class="t s muted" x="564" y="512" text-anchor="start" >Interruptions are expected, not a failure. The list</text>
+<text class="t s muted" x="564" y="530" text-anchor="start" >does not shame you for what you did not finish —</text>
+<text class="t s muted" x="564" y="548" text-anchor="start" >it just asks again tomorrow, once.</text>
+<text class="t s muted" x="564" y="576" text-anchor="start" >There is no scheduling, no calendar and no</text>
+<text class="t s muted" x="564" y="594" text-anchor="start" >streaks to break. One ranked list, every day.</text>
+</g>
+</svg>

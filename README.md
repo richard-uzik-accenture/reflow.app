@@ -4,6 +4,26 @@ A personal task-triage app: Vite + React + TypeScript on the frontend, talking d
 
 Branching model is `feature/* → dev → main`, promoted to DEV/QUALITY/PROD by Octopus Deploy — see the `devops-workflow` Claude Code skill (`.claude/skills/devops-workflow/SKILL.md`) for the full flow rather than re-deriving it here.
 
+## Overview
+
+### A day in reflow
+
+![A day in reflow](docs/diagrams/user-flow.svg)
+
+### How it is put together
+
+![How reflow is put together](docs/diagrams/architecture.svg)
+
+### What it stores
+
+![What reflow stores](docs/diagrams/data-model.svg)
+
+### How a change reaches people
+
+![How a change reaches people](docs/diagrams/deployment.svg)
+
+These four SVGs are generated, not drawn by hand — the sources live in [scripts/diagrams/](scripts/diagrams/) and `npm run diagrams` rewrites them. Each one ships a light and a dark palette and follows the reader's theme. Update the source and re-run whenever the schema, the module layout, or the deploy pipeline changes.
+
 ## Requirements
 
 - **Node.js 20.19+ or 22.12+** (Vite 8 / Vitest 4 require this; Node 18 will not work)
@@ -56,6 +76,7 @@ npm run build     # tsc -b && vite build
 npm run preview   # preview the production build
 npm run test      # vitest run
 npm run lint      # oxlint
+npm run diagrams  # regenerate the SVGs in docs/diagrams/
 ```
 
 ## Testing on a second device

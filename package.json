@@ -9,6 +9,7 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run",
+    "diagrams": "node scripts/generate-diagrams.mjs",
     "postinstall": "patch-package"
   },
   "dependencies": {

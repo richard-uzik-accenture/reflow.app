@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="What reflow stores">
+<title>What reflow stores</title>
+<style>
+  @media (prefers-color-scheme: dark) {
+    .layer-l { display: none; }
+    .layer-d { display: inline !important; }
+  }
+</style>
+<g class="layer-l">
+<style>
+  .layer-l .t { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; fill: #0B1120; }
+  .layer-l .mono { font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace; }
+  .layer-l .muted { fill: #475569; }
+  .layer-l .title { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
+  .layer-l .subtitle { font-size: 12.5px; fill: #475569; }
+  .layer-l .h { font-size: 13.5px; font-weight: 600; }
+  .layer-l .b { font-size: 12px; }
+  .layer-l .s { font-size: 10.5px; }
+  .layer-l .box { fill: #FFFFFF; stroke: #E2E8F0; stroke-width: 1.25; }
+  .layer-l .box-alt { fill: #F1F5F9; stroke: #E2E8F0; stroke-width: 1.25; }
+  .layer-l .group { fill: none; stroke: #94A3B8; stroke-width: 1.25; stroke-dasharray: 5 4; opacity: 0.75; }
+  .layer-l .edge { fill: none; stroke: #94A3B8; stroke-width: 1.5; }
+  .layer-l .edge-accent { fill: none; stroke: #2563EB; stroke-width: 1.75; }
+  .layer-l .edge-dash { fill: none; stroke: #475569; stroke-width: 1.25; stroke-dasharray: 4 4; }
+</style>
+<defs>
+  <marker id="arrow-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+  </marker>
+  <marker id="arrow-accent-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#2563EB"/>
+  </marker>
+  <marker id="arrow-muted-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+  </marker>
+  <marker id="crowsfoot-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" orient="auto">
+    <path d="M10,0 L0,5 L10,10 M10,5 L0,5" fill="none" stroke="#94A3B8" stroke-width="1.4"/>
+  </marker>
+</defs>
+<rect width="800" height="600" fill="#F8FAFC"/>
+<text class="t title" x="32" y="42">What reflow stores</text>
+<text class="t subtitle" x="32" y="63">Two tables, both private to the person who owns the rows.</text>
+<rect x="60" y="130" width="250" height="106" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<rect x="80" y="145" width="26" height="26" rx="8" fill="#2563EB"/>
+<g transform="translate(85,150) scale(0.6666666666666666)" fill="none" stroke="#FFFFFF" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21a8 8 0 0 1 16 0"/></g>
+<text class="t" x="118" y="163" font-size="14.5" font-weight="600" fill="#0B1120">A signed-in person</text>
+<text class="t s" x="118" y="192" fill="#475569">handled by Supabase Auth</text>
+<text class="t s" x="118" y="211" fill="#475569">email, Google or GitHub</text>
+<rect x="430" y="130" width="300" height="163" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<rect x="450" y="145" width="26" height="26" rx="8" fill="#DBEAFE"/>
+<g transform="translate(455,150) scale(0.6666666666666666)" fill="none" stroke="#2563EB" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16 M4 12h16 M4 17h10"/></g>
+<text class="t" x="488" y="163" font-size="14.5" font-weight="600" fill="#0B1120">tasks</text>
+<text class="t s" x="488" y="192" fill="#475569">title  —  what to do</text>
+<text class="t s" x="488" y="211" fill="#475569">status  —  active, done or dropped</text>
+<text class="t s" x="488" y="230" fill="#475569">rank  —  where it sits in the list</text>
+<text class="t s" x="488" y="249" fill="#475569">tags  —  up to ten labels</text>
+<text class="t s" x="488" y="268" fill="#475569">last_triaged_on  —  last reviewed</text>
+<rect x="430" y="330" width="300" height="106" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<rect x="450" y="345" width="26" height="26" rx="8" fill="#DBEAFE"/>
+<g transform="translate(455,350) scale(0.6666666666666666)" fill="none" stroke="#2563EB" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9 M17 6h3 M4 12h3 M11 12h9 M4 18h13 M21 18h-1 M17 4v4 M7 10v4 M15 16v4"/></g>
+<text class="t" x="488" y="363" font-size="14.5" font-weight="600" fill="#0B1120">profiles</text>
+<text class="t s" x="488" y="392" fill="#475569">user_id  —  one row per person</text>
+<text class="t s" x="488" y="411" fill="#475569">theme_preference  —  system, light or dark</text>
+<path class="edge" d="M310,183 H370 V211.5 H426" marker-end="url(#arrow-l)"/>
+<g><rect x="342.6" y="152" width="54.8" height="15" rx="7.5" fill="#F8FAFC"/><text class="t s muted" x="370" y="163" text-anchor="middle" >has many</text></g>
+<path class="edge" d="M340,183 V383 H426" marker-end="url(#arrow-l)"/>
+<g><rect x="353.4" y="362" width="49.199999999999996" height="15" rx="7.5" fill="#F8FAFC"/><text class="t s muted" x="378" y="373" text-anchor="middle" >has one</text></g>
+<rect x="60" y="330" width="250" height="144" rx="14" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1.25"/>
+<rect x="80" y="345" width="26" height="26" rx="8" fill="#DBEAFE"/>
+<g transform="translate(85,350) scale(0.6666666666666666)" fill="none" stroke="#2563EB" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6z M9 11V8a3 3 0 0 1 6 0v3"/></g>
+<text class="t" x="118" y="363" font-size="14.5" font-weight="600" fill="#0B1120">Private by default</text>
+<text class="t s" x="118" y="392" fill="#475569">Every row is tied to one person and</text>
+<text class="t s" x="118" y="411" fill="#475569">the database itself refuses to return</text>
+<text class="t s" x="118" y="430" fill="#475569">anyone else’s — the app cannot ask</text>
+<text class="t s" x="118" y="449" fill="#475569">for another user’s tasks.</text>
+<g transform="translate(62,512) scale(0.75)" fill="none" stroke="#2563EB" stroke-width="2.33" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5 9-11"/></g>
+<text class="t b" x="90" y="526" text-anchor="start" font-weight="600">Nothing is ever deleted.</text>
+<text class="t s muted" x="90" y="546" text-anchor="start" >Finishing or dropping a task changes its status, so the day’s</text>
+<text class="t s muted" x="90" y="564" text-anchor="start" >history stays intact and other devices can be told what changed.</text>
+</g>
+<g class="layer-d" display="none">
+<style>
+  .layer-d .t { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; fill: #F1F5F9; }
+  .layer-d .mono { font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace; }
+  .layer-d .muted { fill: #94A3B8; }
+  .layer-d .title { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
+  .layer-d .subtitle { font-size: 12.5px; fill: #94A3B8; }
+  .layer-d .h { font-size: 13.5px; font-weight: 600; }
+  .layer-d .b { font-size: 12px; }
+  .layer-d .s { font-size: 10.5px; }
+  .layer-d .box { fill: #1E293B; stroke: #2E3B4E; stroke-width: 1.25; }
+  .layer-d .box-alt { fill: #152033; stroke: #2E3B4E; stroke-width: 1.25; }
+  .layer-d .group { fill: none; stroke: #5B6B84; stroke-width: 1.25; stroke-dasharray: 5 4; opacity: 0.75; }
+  .layer-d .edge { fill: none; stroke: #5B6B84; stroke-width: 1.5; }
+  .layer-d .edge-accent { fill: none; stroke: #60A5FA; stroke-width: 1.75; }
+  .layer-d .edge-dash { fill: none; stroke: #94A3B8; stroke-width: 1.25; stroke-dasharray: 4 4; }
+</style>
+<defs>
+  <marker id="arrow-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#5B6B84"/>
+  </marker>
+  <marker id="arrow-accent-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#60A5FA"/>
+  </marker>
+  <marker id="arrow-muted-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+  </marker>
+  <marker id="crowsfoot-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" orient="auto">
+    <path d="M10,0 L0,5 L10,10 M10,5 L0,5" fill="none" stroke="#5B6B84" stroke-width="1.4"/>
+  </marker>
+</defs>
+<rect width="800" height="600" fill="#0A0F1C"/>
+<text class="t title" x="32" y="42">What reflow stores</text>
+<text class="t subtitle" x="32" y="63">Two tables, both private to the person who owns the rows.</text>
+<rect x="60" y="130" width="250" height="106" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<rect x="80" y="145" width="26" height="26" rx="8" fill="#60A5FA"/>
+<g transform="translate(85,150) scale(0.6666666666666666)" fill="none" stroke="#0B1120" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M4 21a8 8 0 0 1 16 0"/></g>
+<text class="t" x="118" y="163" font-size="14.5" font-weight="600" fill="#F1F5F9">A signed-in person</text>
+<text class="t s" x="118" y="192" fill="#94A3B8">handled by Supabase Auth</text>
+<text class="t s" x="118" y="211" fill="#94A3B8">email, Google or GitHub</text>
+<rect x="430" y="130" width="300" height="163" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<rect x="450" y="145" width="26" height="26" rx="8" fill="#1E2E47"/>
+<g transform="translate(455,150) scale(0.6666666666666666)" fill="none" stroke="#60A5FA" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16 M4 12h16 M4 17h10"/></g>
+<text class="t" x="488" y="163" font-size="14.5" font-weight="600" fill="#F1F5F9">tasks</text>
+<text class="t s" x="488" y="192" fill="#94A3B8">title  —  what to do</text>
+<text class="t s" x="488" y="211" fill="#94A3B8">status  —  active, done or dropped</text>
+<text class="t s" x="488" y="230" fill="#94A3B8">rank  —  where it sits in the list</text>
+<text class="t s" x="488" y="249" fill="#94A3B8">tags  —  up to ten labels</text>
+<text class="t s" x="488" y="268" fill="#94A3B8">last_triaged_on  —  last reviewed</text>
+<rect x="430" y="330" width="300" height="106" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<rect x="450" y="345" width="26" height="26" rx="8" fill="#1E2E47"/>
+<g transform="translate(455,350) scale(0.6666666666666666)" fill="none" stroke="#60A5FA" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9 M17 6h3 M4 12h3 M11 12h9 M4 18h13 M21 18h-1 M17 4v4 M7 10v4 M15 16v4"/></g>
+<text class="t" x="488" y="363" font-size="14.5" font-weight="600" fill="#F1F5F9">profiles</text>
+<text class="t s" x="488" y="392" fill="#94A3B8">user_id  —  one row per person</text>
+<text class="t s" x="488" y="411" fill="#94A3B8">theme_preference  —  system, light or dark</text>
+<path class="edge" d="M310,183 H370 V211.5 H426" marker-end="url(#arrow-d)"/>
+<g><rect x="342.6" y="152" width="54.8" height="15" rx="7.5" fill="#0A0F1C"/><text class="t s muted" x="370" y="163" text-anchor="middle" >has many</text></g>
+<path class="edge" d="M340,183 V383 H426" marker-end="url(#arrow-d)"/>
+<g><rect x="353.4" y="362" width="49.199999999999996" height="15" rx="7.5" fill="#0A0F1C"/><text class="t s muted" x="378" y="373" text-anchor="middle" >has one</text></g>
+<rect x="60" y="330" width="250" height="144" rx="14" fill="#152033" stroke="#2E3B4E" stroke-width="1.25"/>
+<rect x="80" y="345" width="26" height="26" rx="8" fill="#1E2E47"/>
+<g transform="translate(85,350) scale(0.6666666666666666)" fill="none" stroke="#60A5FA" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6z M9 11V8a3 3 0 0 1 6 0v3"/></g>
+<text class="t" x="118" y="363" font-size="14.5" font-weight="600" fill="#F1F5F9">Private by default</text>
+<text class="t s" x="118" y="392" fill="#94A3B8">Every row is tied to one person and</text>
+<text class="t s" x="118" y="411" fill="#94A3B8">the database itself refuses to return</text>
+<text class="t s" x="118" y="430" fill="#94A3B8">anyone else’s — the app cannot ask</text>
+<text class="t s" x="118" y="449" fill="#94A3B8">for another user’s tasks.</text>
+<g transform="translate(62,512) scale(0.75)" fill="none" stroke="#60A5FA" stroke-width="2.33" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5 9-11"/></g>
+<text class="t b" x="90" y="526" text-anchor="start" font-weight="600">Nothing is ever deleted.</text>
+<text class="t s muted" x="90" y="546" text-anchor="start" >Finishing or dropping a task changes its status, so the day’s</text>
+<text class="t s muted" x="90" y="564" text-anchor="start" >history stays intact and other devices can be told what changed.</text>
+</g>
+</svg>

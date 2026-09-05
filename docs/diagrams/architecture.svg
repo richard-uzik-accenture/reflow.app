@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="870" height="620" viewBox="0 0 870 620" role="img" aria-label="How reflow is put together">
+<title>How reflow is put together</title>
+<style>
+  @media (prefers-color-scheme: dark) {
+    .layer-l { display: none; }
+    .layer-d { display: inline !important; }
+  }
+</style>
+<g class="layer-l">
+<style>
+  .layer-l .t { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; fill: #0B1120; }
+  .layer-l .mono { font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace; }
+  .layer-l .muted { fill: #475569; }
+  .layer-l .title { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
+  .layer-l .subtitle { font-size: 12.5px; fill: #475569; }
+  .layer-l .h { font-size: 13.5px; font-weight: 600; }
+  .layer-l .b { font-size: 12px; }
+  .layer-l .s { font-size: 10.5px; }
+  .layer-l .box { fill: #FFFFFF; stroke: #E2E8F0; stroke-width: 1.25; }
+  .layer-l .box-alt { fill: #F1F5F9; stroke: #E2E8F0; stroke-width: 1.25; }
+  .layer-l .group { fill: none; stroke: #94A3B8; stroke-width: 1.25; stroke-dasharray: 5 4; opacity: 0.75; }
+  .layer-l .edge { fill: none; stroke: #94A3B8; stroke-width: 1.5; }
+  .layer-l .edge-accent { fill: none; stroke: #2563EB; stroke-width: 1.75; }
+  .layer-l .edge-dash { fill: none; stroke: #475569; stroke-width: 1.25; stroke-dasharray: 4 4; }
+</style>
+<defs>
+  <marker id="arrow-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+  </marker>
+  <marker id="arrow-accent-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#2563EB"/>
+  </marker>
+  <marker id="arrow-muted-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+  </marker>
+  <marker id="crowsfoot-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" orient="auto">
+    <path d="M10,0 L0,5 L10,10 M10,5 L0,5" fill="none" stroke="#94A3B8" stroke-width="1.4"/>
+  </marker>
+</defs>
+<rect width="870" height="620" fill="#F8FAFC"/>
+<text class="t title" x="32" y="42">How reflow is put together</text>
+<text class="t subtitle" x="32" y="63">A React app in the browser, talking straight to Supabase. Nothing else to run.</text>
+<rect x="60" y="140" width="320" height="144" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<rect x="80" y="155" width="26" height="26" rx="8" fill="#2563EB"/>
+<g transform="translate(85,160) scale(0.6666666666666666)" fill="none" stroke="#FFFFFF" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v14H3z M3 9h18 M6 7h.01 M9 7h.01"/></g>
+<text class="t" x="118" y="173" font-size="14.5" font-weight="600" fill="#0B1120">The app in your browser</text>
+<text class="t s" x="118" y="202" fill="#475569">React + TypeScript, built with Vite</text>
+<text class="t s" x="118" y="221" fill="#475569">Screens: Landing · Sign in · Today</text>
+<text class="t s" x="118" y="240" fill="#475569">Installable as a phone app (PWA)</text>
+<text class="t s" x="118" y="259" fill="#475569">Works offline once it has loaded</text>
+<rect x="490" y="140" width="320" height="125" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<rect x="510" y="155" width="26" height="26" rx="8" fill="#2563EB"/>
+<g transform="translate(515,160) scale(0.6666666666666666)" fill="none" stroke="#FFFFFF" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19a4 4 0 0 1 0-8 6 6 0 0 1 11.3 2A3.5 3.5 0 0 1 17.5 19H7Z"/></g>
+<text class="t" x="548" y="173" font-size="14.5" font-weight="600" fill="#0B1120">Supabase</text>
+<text class="t s" x="548" y="202" fill="#475569">Sign-in and accounts</text>
+<text class="t s" x="548" y="221" fill="#475569">A REST API over the database</text>
+<text class="t s" x="548" y="240" fill="#475569">A live feed of anything that changes</text>
+<rect x="490" y="350" width="320" height="106" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.25"/>
+<rect x="510" y="365" width="26" height="26" rx="8" fill="#DBEAFE"/>
+<g transform="translate(515,370) scale(0.6666666666666666)" fill="none" stroke="#2563EB" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c4.4 0 8-1.3 8-3s-3.6-3-8-3-8 1.3-8 3 3.6 3 8 3Z M4 4v16c0 1.7 3.6 3 8 3s8-1.3 8-3V4 M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></g>
+<text class="t" x="548" y="383" font-size="14.5" font-weight="600" fill="#0B1120">Postgres</text>
+<text class="t s" x="548" y="412" fill="#475569">The tasks and profiles tables</text>
+<text class="t s" x="548" y="431" fill="#475569">Access rules enforced by the database</text>
+<rect x="60" y="350" width="320" height="125" rx="14" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1.25"/>
+<rect x="80" y="365" width="26" height="26" rx="8" fill="#DBEAFE"/>
+<g transform="translate(85,370) scale(0.6666666666666666)" fill="none" stroke="#2563EB" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11 M4 4v6h16V6.5 M4 14h7 M4 14v6h9v-3.5 M3 3l18 18"/></g>
+<text class="t" x="118" y="383" font-size="14.5" font-weight="600" fill="#0B1120">No server of our own</text>
+<text class="t s" x="118" y="412" fill="#475569">The browser talks straight to Supabase.</text>
+<text class="t s" x="118" y="431" fill="#475569">There is no backend to write or run —</text>
+<text class="t s" x="118" y="450" fill="#475569">the app is static files on Vercel.</text>
+<path class="edge" d="M380,205 H486" marker-end="url(#arrow-l)"/>
+<g><rect x="377.6" y="183" width="110.8" height="15" rx="7.5" fill="#F8FAFC"/><text class="t s muted" x="433" y="194" text-anchor="middle" >asks for and saves</text></g>
+<path class="edge-dash" d="M486,250 H380" marker-end="url(#arrow-muted-l)"/>
+<g><rect x="374.8" y="263" width="116.39999999999999" height="15" rx="7.5" fill="#F8FAFC"/><text class="t s muted" x="433" y="274" text-anchor="middle" >pushes back changes</text></g>
+<path class="edge" d="M650,286 V346" marker-end="url(#arrow-l)"/>
+<g transform="translate(62,520) scale(0.75)" fill="none" stroke="#2563EB" stroke-width="2.33" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z"/></g>
+<text class="t b" x="90" y="534" text-anchor="start" font-weight="600">Changes show up instantly.</text>
+<text class="t s muted" x="90" y="554" text-anchor="start" >The screen updates the moment you tap, before the save finishes —</text>
+<text class="t s muted" x="90" y="572" text-anchor="start" >and quietly puts things back if the save ever fails.</text>
+<g transform="translate(442,520) scale(0.75)" fill="none" stroke="#2563EB" stroke-width="2.33" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z M11 18h2"/></g>
+<text class="t b" x="470" y="534" text-anchor="start" font-weight="600">Your devices stay in sync.</text>
+<text class="t s muted" x="470" y="554" text-anchor="start" >Tick a task off on your phone and the laptop list</text>
+<text class="t s muted" x="470" y="572" text-anchor="start" >reorders itself a moment later, with no refresh.</text>
+</g>
+<g class="layer-d" display="none">
+<style>
+  .layer-d .t { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; fill: #F1F5F9; }
+  .layer-d .mono { font-family: ui-monospace, 'Cascadia Mono', 'Consolas', monospace; }
+  .layer-d .muted { fill: #94A3B8; }
+  .layer-d .title { font-size: 21px; font-weight: 600; letter-spacing: -0.3px; }
+  .layer-d .subtitle { font-size: 12.5px; fill: #94A3B8; }
+  .layer-d .h { font-size: 13.5px; font-weight: 600; }
+  .layer-d .b { font-size: 12px; }
+  .layer-d .s { font-size: 10.5px; }
+  .layer-d .box { fill: #1E293B; stroke: #2E3B4E; stroke-width: 1.25; }
+  .layer-d .box-alt { fill: #152033; stroke: #2E3B4E; stroke-width: 1.25; }
+  .layer-d .group { fill: none; stroke: #5B6B84; stroke-width: 1.25; stroke-dasharray: 5 4; opacity: 0.75; }
+  .layer-d .edge { fill: none; stroke: #5B6B84; stroke-width: 1.5; }
+  .layer-d .edge-accent { fill: none; stroke: #60A5FA; stroke-width: 1.75; }
+  .layer-d .edge-dash { fill: none; stroke: #94A3B8; stroke-width: 1.25; stroke-dasharray: 4 4; }
+</style>
+<defs>
+  <marker id="arrow-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#5B6B84"/>
+  </marker>
+  <marker id="arrow-accent-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#60A5FA"/>
+  </marker>
+  <marker id="arrow-muted-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+  </marker>
+  <marker id="crowsfoot-d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" orient="auto">
+    <path d="M10,0 L0,5 L10,10 M10,5 L0,5" fill="none" stroke="#5B6B84" stroke-width="1.4"/>
+  </marker>
+</defs>
+<rect width="870" height="620" fill="#0A0F1C"/>
+<text class="t title" x="32" y="42">How reflow is put together</text>
+<text class="t subtitle" x="32" y="63">A React app in the browser, talking straight to Supabase. Nothing else to run.</text>
+<rect x="60" y="140" width="320" height="144" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<rect x="80" y="155" width="26" height="26" rx="8" fill="#60A5FA"/>
+<g transform="translate(85,160) scale(0.6666666666666666)" fill="none" stroke="#0B1120" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v14H3z M3 9h18 M6 7h.01 M9 7h.01"/></g>
+<text class="t" x="118" y="173" font-size="14.5" font-weight="600" fill="#F1F5F9">The app in your browser</text>
+<text class="t s" x="118" y="202" fill="#94A3B8">React + TypeScript, built with Vite</text>
+<text class="t s" x="118" y="221" fill="#94A3B8">Screens: Landing · Sign in · Today</text>
+<text class="t s" x="118" y="240" fill="#94A3B8">Installable as a phone app (PWA)</text>
+<text class="t s" x="118" y="259" fill="#94A3B8">Works offline once it has loaded</text>
+<rect x="490" y="140" width="320" height="125" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<rect x="510" y="155" width="26" height="26" rx="8" fill="#60A5FA"/>
+<g transform="translate(515,160) scale(0.6666666666666666)" fill="none" stroke="#0B1120" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19a4 4 0 0 1 0-8 6 6 0 0 1 11.3 2A3.5 3.5 0 0 1 17.5 19H7Z"/></g>
+<text class="t" x="548" y="173" font-size="14.5" font-weight="600" fill="#F1F5F9">Supabase</text>
+<text class="t s" x="548" y="202" fill="#94A3B8">Sign-in and accounts</text>
+<text class="t s" x="548" y="221" fill="#94A3B8">A REST API over the database</text>
+<text class="t s" x="548" y="240" fill="#94A3B8">A live feed of anything that changes</text>
+<rect x="490" y="350" width="320" height="106" rx="14" fill="#1E293B" stroke="#2E3B4E" stroke-width="1.25"/>
+<rect x="510" y="365" width="26" height="26" rx="8" fill="#1E2E47"/>
+<g transform="translate(515,370) scale(0.6666666666666666)" fill="none" stroke="#60A5FA" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7c4.4 0 8-1.3 8-3s-3.6-3-8-3-8 1.3-8 3 3.6 3 8 3Z M4 4v16c0 1.7 3.6 3 8 3s8-1.3 8-3V4 M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></g>
+<text class="t" x="548" y="383" font-size="14.5" font-weight="600" fill="#F1F5F9">Postgres</text>
+<text class="t s" x="548" y="412" fill="#94A3B8">The tasks and profiles tables</text>
+<text class="t s" x="548" y="431" fill="#94A3B8">Access rules enforced by the database</text>
+<rect x="60" y="350" width="320" height="125" rx="14" fill="#152033" stroke="#2E3B4E" stroke-width="1.25"/>
+<rect x="80" y="365" width="26" height="26" rx="8" fill="#1E2E47"/>
+<g transform="translate(85,370) scale(0.6666666666666666)" fill="none" stroke="#60A5FA" stroke-width="2.63" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11 M4 4v6h16V6.5 M4 14h7 M4 14v6h9v-3.5 M3 3l18 18"/></g>
+<text class="t" x="118" y="383" font-size="14.5" font-weight="600" fill="#F1F5F9">No server of our own</text>
+<text class="t s" x="118" y="412" fill="#94A3B8">The browser talks straight to Supabase.</text>
+<text class="t s" x="118" y="431" fill="#94A3B8">There is no backend to write or run —</text>
+<text class="t s" x="118" y="450" fill="#94A3B8">the app is static files on Vercel.</text>
+<path class="edge" d="M380,205 H486" marker-end="url(#arrow-d)"/>
+<g><rect x="377.6" y="183" width="110.8" height="15" rx="7.5" fill="#0A0F1C"/><text class="t s muted" x="433" y="194" text-anchor="middle" >asks for and saves</text></g>
+<path class="edge-dash" d="M486,250 H380" marker-end="url(#arrow-muted-d)"/>
+<g><rect x="374.8" y="263" width="116.39999999999999" height="15" rx="7.5" fill="#0A0F1C"/><text class="t s muted" x="433" y="274" text-anchor="middle" >pushes back changes</text></g>
+<path class="edge" d="M650,286 V346" marker-end="url(#arrow-d)"/>
+<g transform="translate(62,520) scale(0.75)" fill="none" stroke="#60A5FA" stroke-width="2.33" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z"/></g>
+<text class="t b" x="90" y="534" text-anchor="start" font-weight="600">Changes show up instantly.</text>
+<text class="t s muted" x="90" y="554" text-anchor="start" >The screen updates the moment you tap, before the save finishes —</text>
+<text class="t s muted" x="90" y="572" text-anchor="start" >and quietly puts things back if the save ever fails.</text>
+<g transform="translate(442,520) scale(0.75)" fill="none" stroke="#60A5FA" stroke-width="2.33" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z M11 18h2"/></g>
+<text class="t b" x="470" y="534" text-anchor="start" font-weight="600">Your devices stay in sync.</text>
+<text class="t s muted" x="470" y="554" text-anchor="start" >Tick a task off on your phone and the laptop list</text>
+<text class="t s muted" x="470" y="572" text-anchor="start" >reorders itself a moment later, with no refresh.</text>
+</g>
+</svg>
